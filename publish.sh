@@ -5,4 +5,4 @@ echo 'Generating content...'
 pelican content -o output/blog
 ghp-import output
 echo 'Pushing to GitHub pages...'
-git push git@github.com:csparpa/csparpa.github.io.git gh-pages:master
+git push http://github.com/csparpa/csparpa.github.io gh-pages:master
