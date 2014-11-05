@@ -28,8 +28,8 @@ ARTICLE_SAVE_AS = "{date:%Y}/{date:%m}/{slug}.html"
 DISQUS_SITENAME = "csparpa"
 
 # Feed generation is usually not desired when developing
-FEED_ALL_ATOM = 'feeds/all.atom.xml'
-CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
+FEED_ALL_ATOM = 'blog/feeds/all.atom.xml'
+CATEGORY_FEED_ATOM = 'blog/feeds/%s.atom.xml'
 
 # Blogroll
 LINKS = (('Website', 'http://csparpa.tk'),
