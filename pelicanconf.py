@@ -5,7 +5,8 @@ from __future__ import unicode_literals
 # Blog global info
 AUTHOR = u'csparpa'
 SITENAME = u'Vorsprung durch Informatik'
-SITEURL = 'http://csparpa.github.io'
+ROOTURL = 'http://csparpa.github.io'
+SITEURL = ROOTURL + '/blog'
 
 # Path for source .md files
 PATH = 'content'
@@ -16,7 +17,7 @@ DEFAULT_LANG = u'en'
 DEFAULT_DATE_FORMAT = ('%d/%b/%Y %H:%M')
 
 # Rel/abs URLs
-RELATIVE_URLS = True
+RELATIVE_URLS = False
 
 # Control categories display on navigation bar
 HIDE_CATEGORIES_FROM_MENU = True
@@ -29,8 +30,8 @@ ARTICLE_SAVE_AS = "{date:%Y}/{date:%m}/{slug}.html"
 DISQUS_SITENAME = "csparpa"
 
 # Feed generation
-FEED_ALL_ATOM = 'blog/feeds/all.atom.xml'
-CATEGORY_FEED_ATOM = 'blog/feeds/%s.atom.xml'
+FEED_ALL_ATOM = 'feeds/all.atom.xml'
+CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
 
 # Blogroll links
 LINKS = (('Website', 'http://csparpa.tk'),
