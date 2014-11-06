@@ -1,10 +1,13 @@
 #!/bin/bash
-echo 'Clearing output/blog folder...'
+echo '***Clearing ./output/blog/ folder...'
 rm -rf output/blog
-echo 'Generating content...'
+echo '***Generating blog content...'
 pelican content -o output/blog
-echo 'Copying images...'
+echo '***Copying images to blog...'
 mkdir output/blog/img
 cp images/*.png output/blog/img
+echo '***Copying static website to ./output/ folder...'
+cp -R website/* output/
 cd output/
-python -m SimpleHTTPServer
+echo '***Serving on http://localhost:8000...'
+python -m SimpleHTTPServer &> /dev/null
