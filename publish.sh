@@ -8,8 +8,10 @@ mkdir output/blog/img
 cp images/*.png output/blog/img
 echo '***Copying static website to ./output/ folder...'
 cp -R website/* output/
-echo '***Copying CNAME settings to ./output folder...'
-cp extra/CNAME output/
+if [ -f extra/CNAME ]; then
+    echo '***Copying CNAME settings to ./output folder...'
+    cp extra/CNAME output/
+fi
 echo '***Pushing to GitHub pages on csparpa.github.io@master...'
 ghp-import output
 git push http://github.com/csparpa/csparpa.github.io gh-pages:master
