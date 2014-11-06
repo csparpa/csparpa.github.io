@@ -1,6 +1,6 @@
 #!/bin/bash
 echo '***Clearing ./output/blog/ folder...'
-rm -rfv output/blog
+rm -rf output/blog
 echo '***Generating blog content...'
 pelican content -o output/blog
 echo '***Copying images to blog...'
