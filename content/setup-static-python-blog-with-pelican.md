@@ -138,7 +138,51 @@ $> python -m SimpleHTTPServer 8888
 and pointing your browser to <http://localhost:8888>.  
 Cool, isn't it?
 
+### Installing Pelican plugins
+Pelican is an extensible platform, which means you can add one or more [plugins](https://github.com/getpelican/pelican-plugins)
+into it and add functionalities.  
+You can install community-provided plugins by cloning the plugins repository:
+
+```bash
+$> git clone https://github.com/getpelican/pelican-plugins plugins
+```
+
+Now the plugins are in the `plugins` folder and you can enable/disable them and put their corresponding configuration
+data into your Pelican configuration file.
+
+
+### Adding an XML sitemap
+
+You want your blog to be fully crawled by Google, dont' you? So you need to generate a sitemap for it.  
+Generating a sitemap is easy if you use the `sitemap` plugin.  
+What you need to do is, once you've installed all the plugins, add the following lines to the `pelicanconf.py`:
+
+```python
+# Path to the folder containing the plugins
+PLUGIN_PATH = u'plugins'
+
+# The plugins you want to be enabled
+PLUGINS = [u'sitemap',]
+
+# Configuration for the "sitemap" plugin
+SITEMAP = {
+    'format': 'xml',
+    'priorities': {
+        'articles': 1,
+        'indexes': 0.5,
+        'pages': 0.5,
+    },
+    'changefreqs': {
+        'articles': 'always',
+        'indexes': 'hourly',
+        'pages': 'monthly'
+    }
+}
+```
+
+Regenerate the output and you'll notice your `output` folder now contains a `sitemap.xml` file.  
+
 ### Where to go from here
-Now you can upload the contents of the `output` folder 'as are' to your web hosting.  
-Visit the  [Pelican tips page](http://docs.getpelican.com/en/3.4.0/tips.html) which also
-explains how to integrate Pelican into GitHub pages.
+Now you can upload the contents of the `output` folder 'as are' to your web hosting provider.  
+Don't forget to setup your Google Analytics account to crawl to the domain you publish the pages under.  
+Visit the  [Pelican tips page](http://docs.getpelican.com/en/3.4.0/tips.html) which also explains how to integrate Pelican into GitHub pages.

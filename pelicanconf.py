@@ -26,6 +26,10 @@ HIDE_CATEGORIES_FROM_MENU = True
 ARTICLE_URL = "{date:%Y}/{date:%m}/{slug}.html"
 ARTICLE_SAVE_AS = "{date:%Y}/{date:%m}/{slug}.html"
 
+# Pelican plugins
+PLUGIN_PATH = u'plugins'
+PLUGINS = [u'sitemap',]
+
 # Social widget
 DISQUS_SITENAME = "csparpa"
 
@@ -47,3 +51,18 @@ DEFAULT_PAGINATION = 5
 
 # The graphical theme for the blog
 THEME = 'themes/fresh'
+
+# Configuration for the 'sitemap' plugin
+SITEMAP = {
+    'format': 'xml',
+    'priorities': {
+        'articles': 1,
+        'indexes': 0.5,
+        'pages': 0.5,
+    },
+    'changefreqs': {
+        'articles': 'always',
+        'indexes': 'hourly',
+        'pages': 'monthly'
+    }
+}
