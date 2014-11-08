@@ -215,10 +215,48 @@ What is the meaning of life the universe and everything?
 
 <p>and pointing your browser to <a href="http://localhost:8888">http://localhost:8888</a>.<br />
 Cool, isn't it?</p>
+<h3>Installing Pelican plugins</h3>
+<p>Pelican is an extensible platform, which means you can add one or more <a href="https://github.com/getpelican/pelican-plugins">plugins</a>
+into it and add functionalities.<br />
+You can install community-provided plugins by cloning the plugins repository:</p>
+<div class="highlight"><pre><span class="nv">$&gt;</span> git clone https://github.com/getpelican/pelican-plugins plugins
+</pre></div>
+
+
+<p>Now the plugins are in the <code>plugins</code> folder and you can enable/disable them and put their corresponding configuration
+data into your Pelican configuration file.</p>
+<h3>Adding an XML sitemap</h3>
+<p>You want your blog to be fully crawled by Google, dont' you? So you need to generate a sitemap for it.<br />
+Generating a sitemap is easy if you use the <code>sitemap</code> plugin.<br />
+What you need to do is, once you've installed all the plugins, add the following lines to the <code>pelicanconf.py</code>:</p>
+<div class="highlight"><pre><span class="c"># Path to the folder containing the plugins</span>
+<span class="n">PLUGIN_PATH</span> <span class="o">=</span> <span class="s">u&#39;plugins&#39;</span>
+
+<span class="c"># The plugins you want to be enabled</span>
+<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;sitemap&#39;</span><span class="p">,]</span>
+
+<span class="c"># Configuration for the &quot;sitemap&quot; plugin</span>
+<span class="n">SITEMAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;format&#39;</span><span class="p">:</span> <span class="s">&#39;xml&#39;</span><span class="p">,</span>
+    <span class="s">&#39;priorities&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;articles&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s">&#39;indexes&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s">&#39;pages&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s">&#39;changefreqs&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;articles&#39;</span><span class="p">:</span> <span class="s">&#39;always&#39;</span><span class="p">,</span>
+        <span class="s">&#39;indexes&#39;</span><span class="p">:</span> <span class="s">&#39;hourly&#39;</span><span class="p">,</span>
+        <span class="s">&#39;pages&#39;</span><span class="p">:</span> <span class="s">&#39;monthly&#39;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Regenerate the output and you'll notice your <code>output</code> folder now contains a <code>sitemap.xml</code> file.  </p>
 <h3>Where to go from here</h3>
-<p>Now you can upload the contents of the <code>output</code> folder 'as are' to your web hosting.<br />
-Visit the  <a href="http://docs.getpelican.com/en/3.4.0/tips.html">Pelican tips page</a> which also
-explains how to integrate Pelican into GitHub pages.</p>
+<p>Now you can upload the contents of the <code>output</code> folder 'as are' to your web hosting provider.<br />
+Don't forget to setup your Google Analytics account to crawl to the domain you publish the pages under.<br />
+Visit the  <a href="http://docs.getpelican.com/en/3.4.0/tips.html">Pelican tips page</a> which also explains how to integrate Pelican into GitHub pages.</p>
 
       </div><!-- /.entry-content -->
       <div class="comments">

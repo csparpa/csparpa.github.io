@@ -126,7 +126,45 @@ What is the meaning of life the universe and everything?
 
 &lt;p&gt;and pointing your browser to &lt;a href="http://localhost:8888"&gt;http://localhost:8888&lt;/a&gt;.&lt;br /&gt;
 Cool, isn't it?&lt;/p&gt;
+&lt;h3&gt;Installing Pelican plugins&lt;/h3&gt;
+&lt;p&gt;Pelican is an extensible platform, which means you can add one or more &lt;a href="https://github.com/getpelican/pelican-plugins"&gt;plugins&lt;/a&gt;
+into it and add functionalities.&lt;br /&gt;
+You can install community-provided plugins by cloning the plugins repository:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; git clone https://github.com/getpelican/pelican-plugins plugins
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now the plugins are in the &lt;code&gt;plugins&lt;/code&gt; folder and you can enable/disable them and put their corresponding configuration
+data into your Pelican configuration file.&lt;/p&gt;
+&lt;h3&gt;Adding an XML sitemap&lt;/h3&gt;
+&lt;p&gt;You want your blog to be fully crawled by Google, dont' you? So you need to generate a sitemap for it.&lt;br /&gt;
+Generating a sitemap is easy if you use the &lt;code&gt;sitemap&lt;/code&gt; plugin.&lt;br /&gt;
+What you need to do is, once you've installed all the plugins, add the following lines to the &lt;code&gt;pelicanconf.py&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Path to the folder containing the plugins&lt;/span&gt;
+&lt;span class="n"&gt;PLUGIN_PATH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;plugins&amp;#39;&lt;/span&gt;
+
+&lt;span class="c"&gt;# The plugins you want to be enabled&lt;/span&gt;
+&lt;span class="n"&gt;PLUGINS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;u&amp;#39;sitemap&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,]&lt;/span&gt;
+
+&lt;span class="c"&gt;# Configuration for the &amp;quot;sitemap&amp;quot; plugin&lt;/span&gt;
+&lt;span class="n"&gt;SITEMAP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;#39;format&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;xml&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;#39;priorities&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;articles&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;indexes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;pages&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;#39;changefreqs&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;articles&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;always&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;indexes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;hourly&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;pages&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;monthly&amp;#39;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Regenerate the output and you'll notice your &lt;code&gt;output&lt;/code&gt; folder now contains a &lt;code&gt;sitemap.xml&lt;/code&gt; file.  &lt;/p&gt;
 &lt;h3&gt;Where to go from here&lt;/h3&gt;
-&lt;p&gt;Now you can upload the contents of the &lt;code&gt;output&lt;/code&gt; folder 'as are' to your web hosting.&lt;br /&gt;
-Visit the  &lt;a href="http://docs.getpelican.com/en/3.4.0/tips.html"&gt;Pelican tips page&lt;/a&gt; which also
-explains how to integrate Pelican into GitHub pages.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Sat, 01 Nov 2014 13:49:00 +0100</pubDate><guid>tag:csparpa.github.io,2014-11-01:blog/2014/11/setup-static-blog-with-pelican.html</guid><category>python</category><category>blogging</category><category>pelican</category></item></channel></rss>
+&lt;p&gt;Now you can upload the contents of the &lt;code&gt;output&lt;/code&gt; folder 'as are' to your web hosting provider.&lt;br /&gt;
+Don't forget to setup your Google Analytics account to crawl to the domain you publish the pages under.&lt;br /&gt;
+Visit the  &lt;a href="http://docs.getpelican.com/en/3.4.0/tips.html"&gt;Pelican tips page&lt;/a&gt; which also explains how to integrate Pelican into GitHub pages.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Sat, 01 Nov 2014 13:49:00 +0100</pubDate><guid>tag:csparpa.github.io,2014-11-01:blog/2014/11/setup-static-blog-with-pelican.html</guid><category>python</category><category>blogging</category><category>pelican</category></item></channel></rss>
