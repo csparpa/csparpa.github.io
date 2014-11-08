@@ -27,11 +27,14 @@ ARTICLE_URL = "{date:%Y}/{date:%m}/{slug}.html"
 ARTICLE_SAVE_AS = "{date:%Y}/{date:%m}/{slug}.html"
 
 # Pelican plugins
-PLUGIN_PATH = u'plugins'
-PLUGINS = [u'sitemap',]
+PLUGIN_PATHS = [u'plugins']
+PLUGINS = [u'sitemap']
 
 # Social widget
 DISQUS_SITENAME = "csparpa"
+
+# Google Analytics hook
+GOOGLE_ANALYTICS = 'UA-56547669-1'
 
 # Feed generation
 FEED_ALL_ATOM = 'feeds/all.atom.xml'

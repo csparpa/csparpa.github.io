@@ -159,10 +159,10 @@ What you need to do is, once you've installed all the plugins, add the following
 
 ```python
 # Path to the folder containing the plugins
-PLUGIN_PATH = u'plugins'
+PLUGIN_PATHS = [u'plugins']
 
 # The plugins you want to be enabled
-PLUGINS = [u'sitemap',]
+PLUGINS = [u'sitemap']
 
 # Configuration for the "sitemap" plugin
 SITEMAP = {
