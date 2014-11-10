@@ -5,30 +5,37 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://csparpa.github.io/blog/index.html</loc>
-<lastmod>2014-11-10T18:53:12-00:00</lastmod>
+<lastmod>2014-11-10T18:55:15-00:00</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://csparpa.github.io/blog/archives.html</loc>
-<lastmod>2014-11-10T18:53:12-00:00</lastmod>
+<lastmod>2014-11-10T18:55:15-00:00</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://csparpa.github.io/blog/tags.html</loc>
-<lastmod>2014-11-10T18:53:12-00:00</lastmod>
+<lastmod>2014-11-10T18:55:15-00:00</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://csparpa.github.io/blog/categories.html</loc>
-<lastmod>2014-11-10T18:53:12-00:00</lastmod>
+<lastmod>2014-11-10T18:55:15-00:00</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://csparpa.github.io/blog/2014/11/writing-a-good-cv-in-the-software-development-industry.html</loc>
+<lastmod>2014-11-09T18:32:00-00:00</lastmod>
+<changefreq>always</changefreq>
+<priority>1</priority>
 </url>
 
 <url>
@@ -60,6 +67,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://csparpa.github.io/blog/category/career.html</loc>
+<lastmod>2014-11-09T18:32:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://csparpa.github.io/blog/category/design.html</loc>
 <lastmod>2013-10-29T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
@@ -81,6 +95,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://csparpa.github.io/blog/tag/development.html</loc>
+<lastmod>2014-11-09T18:32:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://csparpa.github.io/blog/tag/pelican.html</loc>
 <lastmod>2014-11-01T13:49:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
@@ -97,6 +118,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://csparpa.github.io/blog/tag/http.html</loc>
 <lastmod>2013-10-29T01:00:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://csparpa.github.io/blog/tag/recruitment.html</loc>
+<lastmod>2014-11-09T18:32:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -132,6 +160,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://csparpa.github.io/blog/tag/zen.html</loc>
 <lastmod>2014-01-22T01:00:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://csparpa.github.io/blog/tag/cv.html</loc>
+<lastmod>2014-11-09T18:32:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -179,6 +214,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://csparpa.github.io/blog/tag/skills.html</loc>
+<lastmod>2014-11-09T18:32:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://csparpa.github.io/blog/tag/memcached.html</loc>
 <lastmod>2013-12-13T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
@@ -194,14 +236,14 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://csparpa.github.io/blog/tag/software.html</loc>
-<lastmod>2014-01-22T01:00:00+00:50</lastmod>
+<lastmod>2014-11-09T18:32:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://csparpa.github.io/blog/author/csparpa.html</loc>
-<lastmod>2014-11-01T13:49:00+00:50</lastmod>
+<lastmod>2014-11-09T18:32:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
