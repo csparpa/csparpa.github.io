@@ -12,10 +12,3 @@ reasons why you should give the maximum relevance to it.
 
 ### ...isn't it enough to just write down my previous jobs and my skillset?
 *No!*  
-
-
-### Install Pelican
-Install Pelican and Markdown syntax modules:
-```bash
-$> pip install pelican Markdown
-```
