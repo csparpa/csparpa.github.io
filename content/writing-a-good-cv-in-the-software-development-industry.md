@@ -1,7 +1,7 @@
 Title: Guidelines for writing a good CV in the software development industry
 Date: 2014-11-09 18:32
-Category: howtos, cv, software development
-Tags: cv, software, development, skills, self-promotion, recruitment
+Category: career
+Tags: CV, software, development, skills, recruitment
 Slug: writing-a-good-cv-in-the-software-development-industry
 Authors: csparpa
 Summary: A few hints on writing a good CV to promote yourself as a programmer in the SW development industry

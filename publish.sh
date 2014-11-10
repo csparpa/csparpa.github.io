@@ -4,7 +4,7 @@ rm *.pyc
 echo '***Clearing ./output/blog/ folder...'
 rm -rf output/blog
 echo '***Generating blog content...'
-pelican content -o output/blog
+pelican content -s publish_conf.py -o output/blog
 echo '***Copying images to blog...'
 mkdir output/blog/img
 cp images/*.png output/blog/img

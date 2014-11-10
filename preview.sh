@@ -4,7 +4,7 @@ rm *.pyc
 echo '***Clearing ./output/blog/ folder...'
 rm -rf output/blog
 echo '***Generating blog content...'
-pelican content -o output/blog
+pelican content -s preview_conf.py -o output/blog
 echo '***Copying images to blog...'
 mkdir output/blog/img
 cp images/*.png output/blog/img
@@ -16,6 +16,6 @@ if [ -f extra/CNAME ]; then
     echo '***Copying CNAME settings to ./output folder...'
     cp extra/CNAME output/
 fi
-echo '***Serving on http://localhost:8000...'
+echo '***Serving preview on http://localhost:8000...'
 cd output/
 python -m SimpleHTTPServer &> /dev/null

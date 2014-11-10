@@ -1,6 +1,6 @@
 ﻿Title: Meditation on the Zen of Python
 Date: 2014-01-22 01:00
-Category: github, software, python
+Category: Python
 Tags: zen, python, mantra, github, software
 Slug: meditation-on-the-zen-of-python
 Authors: csparpa
