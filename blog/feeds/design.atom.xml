@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds/design.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2013-10-29T01:00:00+01:00</updated><entry><title>Web APIs design: an improvable example</title><link href="http://csparpa.github.io/blog/2013/10/web-apis-design-an-improvable-example.html" rel="alternate"></link><updated>2013-10-29T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-10-29:blog/2013/10/web-apis-design-an-improvable-example.html</id><summary type="html">&lt;p&gt;Today I want to speak about the &lt;a href="http://bugs.openweathermap.org/projects/api/wiki/API_2_5"&gt;OWM web API 2.5&lt;/a&gt; and its design. As this API follows a versioning scheme, this analysis holds for version 2.5 (which then I suppose is not changing in time!)&lt;/p&gt;
+&lt;p&gt;First let me clearly state that I'm writing this post as a "gathering of thoughts” I've had during the first draft development of the PyOWM library, and it is not meant to be a negative criticism – but rather a positive review – to the  API architects/developers. I just want to write here my ideas so that the OWM API can be improved in future versions – and I will commit myself to help with this process, if needed.  &lt;/p&gt;
+&lt;p&gt;I found this activity also very educational because it made me think again to all that books and articles I've read on the Internet about API design and – good grief – they were damn right!  &lt;/p&gt;
+&lt;p&gt;As I said, developing the PyOWM library I had to write code interfacing with the OWM web API, which basically meant I had to setup an HTTP client and some kind of parsing module in order to read the API's responses, squeeze useful data out of them and inject data into my custom object model to the benefit of users. These funny tasks lead me, nevertheless, to crash onto a few improvable API design features that made my work unreasonably more complicated and error-prone. And a bug also came into sight.  &lt;/p&gt;
+&lt;p&gt;Be warned: this is a quite long post ;-)  &lt;/p&gt;
+&lt;h3&gt;Design oddities&lt;/h3&gt;
+&lt;p&gt;I found the following ones:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;mismatch between endpoint naming and features that endpoints implement&lt;/li&gt;
+&lt;li&gt;inconsistent formatting of JSON data returned by different endpoints when queried for the same (or similar) data entities&lt;/li&gt;
+&lt;li&gt;lack of use of proper status codes in HTTP headers for error signaling&lt;/li&gt;
+&lt;li&gt;certain endpoints map on 200 (Ok) HTTP status codes also 404 (Not Found) error conditions&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;And there is something more… I won't blame anybody  of these, but they really should be taken into account:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the API is poorly documented&lt;/li&gt;
+&lt;li&gt;the API is not RESTful&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Let's dig into each point.  &lt;/p&gt;
+&lt;h3&gt;Endpoints: naming vs features&lt;/h3&gt;
+&lt;p&gt;The API lets you basically retrieve different weather datasets (observations, forecasts, historic data) about places in the world.
+The most simple and natural feature for the API is to let you query for the currently observed weather in a location: this can be specified in a twofold manner, either by passing the API a toponym or a lat/lon couple.  &lt;/p&gt;
+&lt;p&gt;The related endpoints are:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#Feature: retrieve current weather - location is specified via toponym
+http://api.openweathermap.org/data/2.5/weather?q=London,uk
+
+#Feature: retrieve current weather - location is specified via lat/lon
+http://api.openweathermap.org/data/2.5/weather?lat=57&amp;amp;lon=-2.15
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Here the naming seems to quite proper with regards to the implemented feature: great!  &lt;/p&gt;
+&lt;p&gt;Things worsen when you consider these API features: find the current weather conditions in all the locations having certain characteristics, such as having toponyms that are similar/equal to a given string or being in the neighborhood of a given lat/lon couple.&lt;br /&gt;
+Here are the related endpoints:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#Feature: retrieve current weathers in all the locations whose names exactly equal to the string &amp;quot;London&amp;quot;
+http://api.openweathermap.org/data/2.5/find?q=London&amp;amp;type=accurate
+
+#Feature: retrieve current weathers in all the locations whose names contains the string &amp;quot;London&amp;quot;
+http://api.openweathermap.org/data/2.5/find?q=London&amp;amp;type=like
+
+#Feature: retrieve current weathers in all the locations in the neighborhoods of a lat/lon couple
+http://api.openweathermap.org/data/2.5/find?lat=57&amp;amp;lon=-2.15
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, this lays down three questions:  &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;what the heck does "neighborhood” mean? The API documentation is silent about this topic. One could suppose that the API is performing a geographic search based on a circle with center into the specified lat/lon couple and a certain radius – and this is effectively what has been done in a prior (and now dismissed) version of the API. But nobody knows if this guess is true and – above all – what is the value for the radius , as it cannot be specified by the user.&lt;/li&gt;
+&lt;li&gt;we know for sure that behind the API a geocoder is in action (for those who don't know what a geocoder is: it is a SW module that performs direct mapping between geographic labels – such as addresses, city names, toponyms into a geographic coordinates couple or even a geographic feature on a map. Sometimes geocoders also perform the reverse mapping): for this reason, we have a "smell” here… the "find” endpoint is implementing a geocoder-like feature: it should not be responsibility of the API to behave like that, or at least, if this responsibility is implemented it should be kept separate from the weather data provisioning. So, in my opinion, there should be an endpoint providing geocoding queries and another one providing current weather data on a single location: then, queries for current weather data on X multiple locations can be done with X API requests for current weather on a each single location. You think that users won't do that? Yes, they shouldn't: an automatic HTTP client should. Indeed, that's what APIs are meant to do: automatize :-)&lt;/li&gt;
+&lt;li&gt;isn't the "accurate” parameter unnecessary? A "like” query should also give as results literal word matchings!&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Another feature: retrieve weather forecasts for a location. You can get forecasts for every 3-hours of the next 5 days or for every of the next 14 days.  &lt;/p&gt;
+&lt;p&gt;Here are the endpoints:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#Feature: retrieve 3h weather forecast for a location
+http://api.openweathermap.org/data/2.5/forecast?q=London
+
+#Feature: retrieve daily weather forecast for a location
+http://api.openweathermap.org/data/2.5/forecast/daily?q=London
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Again, questions:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;good naming here, but it can be improved. I would use "/forecast/daily” for daily forecast and "/forecast/3h” for 3-hours forecast. A viable alternative could be using a single endpoint "/forecast” along with a "interval=[daily|3h]” query parameter.&lt;/li&gt;
+&lt;li&gt;only results coming from the daily forecast query can be paged by the user: the user can control how many results are returned by the API through an optional parameter named "cnt”. This is not possible with regards to the 3-hours forecast query: why?&lt;/li&gt;
+&lt;li&gt;why isn't it possible to specify a forecast through a lon/lat couple? Maybe it is a design decision, but it creates asimmetry with the previously described API features.&lt;/li&gt;
+&lt;li&gt;why isn't it possible to query for weather forecasts for all the locations having name similar to a given string or being in the neighborhood of a specific lon/lat couple? Guess it's due to API designers laziness…&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Same conceptual entities, different JSON representations&lt;/h3&gt;
+&lt;p&gt;Clients of data API expect returned data to be structured using some kind of language or convention and  they also expect that structured data is organized in chunks or logical groups  that clearly convey cohesion and hierarchy. In our specific case, the description language used by the API can either be JSON or XML (but we will only rely on JSON from now on): this is a consolidated practice among the web APIs  and this sounds good. At this point, we want to inspect the JSON returned by a query for current weather data on London,UK:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#Payload of response to request:
+#GET http://api.openweathermap.org/data/2.5/weather?q=London,uk
+{
+  &amp;quot;coord&amp;quot;: {
+     &amp;quot;lon&amp;quot;: -0.12574,
+     &amp;quot;lat&amp;quot;: 51.50853 },
+  &amp;quot;sys&amp;quot;: {
+     &amp;quot;country&amp;quot;: &amp;quot;GB&amp;quot;,
+     &amp;quot;sunrise&amp;quot;: 1378877413,
+     &amp;quot;sunset&amp;quot;: 1378923812 },
+  &amp;quot;weather&amp;quot;: [{
+     &amp;quot;id&amp;quot;: 521,
+     &amp;quot;main&amp;quot;: &amp;quot;Rain&amp;quot;,
+     &amp;quot;description&amp;quot;: &amp;quot;proximity shower rain&amp;quot;,
+     &amp;quot;icon&amp;quot;: &amp;quot;09d&amp;quot; }],
+  &amp;quot;base&amp;quot;: &amp;quot;gdps stations&amp;quot;,
+  &amp;quot;main&amp;quot;: {
+       &amp;quot;temp&amp;quot;: 288.88,
+       &amp;quot;pressure&amp;quot;: 1021,
+       &amp;quot;humidity&amp;quot;: 63,
+       &amp;quot;temp_min&amp;quot;: 287.15,
+       &amp;quot;temp_max&amp;quot;: 290.37 },
+  &amp;quot;wind&amp;quot;: {
+       &amp;quot;speed&amp;quot;: 4.6,
+       &amp;quot;deg&amp;quot;: 330 },
+  &amp;quot;clouds&amp;quot;: {
+       &amp;quot;all&amp;quot;: 75 },
+  &amp;quot;dt&amp;quot;: 1378899070,
+  &amp;quot;id&amp;quot;: 2643743,
+  &amp;quot;name&amp;quot;: &amp;quot;London&amp;quot;,
+  &amp;quot;cod&amp;quot;: 200
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The "coord”, "country”, "id” and "name” JSON root elements refer to a single logical entity: the location for which the current weather is given (London, UK). Can you see it? Wouldn't have it been better to group all the location info into a single JSON element? For example, like this:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;{
+...
+&amp;quot;location&amp;quot;:
+{
+  &amp;quot;coord&amp;quot;: {
+     &amp;quot;lon&amp;quot;: -0.12574,
+     &amp;quot;lat&amp;quot;: 51.50853 },
+  &amp;quot;country&amp;quot;: &amp;quot;GB&amp;quot;,
+  &amp;quot;name&amp;quot;: &amp;quot;London&amp;quot;,
+  &amp;quot;id&amp;quot;: 2643743
+}
+ ...
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Another legitimate question is: why location information spread out from the data regarding current weather? Here the API is clearly returning more data than it has been asked for. But what is really obscure is that location info are structured in different ways if returned by different endpoints. In example, if we ask for the daily weather forecast on London,UK we get:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#Payload of response to request:
+#GET http://api.openweathermap.org/data/2.5/forecast/daily?q=London
+{
+&amp;quot;city&amp;quot; : {
+  &amp;quot;coord&amp;quot; : {
+     &amp;quot;lat&amp;quot; : 51.50853,
+     &amp;quot;lon&amp;quot; : -0.12573999999999999 },
+   &amp;quot;country&amp;quot; : &amp;quot;GB&amp;quot;,
+   &amp;quot;id&amp;quot; : 2643743,
+   &amp;quot;name&amp;quot; : &amp;quot;London&amp;quot;,
+   &amp;quot;population&amp;quot; : 1000000},
+...
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now data is structured! Magic? No: an evil art! And it drives me – and everyone else who is developing  a client library for this API – literally mad to parse the JSON: each endpoint, in practice, needs a specific JSON parser in order to parse the same data entities, and this introduces complexity into the code. Had the data been structured uniformly across the different endpoints, just one parser would be needed.  &lt;/p&gt;
+&lt;h3&gt;HTTP status codes are neglected&lt;/h3&gt;
+&lt;p&gt;This is one of the main shortcomings of this API: it does not convey error conditions through a proper use of HTTP status codes. The API users want to receive a 200 (OK) status code in the HTTP response's header – along with data – whenever a GET request is a hit: this means that the endpoint exists and is correctly invoked by the clients; the same way, users want to receive a 4xx or 5xx status code whenever something goes wrong with their request: this can happen for several reasons, either due to clients or the server itself. But, to be short: a user expects a non-200 status code to be returned whenever something goes wrong with its request.  s&lt;/p&gt;
+&lt;p&gt;The OWM API &lt;strong&gt;always returns a 200 HTTP status code&lt;/strong&gt;, no matter what happens. But, if something goes wrong with a client's request, it returns the right HTTP status code and an explanation message into the HTTP response's payload! An example: we want to query for current weather on a non-existent location (the folkloristic: "sev082hfrv2qvf2vunr”)  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#HTTP request
+GET /data/2.5/weather?q=sev082hfrv2qvf2vunr HTTP/1.1
+#HTTP response headers
+HTTP/1.1 200 OK
+Server: nginx
+Content-Type: application/json; charset=utf-8
+...
+#HTTP response payload
+{&amp;quot;message&amp;quot;:&amp;quot;Error: Not found city&amp;quot;,&amp;quot;cod&amp;quot;:&amp;quot;404&amp;quot;}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The JSON payload is clear: the location has not been found and a 404 (Not Found) error code has been returned. However the code is returned &lt;strong&gt;into the payload&lt;/strong&gt;, so the clients have to first presume that the request was a success, then parse the payload and find out that it wasn't! The API is mis-using the HTTP protocol, which is a very nasty behaviour for clients and &lt;em&gt;blows the API away from RESTfulness&lt;/em&gt;, as well.  &lt;/p&gt;
+&lt;h3&gt;"Not found” is different from "Found but no data available”&lt;/h3&gt;
+&lt;p&gt;The improper usage of HTTP status codes is particularly problematic in the case of queries to historic weather data registred by meteostations. A meteostation is identified by a unique integer number and when historic data is queried, the API returns a JSON list of data measurements for the desired meteostation. So, an empty list means: no data for the desired meteostation. Now, if I want to get historic data for a station that is not present in the API's meteostations collection (like, say, station number -2147483648), I get:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#HTTP request
+GET /data/2.5/history/station?id=-2147483648&amp;amp;type=tick HTTP/1.1
+#HTTP response headers
+HTTP/1.1 200 OK
+Server: nginx
+Content-Type: application/json; charset=utf-8
+...
+#HTTP response payload
+{
+&amp;quot;message&amp;quot;:&amp;quot;&amp;quot;,
+&amp;quot;cod&amp;quot;:&amp;quot;200&amp;quot;,
+&amp;quot;type&amp;quot;:&amp;quot;tick&amp;quot;,
+&amp;quot;station_id&amp;quot;:-2147483648,
+&amp;quot;calctime&amp;quot;:&amp;quot; tick = 0.294 total=0.2954&amp;quot;,
+&amp;quot;cnt&amp;quot;:0,
+&amp;quot;list&amp;quot;:[]
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Again, a 200 status code (that means: "Ok, everything went smoothly”) and – surprisingly – an empty data list. What I would have expected is a 404 HTTP status code, telling me: "Hey, this station is not listed in my meteostations database”! So in this case, an error condition is wrongly mapped onto a non-error condition. And what if I query for an existing meteostation and it has no data available? How can I discern the "not found” case from the "found but no data available” case?&lt;/p&gt;</summary><category term="API"></category><category term="design"></category><category term="HTTP"></category><category term="JSON"></category><category term="OpenWeatherMap"></category><category term="pyowm"></category></entry></feed>

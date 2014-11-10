@@ -167,4 +167,380 @@ What you need to do is, once you've installed all the plugins, add the following
 &lt;h3&gt;Where to go from here&lt;/h3&gt;
 &lt;p&gt;Now you can upload the contents of the &lt;code&gt;output&lt;/code&gt; folder 'as are' to your web hosting provider.&lt;br /&gt;
 Don't forget to setup your Google Analytics account to crawl to the domain you publish the pages under.&lt;br /&gt;
-Visit the  &lt;a href="http://docs.getpelican.com/en/3.4.0/tips.html"&gt;Pelican tips page&lt;/a&gt; which also explains how to integrate Pelican into GitHub pages.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Sat, 01 Nov 2014 13:49:00 +0100</pubDate><guid>tag:csparpa.github.io,2014-11-01:blog/2014/11/setup-static-blog-with-pelican.html</guid><category>python</category><category>blogging</category><category>pelican</category></item></channel></rss>
+Visit the  &lt;a href="http://docs.getpelican.com/en/3.4.0/tips.html"&gt;Pelican tips page&lt;/a&gt; which also explains how to integrate Pelican into GitHub pages.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Sat, 01 Nov 2014 13:49:00 +0100</pubDate><guid>tag:csparpa.github.io,2014-11-01:blog/2014/11/setup-static-blog-with-pelican.html</guid><category>python</category><category>blogging</category><category>pelican</category></item><item><title>Meditation on the Zen of Python</title><link>http://csparpa.github.io/blog/2014/01/meditation-on-the-zen-of-python.html</link><description>&lt;h3&gt;Read it&lt;/h3&gt;
+&lt;p&gt;If you have ever programmed anything in Python, you probably used the &lt;code&gt;import&lt;/code&gt; statement: the modules of the Python standard library 
+can be imported into your code or into the interpreter. Take a look at the standard library folders and you'll find the &lt;code&gt;this.py&lt;/code&gt; module... what is that?
+Not much a self-explicative name for a Python module, huh? And you – Java lovers – forget about the Java &lt;code&gt;this&lt;/code&gt; keyword: you're far afield.  &lt;/p&gt;
+&lt;p&gt;This module is the mystic &lt;strong&gt;&lt;em&gt;"Zen of Python"&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;this&lt;/span&gt;
+
+&lt;span class="n"&gt;The&lt;/span&gt; &lt;span class="n"&gt;Zen&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt; &lt;span class="n"&gt;Tim&lt;/span&gt; &lt;span class="n"&gt;Peters&lt;/span&gt;
+
+&lt;span class="n"&gt;Beautiful&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;ugly&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Explicit&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;implicit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Simple&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="nb"&gt;complex&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Complex&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;complicated&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Flat&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;nested&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Sparse&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;dense&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Readability&lt;/span&gt; &lt;span class="n"&gt;counts&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Special&lt;/span&gt; &lt;span class="n"&gt;cases&lt;/span&gt; &lt;span class="n"&gt;aren&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;t special enough to break the rules.&lt;/span&gt;
+&lt;span class="n"&gt;Although&lt;/span&gt; &lt;span class="n"&gt;practicality&lt;/span&gt; &lt;span class="n"&gt;beats&lt;/span&gt; &lt;span class="n"&gt;purity&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Errors&lt;/span&gt; &lt;span class="n"&gt;should&lt;/span&gt; &lt;span class="n"&gt;never&lt;/span&gt; &lt;span class="k"&gt;pass&lt;/span&gt; &lt;span class="n"&gt;silently&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Unless&lt;/span&gt; &lt;span class="n"&gt;explicitly&lt;/span&gt; &lt;span class="n"&gt;silenced&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;face&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;ambiguity&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;refuse&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;temptation&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;guess&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;There&lt;/span&gt; &lt;span class="n"&gt;should&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;preferably&lt;/span&gt; &lt;span class="n"&gt;only&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;obvious&lt;/span&gt; &lt;span class="n"&gt;way&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;do&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Although&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;way&lt;/span&gt; &lt;span class="n"&gt;may&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;obvious&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="n"&gt;first&lt;/span&gt; &lt;span class="n"&gt;unless&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;re Dutch.&lt;/span&gt;
+&lt;span class="n"&gt;Now&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;never&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Although&lt;/span&gt; &lt;span class="n"&gt;never&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;often&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;right&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;now&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;If&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;implementation&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;hard&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;explain&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;s a bad idea.&lt;/span&gt;
+&lt;span class="n"&gt;If&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;implementation&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;easy&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;explain&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;may&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;good&lt;/span&gt; &lt;span class="n"&gt;idea&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Namespaces&lt;/span&gt; &lt;span class="n"&gt;are&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="n"&gt;honking&lt;/span&gt; &lt;span class="n"&gt;great&lt;/span&gt; &lt;span class="n"&gt;idea&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt; &lt;span class="n"&gt;let&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;s do more of those!&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Woohaaaa!!! What?!?! A sort of mantra???  &lt;/p&gt;
+&lt;h3&gt;The Pythonic view of the software universe&lt;/h3&gt;
+&lt;p&gt;Kidding apart, the Zen states the high-level development guidelines that were followed in the design of the Python language itself;
+it was formerly stated into &lt;a href="http://www.python.org/dev/peps/pep-0020/"&gt;PEP-20&lt;/a&gt; by Tim Peters, one of the fathers of the language
+along with Guido Van Rossum (BDFL).&lt;br /&gt;
+Ok, I'm curious about it: I open the &lt;code&gt;this.py&lt;/code&gt; file in my favourite text editor and I notice that...&lt;/p&gt;
+&lt;h3&gt;The Zen of Python does not obey the Zen of Python&lt;/h3&gt;
+&lt;p&gt;What??? Here is the source code:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&amp;quot;Gur Mra bs Clguba, ol Gvz Crgref&lt;/span&gt;
+
+&lt;span class="s"&gt;Ornhgvshy vf orggre guna htyl.&lt;/span&gt;
+&lt;span class="s"&gt;Rkcyvpvg vf orggre guna vzcyvpvg.&lt;/span&gt;
+&lt;span class="s"&gt;Fvzcyr vf orggre guna pbzcyrk.&lt;/span&gt;
+&lt;span class="s"&gt;Pbzcyrk vf orggre guna pbzcyvpngrq.&lt;/span&gt;
+&lt;span class="s"&gt;Syng vf orggre guna arfgrq.&lt;/span&gt;
+&lt;span class="s"&gt;Fcnefr vf orggre guna qrafr.&lt;/span&gt;
+&lt;span class="s"&gt;Ernqnovyvgl pbhagf.&lt;/span&gt;
+&lt;span class="s"&gt;Fcrpvny pnfrf nera&amp;#39;g fcrpvny rabhtu gb oernx gur ehyrf.&lt;/span&gt;
+&lt;span class="s"&gt;Nygubhtu cenpgvpnyvgl orngf chevgl.&lt;/span&gt;
+&lt;span class="s"&gt;Reebef fubhyq arire cnff fvyragyl.&lt;/span&gt;
+&lt;span class="s"&gt;Hayrff rkcyvpvgyl fvyraprq.&lt;/span&gt;
+&lt;span class="s"&gt;Va gur snpr bs nzovthvgl, ershfr gur grzcgngvba gb thrff.&lt;/span&gt;
+&lt;span class="s"&gt;Gurer fubhyq or bar-- naq cersrenoyl bayl bar --boivbhf jnl gb qb vg.&lt;/span&gt;
+&lt;span class="s"&gt;Nygubhtu gung jnl znl abg or boivbhf ng svefg hayrff lbh&amp;#39;er Qhgpu.&lt;/span&gt;
+&lt;span class="s"&gt;Abj vf orggre guna arire.&lt;/span&gt;
+&lt;span class="s"&gt;Nygubhtu arire vf bsgra orggre guna *evtug* abj.&lt;/span&gt;
+&lt;span class="s"&gt;Vs gur vzcyrzragngvba vf uneq gb rkcynva, vg&amp;#39;f n onq vqrn.&lt;/span&gt;
+&lt;span class="s"&gt;Vs gur vzcyrzragngvba vf rnfl gb rkcynva, vg znl or n tbbq vqrn.&lt;/span&gt;
+&lt;span class="s"&gt;Anzrfcnprf ner bar ubaxvat terng vqrn -- yrg&amp;#39;f qb zber bs gubfr!&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;65&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;97&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;26&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="mi"&gt;26&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The first approach to this code might be bewildering... but it's not so hard to understand, in the end:
+basically, you have a huge string containing the whole crypted Zen and then you decode it into readable English
+characters and print it out loud. A few hints:  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;65 is the ASCII for ‘A'&lt;/li&gt;
+&lt;li&gt;97 is the ASCII for ‘a'&lt;/li&gt;
+&lt;li&gt;there are 26 letters in the English alphabet&lt;/li&gt;
+&lt;li&gt;the &lt;code&gt;d&lt;/code&gt; dictionary turns out to have uppercase/lowercase chars as keys and their corresponding translitterated chars as values. The "crypting magic" is given by: &lt;code&gt;i+13 % 26 + c&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;You have that &lt;code&gt;"A"= decrypt[crypt["A"]] = crypt[crypt["A"]]&lt;/code&gt;  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Oddity: the Zen &lt;strong&gt;does not follow many of its aphorisms&lt;/strong&gt;!  &lt;/p&gt;
+&lt;p&gt;In fact, its code is far from being explicit, and if it's true that readability counts, well, the Zen doesn't shine at it.
+Ok, practicality beats purity but this is complex (not complicated) to read out; in fact the implementation could be simpler to explain,
+which conveys that this could be done in a better way.&lt;/p&gt;
+&lt;h3&gt;A metaphor&lt;/h3&gt;
+&lt;p&gt;My intention is not to disapprove Tim Peters's work (never be it! I am just a silly rookie!!!) but to show what I think about the Zen:
+I think that it is a metaphor. It basically poses a problem to its readers, who need to "decipher" it in order to understand how it really works:
+this is a strong metaphor of life – if you dig deep on problems/difficulties you come up to be sage about them.&lt;br /&gt;
+And so goes for Python design guidelines.&lt;/p&gt;
+&lt;h3&gt;... and considering that "now is better than never"...&lt;/h3&gt;
+&lt;p&gt;... while writing this post, I scribbeld (it was funny!) &lt;a href="https://github.com/csparpa/betterzen"&gt;a revised version of the Zen of Python&lt;/a&gt;.&lt;br /&gt;
+It shows a few additional features (get random aphorisms, seek for specified keywords) that can help developers to better read and lookup the original Zen of Python.
+Features that – hopefully – comply with what the Zen itself says ;-)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Wed, 22 Jan 2014 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2014-01-22:blog/2014/01/meditation-on-the-zen-of-python.html</guid><category>zen</category><category>python</category><category>mantra</category><category>github</category><category>software</category></item><item><title>How to use Memcached with PyOWM</title><link>http://csparpa.github.io/blog/2013/12/how-to-use-memcached-with-pyowm.html</link><description>&lt;p&gt;This is just a little demonstration on how you can quickly change the basic cache provider provided by the &lt;a href="https://github.com/csparpa/pyowm"&gt;PyOWM library&lt;/a&gt;.&lt;br /&gt;
+For this purpose we'll use Memcached, which – simply put – is a key/value in-memory data store: this turns it into a perfect caching mechanism.&lt;/p&gt;
+&lt;h3&gt;Requirements&lt;/h3&gt;
+&lt;p&gt;This demo requires that you work on a Linux env, as Memcached originally is shipped for Unix-like systems via packet distribution systems (but can nevertheless be compiled from source).&lt;br /&gt;
+I'll use Ubuntu, with Memcached 1.4.6 and PyOWM 0.4.0.&lt;br /&gt;
+Let's dive into it.&lt;br /&gt;
+First we install Memcached and the relative Python bindings:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-get install memcached python-memcache
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then we install PyOWM library and check the installation:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo pip install pyowm
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And we check then that library has correctly been installed by running from the Python console:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pyowm&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;(if you don't get any error, then PyOWM was installed correctly).  &lt;/p&gt;
+&lt;p&gt;Finally, let's start Memcached:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; memcached &amp;amp;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Write the adapter&lt;/h3&gt;
+&lt;p&gt;In order to "plug" Memcached support into PyOWM we are going to leverage the installed Python bindings by creating
+an adapter class that can conform the SW interface that PyOWM expects into the Memcached API for getting/setting cache elements.&lt;br /&gt;
+Fortunately, the Memcached API is very close to the PyOWM expected interface (which is stated into the &lt;code&gt;pyowm.abstractions.owmcache.OWMCache&lt;/code&gt; class), so we have chances
+that our adapter will be simple enough.&lt;br /&gt;
+Let's name it &lt;code&gt;memcachedadapter.py&lt;/code&gt;: you can put it anywhere, provided that this anywhere is "seen" by the Python intepreter: in example, you can put it into any folder
+listed into the &lt;code&gt;PYTHONPATH&lt;/code&gt; variable or you can place it directly into the PyOWM install folder.&lt;br /&gt;
+In my distro, Python packages are installed by &lt;code&gt;pip&lt;/code&gt; into folder &lt;code&gt;/usr/local/lib/python2.6/dist-packages&lt;/code&gt;, I'll put the file over there.  &lt;/p&gt;
+&lt;p&gt;Let's write the adapter:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/lib/python2.6/dist-packages/pyowm
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo vim memcachedadapter.py
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The module will contain the &lt;code&gt;MemcachedAdapter&lt;/code&gt; class:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MemcachedAdapter&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+  &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;  Realizes the pyowm.abstractions.owmcache.OWMCache interface&lt;/span&gt;
+&lt;span class="sd"&gt;  adapting a memcache.Client object&lt;/span&gt;
+&lt;span class="sd"&gt;  &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+  &lt;span class="n"&gt;__ITEM_LIFETIME_MILLISECONDS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;60&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="c"&gt;# Ten minutes&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;11211&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;item_lifetime&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;__ITEM_LIFETIME_MILLISECONDS&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;memcache&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;
+    &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_memcached&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;:&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_item_lifetime&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;item_lifetime&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request_url&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_memcached&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request_url&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request_url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;response_json&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_memcached&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request_url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;response_json&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_item_lifetime&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I wrote this adapter in 5 minutes, so please don't blame me for errors ;-) it can surely be improved.  &lt;/p&gt;
+&lt;p&gt;Now what is left to do is to tell the PyOWM library how to use the adapter: this is done via configuration. The library requires an &lt;code&gt;OWMCache&lt;/code&gt;
+concrete instance which is created into a configuration file and injected into the code.  &lt;/p&gt;
+&lt;p&gt;We have two options now:
+1. create a new configuration file, instantiate the cache adapter in that and then use the configuration file as a parameter when instantiating the PyOM global object
+2. patch the default configuraton file, commenting out the default cache object that is provided  &lt;/p&gt;
+&lt;p&gt;The first solution requires us to write a new configuration module. Say our module will be &lt;code&gt;pyowm.webapi25.mycustomconfig.py&lt;/code&gt;: then you need
+to copy/paste all of the config data from the default &lt;code&gt;pyowm.webapi25.configuration25.py&lt;/code&gt; configuration module, and then patch the
+line where the default cache object is provided:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Cache provider to be used&lt;/span&gt;
+&lt;span class="c"&gt;# cache = NullCache()  # default cache provided by PyOWM: comment out&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;memcachedadapter&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MemcachedAdapter&lt;/span&gt;  &lt;span class="c"&gt;# instantiate our adapter&lt;/span&gt;
+&lt;span class="n"&gt;cache&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MemcachedAdapter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;11211&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then you need to instantiate the PyOWM object by explicitly setting the path to our custom configuration module:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyowm&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;config_module&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;pyowm.webapi25.mycustomconfig&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The second solution is more of a hack and requires us to open module &lt;code&gt;pyowm.webapi25.configuration25.py&lt;/code&gt; and do the same make up as above.
+Once done, you can finally create the main PyOWM object without specifying any custom configuration module:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyowm&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;See it in action&lt;/h3&gt;
+&lt;p&gt;In the above examples, we are adapting a local Memcached instance listening on the default 11211 port, but you can change this configuration as needed.&lt;br /&gt;
+Now let's try it out:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;not_cached&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;daily_forecast&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;London,uk&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c"&gt;# This first call to the API is not cached, obviously&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;cached&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;daily_forecast&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;London,uk&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;      &lt;span class="c"&gt;# This second call is cached&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Time saving should be at a glance!&lt;/p&gt;
+&lt;h3&gt;More cache adapters for PyOWM&lt;/h3&gt;
+&lt;p&gt;In a similar way it is possible to write adapters for plugging other cache/storage providers (Redis, MongoDB, etc..) into the PyOWM library.  &lt;/p&gt;
+&lt;p&gt;This post stimulated me to write more adapters, you can find them &lt;a href="https://github.com/csparpa/pyowm-cache-adapters"&gt;on my GitHub repo&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Fri, 13 Dec 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-12-13:blog/2013/12/how-to-use-memcached-with-pyowm.html</guid><category>python</category><category>github</category><category>software</category><category>adapter</category><category>cache</category><category>linux</category><category>memcached</category><category>pyowm</category></item><item><title>Web APIs design: an improvable example</title><link>http://csparpa.github.io/blog/2013/10/web-apis-design-an-improvable-example.html</link><description>&lt;p&gt;Today I want to speak about the &lt;a href="http://bugs.openweathermap.org/projects/api/wiki/API_2_5"&gt;OWM web API 2.5&lt;/a&gt; and its design. As this API follows a versioning scheme, this analysis holds for version 2.5 (which then I suppose is not changing in time!)&lt;/p&gt;
+&lt;p&gt;First let me clearly state that I'm writing this post as a "gathering of thoughts” I've had during the first draft development of the PyOWM library, and it is not meant to be a negative criticism – but rather a positive review – to the  API architects/developers. I just want to write here my ideas so that the OWM API can be improved in future versions – and I will commit myself to help with this process, if needed.  &lt;/p&gt;
+&lt;p&gt;I found this activity also very educational because it made me think again to all that books and articles I've read on the Internet about API design and – good grief – they were damn right!  &lt;/p&gt;
+&lt;p&gt;As I said, developing the PyOWM library I had to write code interfacing with the OWM web API, which basically meant I had to setup an HTTP client and some kind of parsing module in order to read the API's responses, squeeze useful data out of them and inject data into my custom object model to the benefit of users. These funny tasks lead me, nevertheless, to crash onto a few improvable API design features that made my work unreasonably more complicated and error-prone. And a bug also came into sight.  &lt;/p&gt;
+&lt;p&gt;Be warned: this is a quite long post ;-)  &lt;/p&gt;
+&lt;h3&gt;Design oddities&lt;/h3&gt;
+&lt;p&gt;I found the following ones:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;mismatch between endpoint naming and features that endpoints implement&lt;/li&gt;
+&lt;li&gt;inconsistent formatting of JSON data returned by different endpoints when queried for the same (or similar) data entities&lt;/li&gt;
+&lt;li&gt;lack of use of proper status codes in HTTP headers for error signaling&lt;/li&gt;
+&lt;li&gt;certain endpoints map on 200 (Ok) HTTP status codes also 404 (Not Found) error conditions&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;And there is something more… I won't blame anybody  of these, but they really should be taken into account:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the API is poorly documented&lt;/li&gt;
+&lt;li&gt;the API is not RESTful&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Let's dig into each point.  &lt;/p&gt;
+&lt;h3&gt;Endpoints: naming vs features&lt;/h3&gt;
+&lt;p&gt;The API lets you basically retrieve different weather datasets (observations, forecasts, historic data) about places in the world.
+The most simple and natural feature for the API is to let you query for the currently observed weather in a location: this can be specified in a twofold manner, either by passing the API a toponym or a lat/lon couple.  &lt;/p&gt;
+&lt;p&gt;The related endpoints are:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#Feature: retrieve current weather - location is specified via toponym
+http://api.openweathermap.org/data/2.5/weather?q=London,uk
+
+#Feature: retrieve current weather - location is specified via lat/lon
+http://api.openweathermap.org/data/2.5/weather?lat=57&amp;amp;lon=-2.15
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Here the naming seems to quite proper with regards to the implemented feature: great!  &lt;/p&gt;
+&lt;p&gt;Things worsen when you consider these API features: find the current weather conditions in all the locations having certain characteristics, such as having toponyms that are similar/equal to a given string or being in the neighborhood of a given lat/lon couple.&lt;br /&gt;
+Here are the related endpoints:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#Feature: retrieve current weathers in all the locations whose names exactly equal to the string &amp;quot;London&amp;quot;
+http://api.openweathermap.org/data/2.5/find?q=London&amp;amp;type=accurate
+
+#Feature: retrieve current weathers in all the locations whose names contains the string &amp;quot;London&amp;quot;
+http://api.openweathermap.org/data/2.5/find?q=London&amp;amp;type=like
+
+#Feature: retrieve current weathers in all the locations in the neighborhoods of a lat/lon couple
+http://api.openweathermap.org/data/2.5/find?lat=57&amp;amp;lon=-2.15
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, this lays down three questions:  &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;what the heck does "neighborhood” mean? The API documentation is silent about this topic. One could suppose that the API is performing a geographic search based on a circle with center into the specified lat/lon couple and a certain radius – and this is effectively what has been done in a prior (and now dismissed) version of the API. But nobody knows if this guess is true and – above all – what is the value for the radius , as it cannot be specified by the user.&lt;/li&gt;
+&lt;li&gt;we know for sure that behind the API a geocoder is in action (for those who don't know what a geocoder is: it is a SW module that performs direct mapping between geographic labels – such as addresses, city names, toponyms into a geographic coordinates couple or even a geographic feature on a map. Sometimes geocoders also perform the reverse mapping): for this reason, we have a "smell” here… the "find” endpoint is implementing a geocoder-like feature: it should not be responsibility of the API to behave like that, or at least, if this responsibility is implemented it should be kept separate from the weather data provisioning. So, in my opinion, there should be an endpoint providing geocoding queries and another one providing current weather data on a single location: then, queries for current weather data on X multiple locations can be done with X API requests for current weather on a each single location. You think that users won't do that? Yes, they shouldn't: an automatic HTTP client should. Indeed, that's what APIs are meant to do: automatize :-)&lt;/li&gt;
+&lt;li&gt;isn't the "accurate” parameter unnecessary? A "like” query should also give as results literal word matchings!&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Another feature: retrieve weather forecasts for a location. You can get forecasts for every 3-hours of the next 5 days or for every of the next 14 days.  &lt;/p&gt;
+&lt;p&gt;Here are the endpoints:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#Feature: retrieve 3h weather forecast for a location
+http://api.openweathermap.org/data/2.5/forecast?q=London
+
+#Feature: retrieve daily weather forecast for a location
+http://api.openweathermap.org/data/2.5/forecast/daily?q=London
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Again, questions:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;good naming here, but it can be improved. I would use "/forecast/daily” for daily forecast and "/forecast/3h” for 3-hours forecast. A viable alternative could be using a single endpoint "/forecast” along with a "interval=[daily|3h]” query parameter.&lt;/li&gt;
+&lt;li&gt;only results coming from the daily forecast query can be paged by the user: the user can control how many results are returned by the API through an optional parameter named "cnt”. This is not possible with regards to the 3-hours forecast query: why?&lt;/li&gt;
+&lt;li&gt;why isn't it possible to specify a forecast through a lon/lat couple? Maybe it is a design decision, but it creates asimmetry with the previously described API features.&lt;/li&gt;
+&lt;li&gt;why isn't it possible to query for weather forecasts for all the locations having name similar to a given string or being in the neighborhood of a specific lon/lat couple? Guess it's due to API designers laziness…&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Same conceptual entities, different JSON representations&lt;/h3&gt;
+&lt;p&gt;Clients of data API expect returned data to be structured using some kind of language or convention and  they also expect that structured data is organized in chunks or logical groups  that clearly convey cohesion and hierarchy. In our specific case, the description language used by the API can either be JSON or XML (but we will only rely on JSON from now on): this is a consolidated practice among the web APIs  and this sounds good. At this point, we want to inspect the JSON returned by a query for current weather data on London,UK:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#Payload of response to request:
+#GET http://api.openweathermap.org/data/2.5/weather?q=London,uk
+{
+  &amp;quot;coord&amp;quot;: {
+     &amp;quot;lon&amp;quot;: -0.12574,
+     &amp;quot;lat&amp;quot;: 51.50853 },
+  &amp;quot;sys&amp;quot;: {
+     &amp;quot;country&amp;quot;: &amp;quot;GB&amp;quot;,
+     &amp;quot;sunrise&amp;quot;: 1378877413,
+     &amp;quot;sunset&amp;quot;: 1378923812 },
+  &amp;quot;weather&amp;quot;: [{
+     &amp;quot;id&amp;quot;: 521,
+     &amp;quot;main&amp;quot;: &amp;quot;Rain&amp;quot;,
+     &amp;quot;description&amp;quot;: &amp;quot;proximity shower rain&amp;quot;,
+     &amp;quot;icon&amp;quot;: &amp;quot;09d&amp;quot; }],
+  &amp;quot;base&amp;quot;: &amp;quot;gdps stations&amp;quot;,
+  &amp;quot;main&amp;quot;: {
+       &amp;quot;temp&amp;quot;: 288.88,
+       &amp;quot;pressure&amp;quot;: 1021,
+       &amp;quot;humidity&amp;quot;: 63,
+       &amp;quot;temp_min&amp;quot;: 287.15,
+       &amp;quot;temp_max&amp;quot;: 290.37 },
+  &amp;quot;wind&amp;quot;: {
+       &amp;quot;speed&amp;quot;: 4.6,
+       &amp;quot;deg&amp;quot;: 330 },
+  &amp;quot;clouds&amp;quot;: {
+       &amp;quot;all&amp;quot;: 75 },
+  &amp;quot;dt&amp;quot;: 1378899070,
+  &amp;quot;id&amp;quot;: 2643743,
+  &amp;quot;name&amp;quot;: &amp;quot;London&amp;quot;,
+  &amp;quot;cod&amp;quot;: 200
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The "coord”, "country”, "id” and "name” JSON root elements refer to a single logical entity: the location for which the current weather is given (London, UK). Can you see it? Wouldn't have it been better to group all the location info into a single JSON element? For example, like this:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;{
+...
+&amp;quot;location&amp;quot;:
+{
+  &amp;quot;coord&amp;quot;: {
+     &amp;quot;lon&amp;quot;: -0.12574,
+     &amp;quot;lat&amp;quot;: 51.50853 },
+  &amp;quot;country&amp;quot;: &amp;quot;GB&amp;quot;,
+  &amp;quot;name&amp;quot;: &amp;quot;London&amp;quot;,
+  &amp;quot;id&amp;quot;: 2643743
+}
+ ...
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Another legitimate question is: why location information spread out from the data regarding current weather? Here the API is clearly returning more data than it has been asked for. But what is really obscure is that location info are structured in different ways if returned by different endpoints. In example, if we ask for the daily weather forecast on London,UK we get:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#Payload of response to request:
+#GET http://api.openweathermap.org/data/2.5/forecast/daily?q=London
+{
+&amp;quot;city&amp;quot; : {
+  &amp;quot;coord&amp;quot; : {
+     &amp;quot;lat&amp;quot; : 51.50853,
+     &amp;quot;lon&amp;quot; : -0.12573999999999999 },
+   &amp;quot;country&amp;quot; : &amp;quot;GB&amp;quot;,
+   &amp;quot;id&amp;quot; : 2643743,
+   &amp;quot;name&amp;quot; : &amp;quot;London&amp;quot;,
+   &amp;quot;population&amp;quot; : 1000000},
+...
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now data is structured! Magic? No: an evil art! And it drives me – and everyone else who is developing  a client library for this API – literally mad to parse the JSON: each endpoint, in practice, needs a specific JSON parser in order to parse the same data entities, and this introduces complexity into the code. Had the data been structured uniformly across the different endpoints, just one parser would be needed.  &lt;/p&gt;
+&lt;h3&gt;HTTP status codes are neglected&lt;/h3&gt;
+&lt;p&gt;This is one of the main shortcomings of this API: it does not convey error conditions through a proper use of HTTP status codes. The API users want to receive a 200 (OK) status code in the HTTP response's header – along with data – whenever a GET request is a hit: this means that the endpoint exists and is correctly invoked by the clients; the same way, users want to receive a 4xx or 5xx status code whenever something goes wrong with their request: this can happen for several reasons, either due to clients or the server itself. But, to be short: a user expects a non-200 status code to be returned whenever something goes wrong with its request.  s&lt;/p&gt;
+&lt;p&gt;The OWM API &lt;strong&gt;always returns a 200 HTTP status code&lt;/strong&gt;, no matter what happens. But, if something goes wrong with a client's request, it returns the right HTTP status code and an explanation message into the HTTP response's payload! An example: we want to query for current weather on a non-existent location (the folkloristic: "sev082hfrv2qvf2vunr”)  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#HTTP request
+GET /data/2.5/weather?q=sev082hfrv2qvf2vunr HTTP/1.1
+#HTTP response headers
+HTTP/1.1 200 OK
+Server: nginx
+Content-Type: application/json; charset=utf-8
+...
+#HTTP response payload
+{&amp;quot;message&amp;quot;:&amp;quot;Error: Not found city&amp;quot;,&amp;quot;cod&amp;quot;:&amp;quot;404&amp;quot;}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The JSON payload is clear: the location has not been found and a 404 (Not Found) error code has been returned. However the code is returned &lt;strong&gt;into the payload&lt;/strong&gt;, so the clients have to first presume that the request was a success, then parse the payload and find out that it wasn't! The API is mis-using the HTTP protocol, which is a very nasty behaviour for clients and &lt;em&gt;blows the API away from RESTfulness&lt;/em&gt;, as well.  &lt;/p&gt;
+&lt;h3&gt;"Not found” is different from "Found but no data available”&lt;/h3&gt;
+&lt;p&gt;The improper usage of HTTP status codes is particularly problematic in the case of queries to historic weather data registred by meteostations. A meteostation is identified by a unique integer number and when historic data is queried, the API returns a JSON list of data measurements for the desired meteostation. So, an empty list means: no data for the desired meteostation. Now, if I want to get historic data for a station that is not present in the API's meteostations collection (like, say, station number -2147483648), I get:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#HTTP request
+GET /data/2.5/history/station?id=-2147483648&amp;amp;type=tick HTTP/1.1
+#HTTP response headers
+HTTP/1.1 200 OK
+Server: nginx
+Content-Type: application/json; charset=utf-8
+...
+#HTTP response payload
+{
+&amp;quot;message&amp;quot;:&amp;quot;&amp;quot;,
+&amp;quot;cod&amp;quot;:&amp;quot;200&amp;quot;,
+&amp;quot;type&amp;quot;:&amp;quot;tick&amp;quot;,
+&amp;quot;station_id&amp;quot;:-2147483648,
+&amp;quot;calctime&amp;quot;:&amp;quot; tick = 0.294 total=0.2954&amp;quot;,
+&amp;quot;cnt&amp;quot;:0,
+&amp;quot;list&amp;quot;:[]
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Again, a 200 status code (that means: "Ok, everything went smoothly”) and – surprisingly – an empty data list. What I would have expected is a 404 HTTP status code, telling me: "Hey, this station is not listed in my meteostations database”! So in this case, an error condition is wrongly mapped onto a non-error condition. And what if I query for an existing meteostation and it has no data available? How can I discern the "not found” case from the "found but no data available” case?&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Tue, 29 Oct 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-10-29:blog/2013/10/web-apis-design-an-improvable-example.html</guid><category>API</category><category>design</category><category>HTTP</category><category>JSON</category><category>OpenWeatherMap</category><category>pyowm</category></item></channel></rss>

@@ -167,4 +167,110 @@ What you need to do is, once you've installed all the plugins, add the following
 &lt;h3&gt;Where to go from here&lt;/h3&gt;
 &lt;p&gt;Now you can upload the contents of the &lt;code&gt;output&lt;/code&gt; folder 'as are' to your web hosting provider.&lt;br /&gt;
 Don't forget to setup your Google Analytics account to crawl to the domain you publish the pages under.&lt;br /&gt;
-Visit the  &lt;a href="http://docs.getpelican.com/en/3.4.0/tips.html"&gt;Pelican tips page&lt;/a&gt; which also explains how to integrate Pelican into GitHub pages.&lt;/p&gt;</summary><category term="python"></category><category term="blogging"></category><category term="pelican"></category></entry></feed>
+Visit the  &lt;a href="http://docs.getpelican.com/en/3.4.0/tips.html"&gt;Pelican tips page&lt;/a&gt; which also explains how to integrate Pelican into GitHub pages.&lt;/p&gt;</summary><category term="python"></category><category term="blogging"></category><category term="pelican"></category></entry><entry><title>How to use Memcached with PyOWM</title><link href="http://csparpa.github.io/blog/2013/12/how-to-use-memcached-with-pyowm.html" rel="alternate"></link><updated>2013-12-13T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-12-13:blog/2013/12/how-to-use-memcached-with-pyowm.html</id><summary type="html">&lt;p&gt;This is just a little demonstration on how you can quickly change the basic cache provider provided by the &lt;a href="https://github.com/csparpa/pyowm"&gt;PyOWM library&lt;/a&gt;.&lt;br /&gt;
+For this purpose we'll use Memcached, which – simply put – is a key/value in-memory data store: this turns it into a perfect caching mechanism.&lt;/p&gt;
+&lt;h3&gt;Requirements&lt;/h3&gt;
+&lt;p&gt;This demo requires that you work on a Linux env, as Memcached originally is shipped for Unix-like systems via packet distribution systems (but can nevertheless be compiled from source).&lt;br /&gt;
+I'll use Ubuntu, with Memcached 1.4.6 and PyOWM 0.4.0.&lt;br /&gt;
+Let's dive into it.&lt;br /&gt;
+First we install Memcached and the relative Python bindings:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-get install memcached python-memcache
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then we install PyOWM library and check the installation:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo pip install pyowm
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And we check then that library has correctly been installed by running from the Python console:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pyowm&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;(if you don't get any error, then PyOWM was installed correctly).  &lt;/p&gt;
+&lt;p&gt;Finally, let's start Memcached:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; memcached &amp;amp;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Write the adapter&lt;/h3&gt;
+&lt;p&gt;In order to "plug" Memcached support into PyOWM we are going to leverage the installed Python bindings by creating
+an adapter class that can conform the SW interface that PyOWM expects into the Memcached API for getting/setting cache elements.&lt;br /&gt;
+Fortunately, the Memcached API is very close to the PyOWM expected interface (which is stated into the &lt;code&gt;pyowm.abstractions.owmcache.OWMCache&lt;/code&gt; class), so we have chances
+that our adapter will be simple enough.&lt;br /&gt;
+Let's name it &lt;code&gt;memcachedadapter.py&lt;/code&gt;: you can put it anywhere, provided that this anywhere is "seen" by the Python intepreter: in example, you can put it into any folder
+listed into the &lt;code&gt;PYTHONPATH&lt;/code&gt; variable or you can place it directly into the PyOWM install folder.&lt;br /&gt;
+In my distro, Python packages are installed by &lt;code&gt;pip&lt;/code&gt; into folder &lt;code&gt;/usr/local/lib/python2.6/dist-packages&lt;/code&gt;, I'll put the file over there.  &lt;/p&gt;
+&lt;p&gt;Let's write the adapter:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/lib/python2.6/dist-packages/pyowm
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo vim memcachedadapter.py
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The module will contain the &lt;code&gt;MemcachedAdapter&lt;/code&gt; class:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MemcachedAdapter&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+  &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;  Realizes the pyowm.abstractions.owmcache.OWMCache interface&lt;/span&gt;
+&lt;span class="sd"&gt;  adapting a memcache.Client object&lt;/span&gt;
+&lt;span class="sd"&gt;  &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+
+  &lt;span class="n"&gt;__ITEM_LIFETIME_MILLISECONDS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;60&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="c"&gt;# Ten minutes&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;11211&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;item_lifetime&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;__ITEM_LIFETIME_MILLISECONDS&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;memcache&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;
+    &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_memcached&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;:&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_item_lifetime&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;item_lifetime&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request_url&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_memcached&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request_url&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request_url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;response_json&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_memcached&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request_url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;response_json&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_item_lifetime&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I wrote this adapter in 5 minutes, so please don't blame me for errors ;-) it can surely be improved.  &lt;/p&gt;
+&lt;p&gt;Now what is left to do is to tell the PyOWM library how to use the adapter: this is done via configuration. The library requires an &lt;code&gt;OWMCache&lt;/code&gt;
+concrete instance which is created into a configuration file and injected into the code.  &lt;/p&gt;
+&lt;p&gt;We have two options now:
+1. create a new configuration file, instantiate the cache adapter in that and then use the configuration file as a parameter when instantiating the PyOM global object
+2. patch the default configuraton file, commenting out the default cache object that is provided  &lt;/p&gt;
+&lt;p&gt;The first solution requires us to write a new configuration module. Say our module will be &lt;code&gt;pyowm.webapi25.mycustomconfig.py&lt;/code&gt;: then you need
+to copy/paste all of the config data from the default &lt;code&gt;pyowm.webapi25.configuration25.py&lt;/code&gt; configuration module, and then patch the
+line where the default cache object is provided:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Cache provider to be used&lt;/span&gt;
+&lt;span class="c"&gt;# cache = NullCache()  # default cache provided by PyOWM: comment out&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;memcachedadapter&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MemcachedAdapter&lt;/span&gt;  &lt;span class="c"&gt;# instantiate our adapter&lt;/span&gt;
+&lt;span class="n"&gt;cache&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MemcachedAdapter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;11211&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then you need to instantiate the PyOWM object by explicitly setting the path to our custom configuration module:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyowm&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;config_module&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;pyowm.webapi25.mycustomconfig&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The second solution is more of a hack and requires us to open module &lt;code&gt;pyowm.webapi25.configuration25.py&lt;/code&gt; and do the same make up as above.
+Once done, you can finally create the main PyOWM object without specifying any custom configuration module:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyowm&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;See it in action&lt;/h3&gt;
+&lt;p&gt;In the above examples, we are adapting a local Memcached instance listening on the default 11211 port, but you can change this configuration as needed.&lt;br /&gt;
+Now let's try it out:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;not_cached&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;daily_forecast&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;London,uk&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c"&gt;# This first call to the API is not cached, obviously&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;cached&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;daily_forecast&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;London,uk&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;      &lt;span class="c"&gt;# This second call is cached&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Time saving should be at a glance!&lt;/p&gt;
+&lt;h3&gt;More cache adapters for PyOWM&lt;/h3&gt;
+&lt;p&gt;In a similar way it is possible to write adapters for plugging other cache/storage providers (Redis, MongoDB, etc..) into the PyOWM library.  &lt;/p&gt;
+&lt;p&gt;This post stimulated me to write more adapters, you can find them &lt;a href="https://github.com/csparpa/pyowm-cache-adapters"&gt;on my GitHub repo&lt;/a&gt;.&lt;/p&gt;</summary><category term="python"></category><category term="github"></category><category term="software"></category><category term="adapter"></category><category term="cache"></category><category term="linux"></category><category term="memcached"></category><category term="pyowm"></category></entry></feed>
