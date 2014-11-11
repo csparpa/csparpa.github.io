@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://csparpa.github.io/blog/index.html</loc>
-<lastmod>2014-11-11T11:38:25-00:00</lastmod>
+<lastmod>2014-11-11T11:49:31-00:00</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://csparpa.github.io/blog/archives.html</loc>
-<lastmod>2014-11-11T11:38:25-00:00</lastmod>
+<lastmod>2014-11-11T11:49:31-00:00</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://csparpa.github.io/blog/tags.html</loc>
-<lastmod>2014-11-11T11:38:25-00:00</lastmod>
+<lastmod>2014-11-11T11:49:31-00:00</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://csparpa.github.io/blog/categories.html</loc>
-<lastmod>2014-11-11T11:38:25-00:00</lastmod>
+<lastmod>2014-11-11T11:49:31-00:00</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -95,6 +95,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://csparpa.github.io/blog/2013/02/hamletic-javascript.html</loc>
+<lastmod>2013-02-22T01:00:00-00:00</lastmod>
+<changefreq>always</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
 <loc>http://csparpa.github.io/blog/2013/01/server-is-unwilling-to-perform.html</loc>
 <lastmod>2013-01-11T01:00:00-00:00</lastmod>
 <changefreq>always</changefreq>
@@ -124,7 +131,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://csparpa.github.io/blog/category/humour.html</loc>
-<lastmod>2013-01-11T01:00:00+00:50</lastmod>
+<lastmod>2013-02-22T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -151,15 +158,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://csparpa.github.io/blog/tag/virtualbox.html</loc>
-<lastmod>2013-05-08T01:00:00+00:50</lastmod>
-<changefreq>hourly</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
 <loc>http://csparpa.github.io/blog/tag/humour.html</loc>
-<lastmod>2013-01-11T01:00:00+00:50</lastmod>
+<lastmod>2013-02-22T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -214,7 +214,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://csparpa.github.io/blog/tag/vmware.html</loc>
+<loc>http://csparpa.github.io/blog/tag/virtualbox.html</loc>
 <lastmod>2013-05-08T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
@@ -300,6 +300,20 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://csparpa.github.io/blog/tag/python.html</loc>
 <lastmod>2014-11-01T13:49:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://csparpa.github.io/blog/tag/javascript.html</loc>
+<lastmod>2013-02-22T01:00:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://csparpa.github.io/blog/tag/vmware.html</loc>
+<lastmod>2013-05-08T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
