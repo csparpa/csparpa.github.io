@@ -177,4 +177,122 @@ Content-Type: application/json; charset=utf-8
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Again, a 200 status code (that means: "Ok, everything went smoothly”) and – surprisingly – an empty data list. What I would have expected is a 404 HTTP status code, telling me: "Hey, this station is not listed in my meteostations database”! So in this case, an error condition is wrongly mapped onto a non-error condition. And what if I query for an existing meteostation and it has no data available? How can I discern the "not found” case from the "found but no data available” case?&lt;/p&gt;</summary><category term="API"></category><category term="design"></category><category term="HTTP"></category><category term="JSON"></category><category term="OpenWeatherMap"></category><category term="pyowm"></category></entry></feed>
+&lt;p&gt;Again, a 200 status code (that means: "Ok, everything went smoothly”) and – surprisingly – an empty data list. What I would have expected is a 404 HTTP status code, telling me: "Hey, this station is not listed in my meteostations database”! So in this case, an error condition is wrongly mapped onto a non-error condition. And what if I query for an existing meteostation and it has no data available? How can I discern the "not found” case from the "found but no data available” case?&lt;/p&gt;</summary><category term="API"></category><category term="design"></category><category term="HTTP"></category><category term="JSON"></category><category term="OpenWeatherMap"></category><category term="pyowm"></category></entry><entry><title>Command-line software design: 5 more advices</title><link href="http://csparpa.github.io/blog/2013/04/command-line-software-design-5-more-advices.html" rel="alternate"></link><updated>2013-04-18T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-04-18:blog/2013/04/command-line-software-design-5-more-advices.html</id><summary type="html">&lt;p&gt;Ok, folks, ready to take off with 5 more CLMs (Command-Line Modules) design advices?  This is part II of a posts strip, part I contains the first 5 advices.&lt;/p&gt;
+&lt;h3&gt;1. Provide meaningful messages&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;AKA: "What am I doing? I am existing..."&lt;/strong&gt;s&lt;/p&gt;
+&lt;p&gt;Your CLM should provide insight into what it is currently doing. The difficult part is to decide how much detail you want to provide to the user...and you might argue: "Ok, but you can always use log level filtering and then let the user decide the verbosity" – this is perfectly right, but I'm talking about on-screen messages. My advice is to print out a specific message which conveys what the CLM is currently doing, with a detail level which should be just enough for the user not to say "It is talking rubbish"! So, what is really vital is that you avoid using simple and generalistic messages like "Computing" or "Executing" and – on the other hand – that you avoid using hyper-detailed expressions such as "Inverting matrix – computing determinant of the 3rd 2×2 submatrix" &lt;em&gt;if they are not meaningful to the user&lt;/em&gt;. Of course if the focus of your CLM is matricial inversion that shall be fine, but it shouldn't be if your CLM is – in example – focused on a higher-level problem which is solved using matricial inversion.  &lt;/p&gt;
+&lt;p&gt;...And, please, never print out the raw counters in nested for loops. It happened to me just a couple of days ago to run an image-processing CLM provided by a project partner: this was the output of a successful run  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;python img_processing_clm.py input.tif output.tif
+Conversion to 8bit took 23.567 seconds
+1
+2
+3
+4
+5
+6
+&lt;span class="c"&gt;#2000 or so more lines&lt;/span&gt;
+The variance computation took 367.145 seconds
+...
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Each and every row index is printed out....It is just irritating!!!&lt;/p&gt;
+&lt;h3&gt;2. Gracefully fail&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;AKA: "I don't want to see each blood drop spreading from your wound"&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;As a CLM user, would you prefer seeing this:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;python myclm.py /var/clmdata/testoutdir  &lt;span class="c"&gt;#we are missing the first parameter&lt;/span&gt;
+  Traceback &lt;span class="o"&gt;(&lt;/span&gt;most recent call last&lt;span class="o"&gt;)&lt;/span&gt;:
+  File &lt;span class="s2"&gt;&amp;quot;myclm.py&amp;quot;&lt;/span&gt;, line 3, in &amp;lt;module&amp;gt;
+  &lt;span class="nv"&gt;inputfile&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; sys.argv&lt;span class="o"&gt;[&lt;/span&gt;1&lt;span class="o"&gt;]&lt;/span&gt;
+  IndexError: list index out of range
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;
+1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;..or this?  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;python myclm.py /var/clmdata/testoutdir  &lt;span class="c"&gt;#we are missing the first parameter&lt;/span&gt;
+  ERROR: you must specify an input file
+  Usage:
+    myclm.py &amp;lt;inputfile_path&amp;gt; &amp;lt;output_path&amp;gt;
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;
+1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The correct answer would be: none of them! But you can't expect that your CLM is working fine every time. So it is important to let users know what reasons made the CLM stop running. A nice design choice is to detect possible error conditions and treat them so that your CLM "says something of interest" and terminates with a known exit status: this can be done quite easily if you use languages (eg: Java, Python, etc..) that provide formal exception/error handling constructs – in other terms, the usual try/catch blocks.  &lt;/p&gt;
+&lt;p&gt;Graceful failures are delightful for the user, but may not the best approach to handle error situations while you are still writing your CLM because they may not give you enough information if you need to debug. So my advice is to add them only when you are pretty sure that you won't make further heavy changes or do any more refactoring on your CLM.&lt;/p&gt;
+&lt;h3&gt;3. Organize your CLM folder&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;AKA: "I am the Borg ... I bring order to chaos" (Borg Queen – Star Trek: First Contact)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Order in organizing your code is good. This translates directly into the fact that a well-structured CMS is easy to understand and modify, and can be efficiently used in a small amount of time. My advice is to adhere to widely adopted or standard program folder structuration patterns: I usually have my CLM's folder in this fashion&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;CLM-folder/
+  |--bin/     #Binaries: main CLM program and dependancies
+  |--doc/     #Documentation about CLM usage/installation
+  |--src/     #Source files
+  |--static/  #Static data: config files, static inputs, etc.
+  `--test/    #Tests
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;4. Minimize filesystem usage and leverage temporary folders&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;AKA: "Forbidden: you don't have enough permissions to write the file"&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;As a general advice, don't rely on the safety of filesystem operations. If your CLM needs to store intermediate data try to do that in-memory, and if it's not possible and therefore you are compelled to use the filesystem, your target should be to put the least complexity between your CLM and your data. Reading data from filesystems seldom is a problem, but writing often is, and the amount of adversities you might face depends on a variety of factors such as the architecture (never tried to write in a folder for which you don't have &lt;code&gt;w&lt;/code&gt; permissions?), the possible concurrency in data modification, the remoteness of the target filesystem and so on.  &lt;/p&gt;
+&lt;p&gt;Another misused – but smooth and clever – technique is to leverage temporary folder support provided by the operating systems. In my experience with bash programming, I've always seen people doing local computations as follows: input files are copied into the same folder of the executing binaries, then intermediate files are written in that folder (usually, a lot  of files), and in case of successful CLM end intermediate files are deleted. This always made me angry, because often their programs were  buggy and therefore never got to their natural end, which forced me to press &lt;code&gt;CTRL+C&lt;/code&gt;... leaving all of those intermediate files undeleted in the folder. And this meant: I myself would have to delete them!!! :-o To solve this issue, I simply suggested those people to leverage the "mktemp" Linux command, which creates a temporary folder with a pseudo-random name under /tmp and returns its name: one can then use this folder to do whatever she/he likes – i.e. writing the CLM execution's intermediate rubbish.  &lt;/p&gt;
+&lt;p&gt;It's as easy as follows:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ tempdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;mktemp&lt;span class="k"&gt;)&lt;/span&gt;
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$tempdir&lt;/span&gt;
+/tmp/tmp.hyYKY21864
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;5. Leverage absolute paths&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;AKA: "Time – as well as folder location – is relative"&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;When you provide paths as arguments for CLMs it is a very good practice to give them in an absolute fashion. If you give absolute paths, there's a pretty good chance that your CLM  addresses files and folders in the right way. And my advice is: always handle absolute paths internally to your command-line softwares...in fact, this will prevent you from using terrible solutions like the &lt;code&gt;cd&lt;/code&gt; (change directory) command, which will mess the whole thing up if you are using relative paths because the root folder they are resolved against changes!  &lt;/p&gt;
+&lt;p&gt;A little coding exercise: let us write a small bash script (copier.bash) that takes reads a file and echoes its contents to a file named &lt;code&gt;results.out&lt;/code&gt; which will be created in a directory of our choice. We want it to have this interface:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;copier.bash &amp;lt;inputfile_path&amp;gt; &amp;lt;output_path&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and here is the code (as you can see I'm using the &lt;code&gt;cat&lt;/code&gt; executable which lies in the &lt;code&gt;/bin&lt;/code&gt; path on my Linux system):  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="nv"&gt;inputfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$1&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;outputdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$2&amp;quot;&lt;/span&gt;
+
+&lt;span class="nv"&gt;bindir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/bin&amp;quot;&lt;/span&gt;
+
+&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$bindir&amp;quot;&lt;/span&gt;
+cat &lt;span class="s2"&gt;&amp;quot;$inputfile&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class="s2"&gt;&amp;quot;$outputdir/result.out&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now if we setup the environment like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /opt/copier
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir output  &lt;span class="c"&gt;#we create the output folder&lt;/span&gt;
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;tree .
+.
+|-- copier.bash
+&lt;span class="sb"&gt;`&lt;/span&gt;-- output
+1 directory, 1 file
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;italia has got talent&amp;quot;&lt;/span&gt; &amp;gt; input.txt &lt;span class="c"&gt;#we create the input file&lt;/span&gt;
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash copier.bash input.txt output        &lt;span class="c"&gt;#we run the script&lt;/span&gt;
+copier.bash: line 9: output/result.out: No such file or directory
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As we expected, the &lt;code&gt;cd&lt;/code&gt; inside our script is messing up everything and the bash shell is complaining about the fact that after it, it is impossible to find the &lt;code&gt;output&lt;/code&gt; subfolder (which, in absolute terms, is: &lt;code&gt;/bin/output&lt;/code&gt; !!!)  &lt;/p&gt;
+&lt;p&gt;Also the following command-line fail:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash copier.bash input.txt /opt/copier/output
+cat: input.txt: No such file or directory
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This time it's the &lt;code&gt;cat&lt;/code&gt; executable complaining for the missing &lt;code&gt;input.txt&lt;/code&gt; file, which it expects to be here: &lt;code&gt;/bin/input.txt&lt;/code&gt;  &lt;/p&gt;
+&lt;p&gt;The right way of running this script would be:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash copier.bash /opt/copier/input.txt /opt/copier/output
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;cat output/result.out
+italia has got talent
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can see that: one must know in advance that absolute paths must be used. And consider that we were lucky to have a textual CLM, what if we had a compiled one? Lesson learn: never use &lt;code&gt;cd&lt;/code&gt; and leverage absolute paths!&lt;/p&gt;</summary><category term="software"></category><category term="design"></category><category term="shell"></category></entry></feed>

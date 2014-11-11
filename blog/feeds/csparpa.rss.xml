@@ -3,11 +3,7 @@
 But if you're a software craftsman, writing a good CV isn't so easy and there is a plenty of
 reasons why you should give the maximum relevance to it.&lt;/p&gt;
 &lt;h3&gt;...isn't it enough to just write down my previous jobs and my skillset?&lt;/h3&gt;
-&lt;p&gt;&lt;em&gt;No!&lt;/em&gt;  &lt;/p&gt;
-&lt;h3&gt;Install Pelican&lt;/h3&gt;
-&lt;p&gt;Install Pelican and Markdown syntax modules:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; pip install pelican Markdown
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Sun, 09 Nov 2014 18:32:00 +0100</pubDate><guid>tag:csparpa.github.io,2014-11-09:blog/2014/11/writing-a-good-cv-in-the-software-development-industry.html</guid><category>CV</category><category>software</category><category>development</category><category>skills</category><category>recruitment</category></item><item><title>Setup a static Python-powered blog/website with Pelican</title><link>http://csparpa.github.io/blog/2014/11/setup-static-blog-with-pelican.html</link><description>&lt;h3&gt;Summary&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;No!&lt;/em&gt;  &lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Sun, 09 Nov 2014 18:32:00 +0100</pubDate><guid>tag:csparpa.github.io,2014-11-09:blog/2014/11/writing-a-good-cv-in-the-software-development-industry.html</guid><category>CV</category><category>software</category><category>development</category><category>skills</category><category>recruitment</category></item><item><title>Setup a static Python-powered blog/website with Pelican</title><link>http://csparpa.github.io/blog/2014/11/setup-static-blog-with-pelican.html</link><description>&lt;h3&gt;Summary&lt;/h3&gt;
 &lt;p&gt;Pelican is a Python library that allows static content generation from plain text files written using ReSructured Text or Markdown syntaxes.&lt;br /&gt;
 It is an efficient, easy to setup tool that can - in example - be used to create blogs in minutes.&lt;br /&gt;
 More info on the &lt;a href="http://blog.getpelican.com/"&gt;official Pelican blog&lt;/a&gt;, and of course links to source code and docs.  &lt;/p&gt;
@@ -551,4 +547,253 @@ Content-Type: application/json; charset=utf-8
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Again, a 200 status code (that means: "Ok, everything went smoothly”) and – surprisingly – an empty data list. What I would have expected is a 404 HTTP status code, telling me: "Hey, this station is not listed in my meteostations database”! So in this case, an error condition is wrongly mapped onto a non-error condition. And what if I query for an existing meteostation and it has no data available? How can I discern the "not found” case from the "found but no data available” case?&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Tue, 29 Oct 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-10-29:blog/2013/10/web-apis-design-an-improvable-example.html</guid><category>API</category><category>design</category><category>HTTP</category><category>JSON</category><category>OpenWeatherMap</category><category>pyowm</category></item></channel></rss>
+&lt;p&gt;Again, a 200 status code (that means: "Ok, everything went smoothly”) and – surprisingly – an empty data list. What I would have expected is a 404 HTTP status code, telling me: "Hey, this station is not listed in my meteostations database”! So in this case, an error condition is wrongly mapped onto a non-error condition. And what if I query for an existing meteostation and it has no data available? How can I discern the "not found” case from the "found but no data available” case?&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Tue, 29 Oct 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-10-29:blog/2013/10/web-apis-design-an-improvable-example.html</guid><category>API</category><category>design</category><category>HTTP</category><category>JSON</category><category>OpenWeatherMap</category><category>pyowm</category></item><item><title>My first GitHub project</title><link>http://csparpa.github.io/blog/2013/10/my-first-github-project.html</link><description>&lt;p&gt;It's been a while since I wrote here:  lately I've spent a lot of my spare time to organize and code my first  GitHub project ever.  &lt;/p&gt;
+&lt;h3&gt;Why an open source project on GitHub?&lt;/h3&gt;
+&lt;p&gt;The reasons I decided to setup a GitHub account and launch an open source project are quite simple:  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;I've been living on the shoulders of the open source community for years and I've always been proud of what it gave me. The best way to be thankful is to give my commitment and code for free to everyone!&lt;/li&gt;
+&lt;li&gt;GitHub is a nice place where programmers can show their skills to the world (friends, fellow programmers, potential new employers). I mean: not only coding skills, also organizational and communication skills, as well as mind openness.&lt;/li&gt;
+&lt;li&gt;My desire is to use GitHub to link and cohoperate with others like me, sharing my same interests&lt;/li&gt;
+&lt;li&gt;I'm sure that open source cohoperation will teach me a lot of things: I have a lot to learn from the code masters&lt;/li&gt;
+&lt;li&gt;Last, but not least, it's a good chance to practice with a few languages - first of all, Python&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;The PyOWM library&lt;/h3&gt;
+&lt;p&gt;So the question was: what will my open source project be about?&lt;br /&gt;
+A few minutes after that question raised in my mind I ran into the OpenWeatherMap website, which basically is a web portal disseminating world weather data that are openly contributed by the user community. I noticed that the site provided a data web API, that had been created ages before and, of course, lots of code projects have been popping out since regarding this API. I took a look at the client wrapping libraries that have been created for the API and noticed that no Python client wrapper were mentioned; I also googled a bit and I found that only one attempt of Py-wrapping this API had been made since (pretty rough, not supporting the latest API version and its last commit dates back to more to the beginning of the year).  &lt;/p&gt;
+&lt;p&gt;So, it was a deal: a Python client wrapping library that could allow users to interact with the OpenWeatherMap web API via a simple object-oriented model.  &lt;/p&gt;
+&lt;p&gt;The &lt;a href="https://github.com/csparpa/pyowm"&gt;PyOWM&lt;/a&gt; library was conceptually born.&lt;/p&gt;
+&lt;h3&gt;State of the art&lt;/h3&gt;
+&lt;p&gt;I worked hard to shape the library, and now most of the web API features are covered. I've developed it using a Test-Driven approach and keeping it as minimalist as possible. I hope this work will be useful to as many people as possible.  &lt;/p&gt;
+&lt;p&gt;Now I need to "sponsorize" my creation with the OpenWeatherMap keepers, the OWM community users and gather help to test and improve the library.  &lt;/p&gt;
+&lt;h3&gt;How to contribute&lt;/h3&gt;
+&lt;p&gt;Do you want to help my open source project grow? There are infinite ways you can help: report issues, submit new feature requests, test on specific architectures, port to different Python versions, mention it in your blogs/user communities... and of course help in coding if you are able to!  &lt;/p&gt;
+&lt;h3&gt;Visit on GitHub&lt;/h3&gt;
+&lt;p&gt;Visit the GitHub page of the &lt;a href="http://github.com/csparpa/pyowm"&gt;PyOWM library&lt;/a&gt;.  &lt;/p&gt;
+&lt;p&gt;Thank you and cheers! ;-)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Mon, 07 Oct 2013 01:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2013-10-07:blog/2013/10/my-first-github-project.html</guid><category>software</category><category>development</category><category>opensource</category><category>github</category></item><item><title>How to convert VMWare virtual machines to Virtual Box</title><link>http://csparpa.github.io/blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html</link><description>&lt;h3&gt;Where I started from&lt;/h3&gt;
+&lt;p&gt;This is my situation: I'm on a Windows7 x86 host, and I have an old Ubuntu 10.04 virtual machine with VMWare Tools installed on it.  &lt;/p&gt;
+&lt;p&gt;My need is to turn it into an OVF appliance, so that I can run it on Virtual Box, no matter where what architecture it will be run on.&lt;/p&gt;
+&lt;h3&gt;Steps&lt;/h3&gt;
+&lt;p&gt;This is what I've done:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;I made sure (e.g: using VMWare Player or Workstation) that the virtual appliance is powered off;&lt;/li&gt;
+&lt;li&gt;Opened a Command Prompt, moved to the VMWare Player/Workstation installation dir and executed the OVF conversion tool. Be aware that this conversion may take some time, depending on how big is your VMX appliance. I did it as follows (replace the paths as needed):&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Program Files\VMware\VMware Workstation\OVFTool&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ovftool&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Users\claudio\Documents\Virtual Machines\ubuntu1004\ubuntu1004.vmx&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Users\claudio\Documents\Virtual Machines\converted-to-virtualbox\ubuntu1004.ovf&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;When the conversion process was over, I imported the &lt;code&gt;ubuntu1004.ovf&lt;/code&gt; appliance into Virtual Box by using the &lt;code&gt;File &amp;gt; Import virtual appliance..&lt;/code&gt; menu element and leaving all the defaults;&lt;/li&gt;
+&lt;li&gt;Then I booted up the &lt;code&gt;ubuntu1004.ovf&lt;/code&gt; appliance and performed VMWare Tools uninstallation by opening up an SSH shell and executing:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo /usr/bin/vmware-uninstall-tools.pl
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Then I finished the procedure by executing the &lt;code&gt;Device &amp;gt; Install Guest Additions&lt;/code&gt; menu item: a virtual CD is then mounted and I launched the installation process from a shell:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /media/VBOXADDITIONS_4.2.12_84980
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo bash VBoxLinuxAdditions.run
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Not as difficult as it may seem…. Hope this helps!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Wed, 08 May 2013 01:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2013-05-08:blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html</guid><category>vmware</category><category>virtualbox</category><category>conversion</category></item><item><title>Command-line software design: 5 more advices</title><link>http://csparpa.github.io/blog/2013/04/command-line-software-design-5-more-advices.html</link><description>&lt;p&gt;Ok, folks, ready to take off with 5 more CLMs (Command-Line Modules) design advices?  This is part II of a posts strip, part I contains the first 5 advices.&lt;/p&gt;
+&lt;h3&gt;1. Provide meaningful messages&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;AKA: "What am I doing? I am existing..."&lt;/strong&gt;s&lt;/p&gt;
+&lt;p&gt;Your CLM should provide insight into what it is currently doing. The difficult part is to decide how much detail you want to provide to the user...and you might argue: "Ok, but you can always use log level filtering and then let the user decide the verbosity" – this is perfectly right, but I'm talking about on-screen messages. My advice is to print out a specific message which conveys what the CLM is currently doing, with a detail level which should be just enough for the user not to say "It is talking rubbish"! So, what is really vital is that you avoid using simple and generalistic messages like "Computing" or "Executing" and – on the other hand – that you avoid using hyper-detailed expressions such as "Inverting matrix – computing determinant of the 3rd 2×2 submatrix" &lt;em&gt;if they are not meaningful to the user&lt;/em&gt;. Of course if the focus of your CLM is matricial inversion that shall be fine, but it shouldn't be if your CLM is – in example – focused on a higher-level problem which is solved using matricial inversion.  &lt;/p&gt;
+&lt;p&gt;...And, please, never print out the raw counters in nested for loops. It happened to me just a couple of days ago to run an image-processing CLM provided by a project partner: this was the output of a successful run  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;python img_processing_clm.py input.tif output.tif
+Conversion to 8bit took 23.567 seconds
+1
+2
+3
+4
+5
+6
+&lt;span class="c"&gt;#2000 or so more lines&lt;/span&gt;
+The variance computation took 367.145 seconds
+...
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Each and every row index is printed out....It is just irritating!!!&lt;/p&gt;
+&lt;h3&gt;2. Gracefully fail&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;AKA: "I don't want to see each blood drop spreading from your wound"&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;As a CLM user, would you prefer seeing this:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;python myclm.py /var/clmdata/testoutdir  &lt;span class="c"&gt;#we are missing the first parameter&lt;/span&gt;
+  Traceback &lt;span class="o"&gt;(&lt;/span&gt;most recent call last&lt;span class="o"&gt;)&lt;/span&gt;:
+  File &lt;span class="s2"&gt;&amp;quot;myclm.py&amp;quot;&lt;/span&gt;, line 3, in &amp;lt;module&amp;gt;
+  &lt;span class="nv"&gt;inputfile&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; sys.argv&lt;span class="o"&gt;[&lt;/span&gt;1&lt;span class="o"&gt;]&lt;/span&gt;
+  IndexError: list index out of range
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;
+1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;..or this?  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;python myclm.py /var/clmdata/testoutdir  &lt;span class="c"&gt;#we are missing the first parameter&lt;/span&gt;
+  ERROR: you must specify an input file
+  Usage:
+    myclm.py &amp;lt;inputfile_path&amp;gt; &amp;lt;output_path&amp;gt;
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;
+1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The correct answer would be: none of them! But you can't expect that your CLM is working fine every time. So it is important to let users know what reasons made the CLM stop running. A nice design choice is to detect possible error conditions and treat them so that your CLM "says something of interest" and terminates with a known exit status: this can be done quite easily if you use languages (eg: Java, Python, etc..) that provide formal exception/error handling constructs – in other terms, the usual try/catch blocks.  &lt;/p&gt;
+&lt;p&gt;Graceful failures are delightful for the user, but may not the best approach to handle error situations while you are still writing your CLM because they may not give you enough information if you need to debug. So my advice is to add them only when you are pretty sure that you won't make further heavy changes or do any more refactoring on your CLM.&lt;/p&gt;
+&lt;h3&gt;3. Organize your CLM folder&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;AKA: "I am the Borg ... I bring order to chaos" (Borg Queen – Star Trek: First Contact)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Order in organizing your code is good. This translates directly into the fact that a well-structured CMS is easy to understand and modify, and can be efficiently used in a small amount of time. My advice is to adhere to widely adopted or standard program folder structuration patterns: I usually have my CLM's folder in this fashion&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;CLM-folder/
+  |--bin/     #Binaries: main CLM program and dependancies
+  |--doc/     #Documentation about CLM usage/installation
+  |--src/     #Source files
+  |--static/  #Static data: config files, static inputs, etc.
+  `--test/    #Tests
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;4. Minimize filesystem usage and leverage temporary folders&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;AKA: "Forbidden: you don't have enough permissions to write the file"&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;As a general advice, don't rely on the safety of filesystem operations. If your CLM needs to store intermediate data try to do that in-memory, and if it's not possible and therefore you are compelled to use the filesystem, your target should be to put the least complexity between your CLM and your data. Reading data from filesystems seldom is a problem, but writing often is, and the amount of adversities you might face depends on a variety of factors such as the architecture (never tried to write in a folder for which you don't have &lt;code&gt;w&lt;/code&gt; permissions?), the possible concurrency in data modification, the remoteness of the target filesystem and so on.  &lt;/p&gt;
+&lt;p&gt;Another misused – but smooth and clever – technique is to leverage temporary folder support provided by the operating systems. In my experience with bash programming, I've always seen people doing local computations as follows: input files are copied into the same folder of the executing binaries, then intermediate files are written in that folder (usually, a lot  of files), and in case of successful CLM end intermediate files are deleted. This always made me angry, because often their programs were  buggy and therefore never got to their natural end, which forced me to press &lt;code&gt;CTRL+C&lt;/code&gt;... leaving all of those intermediate files undeleted in the folder. And this meant: I myself would have to delete them!!! :-o To solve this issue, I simply suggested those people to leverage the "mktemp" Linux command, which creates a temporary folder with a pseudo-random name under /tmp and returns its name: one can then use this folder to do whatever she/he likes – i.e. writing the CLM execution's intermediate rubbish.  &lt;/p&gt;
+&lt;p&gt;It's as easy as follows:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ tempdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;mktemp&lt;span class="k"&gt;)&lt;/span&gt;
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$tempdir&lt;/span&gt;
+/tmp/tmp.hyYKY21864
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;5. Leverage absolute paths&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;AKA: "Time – as well as folder location – is relative"&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;When you provide paths as arguments for CLMs it is a very good practice to give them in an absolute fashion. If you give absolute paths, there's a pretty good chance that your CLM  addresses files and folders in the right way. And my advice is: always handle absolute paths internally to your command-line softwares...in fact, this will prevent you from using terrible solutions like the &lt;code&gt;cd&lt;/code&gt; (change directory) command, which will mess the whole thing up if you are using relative paths because the root folder they are resolved against changes!  &lt;/p&gt;
+&lt;p&gt;A little coding exercise: let us write a small bash script (copier.bash) that takes reads a file and echoes its contents to a file named &lt;code&gt;results.out&lt;/code&gt; which will be created in a directory of our choice. We want it to have this interface:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;copier.bash &amp;lt;inputfile_path&amp;gt; &amp;lt;output_path&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and here is the code (as you can see I'm using the &lt;code&gt;cat&lt;/code&gt; executable which lies in the &lt;code&gt;/bin&lt;/code&gt; path on my Linux system):  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class="nv"&gt;inputfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$1&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;outputdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$2&amp;quot;&lt;/span&gt;
+
+&lt;span class="nv"&gt;bindir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/bin&amp;quot;&lt;/span&gt;
+
+&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$bindir&amp;quot;&lt;/span&gt;
+cat &lt;span class="s2"&gt;&amp;quot;$inputfile&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class="s2"&gt;&amp;quot;$outputdir/result.out&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now if we setup the environment like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /opt/copier
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir output  &lt;span class="c"&gt;#we create the output folder&lt;/span&gt;
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;tree .
+.
+|-- copier.bash
+&lt;span class="sb"&gt;`&lt;/span&gt;-- output
+1 directory, 1 file
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;italia has got talent&amp;quot;&lt;/span&gt; &amp;gt; input.txt &lt;span class="c"&gt;#we create the input file&lt;/span&gt;
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash copier.bash input.txt output        &lt;span class="c"&gt;#we run the script&lt;/span&gt;
+copier.bash: line 9: output/result.out: No such file or directory
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As we expected, the &lt;code&gt;cd&lt;/code&gt; inside our script is messing up everything and the bash shell is complaining about the fact that after it, it is impossible to find the &lt;code&gt;output&lt;/code&gt; subfolder (which, in absolute terms, is: &lt;code&gt;/bin/output&lt;/code&gt; !!!)  &lt;/p&gt;
+&lt;p&gt;Also the following command-line fail:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash copier.bash input.txt /opt/copier/output
+cat: input.txt: No such file or directory
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This time it's the &lt;code&gt;cat&lt;/code&gt; executable complaining for the missing &lt;code&gt;input.txt&lt;/code&gt; file, which it expects to be here: &lt;code&gt;/bin/input.txt&lt;/code&gt;  &lt;/p&gt;
+&lt;p&gt;The right way of running this script would be:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash copier.bash /opt/copier/input.txt /opt/copier/output
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;cat output/result.out
+italia has got talent
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can see that: one must know in advance that absolute paths must be used. And consider that we were lucky to have a textual CLM, what if we had a compiled one? Lesson learn: never use &lt;code&gt;cd&lt;/code&gt; and leverage absolute paths!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Thu, 18 Apr 2013 01:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2013-04-18:blog/2013/04/command-line-software-design-5-more-advices.html</guid><category>software</category><category>design</category><category>shell</category></item><item><title>How to deploy Flask applications to Apache webserver</title><link>http://csparpa.github.io/blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html</link><description>&lt;h3&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;This is a simple guide explaining how I managed to configure Apache 2.2 httpd server on a Windows 2012 server platform so that it can serve a Python webapplication I wrote using the &lt;a href="http://flask.pocoo.org/"&gt;Flask micro-framework&lt;/a&gt;.  &lt;/p&gt;
+&lt;p&gt;The guide is valid, with a very little modification, also on Linux environments (you geeks know how to do)&lt;/p&gt;
+&lt;h3&gt;Why I needed to to this&lt;/h3&gt;
+&lt;p&gt;I developed this application at work and I‘ve been serving it from the beginning via the Flask's built-in minimal webserver: unfortunately this  is not enough for production stage as I need a more robust server with SSL capabilities, which Flask's has not. This was my first time in deploying a Python webapp... So, after googling a bit and reading the &lt;a href="http://flask.pocoo.org/docs/deploying/"&gt;Flask deployment notes&lt;/a&gt;, I came up with the answer: what I needed was a WSGI-compliant server running on my target platform, a Windows 2012 server. The natural choice to me was to enable the WSGI module on the "good ole" Apache webserver, which I'm experienced with.&lt;/p&gt;
+&lt;h3&gt;Steps&lt;/h3&gt;
+&lt;h4&gt;1. Flask app&lt;/h4&gt;
+&lt;p&gt;We choose a folder in which we place the Python code. For instance,  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nl"&gt;D:&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;webapps&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;test&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In this folder we create the real Flask webapplication that we want to deploy (file &lt;code&gt;test.py&lt;/code&gt;):  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# test.py&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/hello&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hello_world&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Hello &amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;!&amp;#39;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The Apache server won't be aware of &lt;code&gt;test.py&lt;/code&gt; at all. What you need to do now is to write in the same folder a Python file named &lt;code&gt;test.wsgi&lt;/code&gt; that we will link into the webserver's configuration: the code in this file will import the main Flask application object (built in our case as a singleton) and will be actually executed by the WSGI module of Apache. In the code, it is vital that you DON'T change the name of the "application" variable, as it is exactly what the server expects to find. Also please note that we are extending the Python classes path to include our own webapplication's folder.  &lt;/p&gt;
+&lt;p&gt;This is &lt;code&gt;test.wsgi&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# test.wsgi&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+
+&lt;span class="c"&gt;#Expand Python classes path with your app&amp;#39;s path&lt;/span&gt;
+&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;d:/webapps/test&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;test&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;
+
+&lt;span class="c"&gt;#Put logging code (and imports) here ...&lt;/span&gt;
+
+&lt;span class="c"&gt;#Initialize WSGI app object&lt;/span&gt;
+&lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As an additional remark, if you want to put any logging code (e.g: file/e-mail/console loggers) into your Flask app, you must put it before the &lt;code&gt;if __name__ == ‘__main__'&lt;/code&gt; block, otherwise it won't log anything! Add your loggers to the app object.  &lt;/p&gt;
+&lt;p&gt;More on this on the &lt;a href="http://flask.pocoo.org/docs/0.10/api/#flask.Flask.logger"&gt;Flask documentation&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;2. Apache setup&lt;/h4&gt;
+&lt;p&gt;Ok, what's next? Now it's all about installing and properly configuring Apache.&lt;/p&gt;
+&lt;p&gt;First: install Apache webserver. I &lt;a href="http://apache.panu.it//httpd/binaries/win32/httpd-2.2.22-win32-x86-openssl-0.9.8t.msi"&gt;downloaded&lt;/a&gt; and executed the .msi installer. Apache was installed at:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;quot;C:\Program Files (x86)\Apache Software Foundation\Apache2.2&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Second: install the WSGI Apache module. Pay attention to download the module compiled for your specific combination of platform and Python and Apache versions: I downloaded &lt;a href="https://code.google.com/p/modwsgi/downloads/detail?name=mod_wsgi-win32-ap22py27-3.3.so"&gt;this module&lt;/a&gt;. Once downloaded, rename the &lt;code&gt;.so&lt;/code&gt; file into &lt;code&gt;mod_wsgi.so&lt;/code&gt; and put it under the &lt;code&gt;modules&lt;/code&gt; subfolder of your Apache installation folder. Then you have to tell Apache to use it: open in a text editor the &lt;code&gt;httpd.config&lt;/code&gt; file which is under the &lt;code&gt;conf&lt;/code&gt; subfolder and add the following line at the bottom:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;LoadModule wsgi_module modules/mod_wsgi.so
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Third: restart Apache.&lt;/p&gt;
+&lt;p&gt;Now Apache is ready to serve WSGI webapplications.  &lt;/p&gt;
+&lt;p&gt;What is left to do is to tell about where our application is and match it to a URL alias. It's child's play: open in a text editor the &lt;code&gt;httpd.config&lt;/code&gt; file we used before and add these lines to the bottom:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;lt;Directory d:/webapps/test&amp;gt;
+    Order allow,deny
+    Allow from all
+&amp;lt;/Directory&amp;gt;
+WSGIScriptAlias /flasktest d:/webapps/test/test.wsgi
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;(nevertheless, I prefer to place the per-virtual-host or per-alias configurations' stuff into separate files and then use an Include directive into the main &lt;code&gt;httpd.conf&lt;/code&gt;).  &lt;/p&gt;
+&lt;p&gt;Now restart Apache again and if you open a browser and point it to:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;http://localhost/flasktest/hello?name=claudio
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and you should see the webapp's greetings!&lt;/p&gt;
+&lt;h3&gt;Further references&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://code.google.com/p/modwsgi/wiki/QuickConfigurationGuide"&gt;This guide&lt;/a&gt; helped me a lot in understanding how to setup Apache WSGI.&lt;/li&gt;
+&lt;li&gt;I also found &lt;a href="https://beagle.whoi.edu/redmine/projects/ibt/wiki/Deploying_Flask_Apps_with_Apache_and_Mod_WSGI?version=3"&gt;this tutorial&lt;/a&gt; which is far more comprehensive than mine and covers Flask deployment on Apache on Debian/Ubuntu environments&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Wed, 06 Mar 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-03-06:blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html</guid><category>software</category><category>webserver</category><category>webapps</category><category>python</category><category>Flask</category></item><item><title>Server is unwilling to perform</title><link>http://csparpa.github.io/blog/2013/01/server-is-unwilling-to-perform.html</link><description>&lt;p&gt;&lt;img alt="Server is unwilling to perform" src="/blog/img/server-unwilling.png" title="Server is unwilling to perform" /&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Fri, 11 Jan 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-01-11:blog/2013/01/server-is-unwilling-to-perform.html</guid><category>software</category><category>ldap</category><category>humour</category></item></channel></rss>

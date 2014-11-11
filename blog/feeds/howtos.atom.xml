@@ -273,4 +273,113 @@ Now let's try it out:&lt;/p&gt;
 &lt;p&gt;Time saving should be at a glance!&lt;/p&gt;
 &lt;h3&gt;More cache adapters for PyOWM&lt;/h3&gt;
 &lt;p&gt;In a similar way it is possible to write adapters for plugging other cache/storage providers (Redis, MongoDB, etc..) into the PyOWM library.  &lt;/p&gt;
-&lt;p&gt;This post stimulated me to write more adapters, you can find them &lt;a href="https://github.com/csparpa/pyowm-cache-adapters"&gt;on my GitHub repo&lt;/a&gt;.&lt;/p&gt;</summary><category term="python"></category><category term="github"></category><category term="software"></category><category term="adapter"></category><category term="cache"></category><category term="linux"></category><category term="memcached"></category><category term="pyowm"></category></entry></feed>
+&lt;p&gt;This post stimulated me to write more adapters, you can find them &lt;a href="https://github.com/csparpa/pyowm-cache-adapters"&gt;on my GitHub repo&lt;/a&gt;.&lt;/p&gt;</summary><category term="python"></category><category term="github"></category><category term="software"></category><category term="adapter"></category><category term="cache"></category><category term="linux"></category><category term="memcached"></category><category term="pyowm"></category></entry><entry><title>How to convert VMWare virtual machines to Virtual Box</title><link href="http://csparpa.github.io/blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html" rel="alternate"></link><updated>2013-05-08T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-05-08:blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html</id><summary type="html">&lt;h3&gt;Where I started from&lt;/h3&gt;
+&lt;p&gt;This is my situation: I'm on a Windows7 x86 host, and I have an old Ubuntu 10.04 virtual machine with VMWare Tools installed on it.  &lt;/p&gt;
+&lt;p&gt;My need is to turn it into an OVF appliance, so that I can run it on Virtual Box, no matter where what architecture it will be run on.&lt;/p&gt;
+&lt;h3&gt;Steps&lt;/h3&gt;
+&lt;p&gt;This is what I've done:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;I made sure (e.g: using VMWare Player or Workstation) that the virtual appliance is powered off;&lt;/li&gt;
+&lt;li&gt;Opened a Command Prompt, moved to the VMWare Player/Workstation installation dir and executed the OVF conversion tool. Be aware that this conversion may take some time, depending on how big is your VMX appliance. I did it as follows (replace the paths as needed):&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Program Files\VMware\VMware Workstation\OVFTool&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ovftool&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Users\claudio\Documents\Virtual Machines\ubuntu1004\ubuntu1004.vmx&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Users\claudio\Documents\Virtual Machines\converted-to-virtualbox\ubuntu1004.ovf&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;When the conversion process was over, I imported the &lt;code&gt;ubuntu1004.ovf&lt;/code&gt; appliance into Virtual Box by using the &lt;code&gt;File &amp;gt; Import virtual appliance..&lt;/code&gt; menu element and leaving all the defaults;&lt;/li&gt;
+&lt;li&gt;Then I booted up the &lt;code&gt;ubuntu1004.ovf&lt;/code&gt; appliance and performed VMWare Tools uninstallation by opening up an SSH shell and executing:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo /usr/bin/vmware-uninstall-tools.pl
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Then I finished the procedure by executing the &lt;code&gt;Device &amp;gt; Install Guest Additions&lt;/code&gt; menu item: a virtual CD is then mounted and I launched the installation process from a shell:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /media/VBOXADDITIONS_4.2.12_84980
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo bash VBoxLinuxAdditions.run
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Not as difficult as it may seem…. Hope this helps!&lt;/p&gt;</summary><category term="vmware"></category><category term="virtualbox"></category><category term="conversion"></category></entry><entry><title>How to deploy Flask applications to Apache webserver</title><link href="http://csparpa.github.io/blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html" rel="alternate"></link><updated>2013-03-06T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-03-06:blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html</id><summary type="html">&lt;h3&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;This is a simple guide explaining how I managed to configure Apache 2.2 httpd server on a Windows 2012 server platform so that it can serve a Python webapplication I wrote using the &lt;a href="http://flask.pocoo.org/"&gt;Flask micro-framework&lt;/a&gt;.  &lt;/p&gt;
+&lt;p&gt;The guide is valid, with a very little modification, also on Linux environments (you geeks know how to do)&lt;/p&gt;
+&lt;h3&gt;Why I needed to to this&lt;/h3&gt;
+&lt;p&gt;I developed this application at work and I‘ve been serving it from the beginning via the Flask's built-in minimal webserver: unfortunately this  is not enough for production stage as I need a more robust server with SSL capabilities, which Flask's has not. This was my first time in deploying a Python webapp... So, after googling a bit and reading the &lt;a href="http://flask.pocoo.org/docs/deploying/"&gt;Flask deployment notes&lt;/a&gt;, I came up with the answer: what I needed was a WSGI-compliant server running on my target platform, a Windows 2012 server. The natural choice to me was to enable the WSGI module on the "good ole" Apache webserver, which I'm experienced with.&lt;/p&gt;
+&lt;h3&gt;Steps&lt;/h3&gt;
+&lt;h4&gt;1. Flask app&lt;/h4&gt;
+&lt;p&gt;We choose a folder in which we place the Python code. For instance,  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nl"&gt;D:&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;webapps&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;test&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In this folder we create the real Flask webapplication that we want to deploy (file &lt;code&gt;test.py&lt;/code&gt;):  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# test.py&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/hello&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hello_world&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Hello &amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;!&amp;#39;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The Apache server won't be aware of &lt;code&gt;test.py&lt;/code&gt; at all. What you need to do now is to write in the same folder a Python file named &lt;code&gt;test.wsgi&lt;/code&gt; that we will link into the webserver's configuration: the code in this file will import the main Flask application object (built in our case as a singleton) and will be actually executed by the WSGI module of Apache. In the code, it is vital that you DON'T change the name of the "application" variable, as it is exactly what the server expects to find. Also please note that we are extending the Python classes path to include our own webapplication's folder.  &lt;/p&gt;
+&lt;p&gt;This is &lt;code&gt;test.wsgi&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# test.wsgi&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+
+&lt;span class="c"&gt;#Expand Python classes path with your app&amp;#39;s path&lt;/span&gt;
+&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;d:/webapps/test&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;test&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;
+
+&lt;span class="c"&gt;#Put logging code (and imports) here ...&lt;/span&gt;
+
+&lt;span class="c"&gt;#Initialize WSGI app object&lt;/span&gt;
+&lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As an additional remark, if you want to put any logging code (e.g: file/e-mail/console loggers) into your Flask app, you must put it before the &lt;code&gt;if __name__ == ‘__main__'&lt;/code&gt; block, otherwise it won't log anything! Add your loggers to the app object.  &lt;/p&gt;
+&lt;p&gt;More on this on the &lt;a href="http://flask.pocoo.org/docs/0.10/api/#flask.Flask.logger"&gt;Flask documentation&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;2. Apache setup&lt;/h4&gt;
+&lt;p&gt;Ok, what's next? Now it's all about installing and properly configuring Apache.&lt;/p&gt;
+&lt;p&gt;First: install Apache webserver. I &lt;a href="http://apache.panu.it//httpd/binaries/win32/httpd-2.2.22-win32-x86-openssl-0.9.8t.msi"&gt;downloaded&lt;/a&gt; and executed the .msi installer. Apache was installed at:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;quot;C:\Program Files (x86)\Apache Software Foundation\Apache2.2&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Second: install the WSGI Apache module. Pay attention to download the module compiled for your specific combination of platform and Python and Apache versions: I downloaded &lt;a href="https://code.google.com/p/modwsgi/downloads/detail?name=mod_wsgi-win32-ap22py27-3.3.so"&gt;this module&lt;/a&gt;. Once downloaded, rename the &lt;code&gt;.so&lt;/code&gt; file into &lt;code&gt;mod_wsgi.so&lt;/code&gt; and put it under the &lt;code&gt;modules&lt;/code&gt; subfolder of your Apache installation folder. Then you have to tell Apache to use it: open in a text editor the &lt;code&gt;httpd.config&lt;/code&gt; file which is under the &lt;code&gt;conf&lt;/code&gt; subfolder and add the following line at the bottom:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;LoadModule wsgi_module modules/mod_wsgi.so
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Third: restart Apache.&lt;/p&gt;
+&lt;p&gt;Now Apache is ready to serve WSGI webapplications.  &lt;/p&gt;
+&lt;p&gt;What is left to do is to tell about where our application is and match it to a URL alias. It's child's play: open in a text editor the &lt;code&gt;httpd.config&lt;/code&gt; file we used before and add these lines to the bottom:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;lt;Directory d:/webapps/test&amp;gt;
+    Order allow,deny
+    Allow from all
+&amp;lt;/Directory&amp;gt;
+WSGIScriptAlias /flasktest d:/webapps/test/test.wsgi
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;(nevertheless, I prefer to place the per-virtual-host or per-alias configurations' stuff into separate files and then use an Include directive into the main &lt;code&gt;httpd.conf&lt;/code&gt;).  &lt;/p&gt;
+&lt;p&gt;Now restart Apache again and if you open a browser and point it to:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;http://localhost/flasktest/hello?name=claudio
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and you should see the webapp's greetings!&lt;/p&gt;
+&lt;h3&gt;Further references&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://code.google.com/p/modwsgi/wiki/QuickConfigurationGuide"&gt;This guide&lt;/a&gt; helped me a lot in understanding how to setup Apache WSGI.&lt;/li&gt;
+&lt;li&gt;I also found &lt;a href="https://beagle.whoi.edu/redmine/projects/ibt/wiki/Deploying_Flask_Apps_with_Apache_and_Mod_WSGI?version=3"&gt;this tutorial&lt;/a&gt; which is far more comprehensive than mine and covers Flask deployment on Apache on Debian/Ubuntu environments&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="software"></category><category term="webserver"></category><category term="webapps"></category><category term="python"></category><category term="Flask"></category></entry></feed>
