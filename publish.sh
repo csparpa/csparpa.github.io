@@ -8,7 +8,6 @@ pelican content -s publish_conf.py -o output/blog
 echo '***Copying images to blog...'
 mkdir output/blog/img
 cp images/*.png output/blog/img
-cp images/favicon.ico output/
 cp images/favicon.ico output/blog
 echo '***Copying static website to ./output/ folder...'
 cp -R website/* output/
