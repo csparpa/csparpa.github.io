@@ -382,4 +382,107 @@ WSGIScriptAlias /flasktest d:/webapps/test/test.wsgi
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://code.google.com/p/modwsgi/wiki/QuickConfigurationGuide"&gt;This guide&lt;/a&gt; helped me a lot in understanding how to setup Apache WSGI.&lt;/li&gt;
 &lt;li&gt;I also found &lt;a href="https://beagle.whoi.edu/redmine/projects/ibt/wiki/Deploying_Flask_Apps_with_Apache_and_Mod_WSGI?version=3"&gt;this tutorial&lt;/a&gt; which is far more comprehensive than mine and covers Flask deployment on Apache on Debian/Ubuntu environments&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="software"></category><category term="webserver"></category><category term="webapps"></category><category term="python"></category><category term="Flask"></category></entry></feed>
+&lt;/ul&gt;</summary><category term="software"></category><category term="webserver"></category><category term="webapps"></category><category term="python"></category><category term="Flask"></category></entry><entry><title>How to install MongoDB on Windows as a service</title><link href="http://csparpa.github.io/blog/2012/10/how-to-install-mongodb-on-windows-as-a-service.html" rel="alternate"></link><updated>2012-10-29T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-10-29:blog/2012/10/how-to-install-mongodb-on-windows-as-a-service.html</id><summary type="html">&lt;h3&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;I’m showing you a quick procedure to install MongoDB as a service on Windows platforms (I simply gathered the hints explained in the &lt;a href="http://www.mongodb.org/display/DOCS/Windows"&gt;official documentation page&lt;/a&gt; and adapted the whole stuff to my specific case).  &lt;/p&gt;
+&lt;h3&gt;Requirements&lt;/h3&gt;
+&lt;p&gt;In my example, I’m installing MongoDB version 2.2.0 on a Windows Server 2003 R2 machine and my goal is to have it available as a service.  &lt;/p&gt;
+&lt;h3&gt;Steps&lt;/h3&gt;
+&lt;p&gt;The procedure is pretty straightforward: all you need is to setup the path in which MongoDB will physically store the data collections, to provide a logfile for the service we’re going to create and finally to tell the &lt;code&gt;mongod&lt;/code&gt; daemon to run as a service.  &lt;/p&gt;
+&lt;p&gt;Here we go (be sure to enclose all the paths in double quotes if they contain spaces):&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Download the installation package (a .zip archive) and decompress it into folder &lt;code&gt;C:\mongodb-2.2.0&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create the data path folders (in my example, &lt;code&gt;C:\mongodb-2.2.0\data\db&lt;/code&gt;):&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;C:\&amp;gt; md C:\mongodb-2.2.0\data
+C:\&amp;gt; md C:\mongodb-2.2.0\data\db
+C:\&amp;gt; set datapath = C:\mongodb-2.2.0\data\db
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;Setup mongod configuration file path (my file is &lt;code&gt;C:\mongodb-2.2.0\mongod.cfg&lt;/code&gt;):&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;C:\&amp;gt; set configpath = C:\mongodb-2.2.0\mongod.cfg
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;Create the folder that will host the service's log file (my folder is &lt;code&gt;C:\mongodb-2.2.0\log&lt;/code&gt;) and write its path into the config file:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;C:\&amp;gt; md C:\mongodb-2.2.0\log
+C:\&amp;gt; echo logpath = C:\mongodb-2.2.0\log\mongod.log &amp;gt; C:\mongodb-2.2.0\mongod.cfg
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;Install &lt;code&gt;mongod&lt;/code&gt; as a service:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;C:\&amp;gt; C:\mongodb-2.2.0\bin\mongod.exe --config %configpath% --dbpath %dbpath% --install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now you can start/stop/remove the MongoDB service via the services administration graphical interface, or via the command line using the following commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;:: Start service
+C:\&amp;gt; net start MongoDB
+
+:: Stop service
+C:\&amp;gt; net stop MongoDB
+
+:: Uninstall the service
+C:\&amp;gt; C:\mongodb-2.2.0\bin\mongod.exe --remove
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Wanna test out your installation? Just call the MongoDB Javascript shell:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;C:\&amp;gt; C:\mongodb-2.2.0\bin\mongo.exe
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and if no error message appears – have fun!&lt;/p&gt;</summary><category term="software"></category><category term="NoSQL"></category><category term="database"></category><category term="windows"></category></entry><entry><title>Installing Android 4.1 Jelly Bean on LG Optimus One (LG P500)</title><link href="http://csparpa.github.io/blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html" rel="alternate"></link><updated>2012-09-19T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-09-19:blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html</id><summary type="html">&lt;h3&gt;A Happy LG Optimus One owner’s story&lt;/h3&gt;
+&lt;p&gt;I’m a happy owner of an LG Optimus One: not only because it proved many times to be a performing device, but also because – a few days after I bought it – I managed to replace the custom Android it had on board (themed by TIM: ugly!!!) with a simple and plain Android 2.2.1 Froyo stock ROM. This I did, despite many warnings I read about phone brick and license invalidation. About six-months after, I had the same fever and replaced Froyo with Gingebread: no problems this time, as well.  &lt;/p&gt;
+&lt;p&gt;Last monday, after reading that someone (&lt;a href="http://aokp.co/"&gt;Android Open Kang Project&lt;/a&gt; team) built an unoffical Android 4.1 Jelly Bean port for LG Optimus One, I took a fancy to it…”Danger is my business” – I thought. So, let’s go replace my current Android with the one on the crest of waves!!!  &lt;/p&gt;
+&lt;p&gt;I am reporting the steps I followed: they took about 3 hours, considering also the conclusive phone re-configuration and apps re-install.  &lt;/p&gt;
+&lt;p&gt;Result: a fresh and fluid install on my Optimus One!&lt;/p&gt;
+&lt;h3&gt;READ THIS: DEATH DANGER ;-)&lt;/h3&gt;
+&lt;p&gt;Please, don’t take what you’re gonna read as a serious guide to modding (you can find tons of forum posts on sites such as xda): the following steps were just conceived to provide a big and fuzzy idea of what it takes to perform such an install, it’s up to you to search for details!  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;You’re warned: I won’t be responsible for any danger to your phone or parts of it in case you follow the procedure and come up with a brick or malfunctionings!&lt;/strong&gt;&lt;/p&gt;
+&lt;h3&gt;Requirements&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;My phone before installing Jelly Bean&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Android version: gingerbread 2.3.3&lt;/li&gt;
+&lt;li&gt;kernel: 2.6.35.10-perf&lt;/li&gt;
+&lt;li&gt;baseband: V20g&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;ROM about to be installed:&lt;/strong&gt; Android 4.1 Jelly Bean unofficial port for LGp500. The porting is by &lt;a href="http://aokp.co/"&gt;Android Open Kang Project&lt;/a&gt;. The ROM version is the nightly build of  Septembre, 9 2012  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;SW to be obtained:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Android 4.1 ROM: &lt;a href="http://www.mediafire.com/?db1my6sftk27jkw"&gt;http://www.mediafire.com/?db1my6sftk27jkw&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;gapps: &lt;a href="http://goo.im/gapps/gapps-ics-20120429-signed.zip"&gt;http://goo.im/gapps/gapps-ics-20120429-signed.zip&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://matrixrewriter.com/android/"&gt;Titanium Backup&lt;/a&gt; for backing up phone apps state&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Web resources to be read:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;flashing ROMS on LGP500 guide: &lt;a href="http://forum.cyanogenmod.com/topic/41965-lg-optimus-one-complete-flashing-guide"&gt;http://forum.cyanogenmod.com/topic/41965-lg-optimus-one-complete-flashing-guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Android 4.x ROMs for LGP500: &lt;a href="http://droidviews.com/2012/lg-p500-best-ics-roms-series-part-5"&gt;http://droidviews.com/2012/lg-p500-best-ics-roms-series-part-5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;XDA thread for flashing AOKP ROM: &lt;a href="http://forum.xda-developers.com/showthread.php?p=25182021#post25182021"&gt;http://forum.xda-developers.com/showthread.php?p=25182021#post25182021&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Prerequisites:&lt;/strong&gt; you need to have superuser access to your phone (if you don’t, install the &lt;a href="http://androidsu.com/superuser/"&gt;Superuser&lt;/a&gt; app)  &lt;/p&gt;
+&lt;h3&gt;Steps&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Copied Android 4.1 ROM and gapps .zip archives into the root folder of the SD card&lt;/li&gt;
+&lt;li&gt;Installed ROM Manager via Google Play store&lt;/li&gt;
+&lt;li&gt;Backupped all applications using Titanium Backup and then copied backups on PC&lt;/li&gt;
+&lt;li&gt;Backupped personal data and contacts on PC using LG PC Suite 4&lt;/li&gt;
+&lt;li&gt;Backupped current ROM using ROM manager and then copied backup on PC&lt;/li&gt;
+&lt;li&gt;Installed ClockworkMod using ROM manager&lt;/li&gt;
+&lt;li&gt;Rebooted phone in recovery mode&lt;/li&gt;
+&lt;li&gt;Made a factory reset/wipe&lt;/li&gt;
+&lt;li&gt;Flashed the Android 4.1 ROM from the .zip archive on the SD card&lt;/li&gt;
+&lt;li&gt;Flashed the gapps from the .zip archive on the SD card&lt;/li&gt;
+&lt;li&gt;Rebooted phone&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Hope this helps for all of you who whish to try out Jelly Bean on LG Optimus One!&lt;/p&gt;</summary><category term="software"></category><category term="android"></category><category term="modding"></category><category term="mobile"></category></entry></feed>

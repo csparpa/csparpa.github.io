@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://csparpa.github.io/blog/index.html</loc>
-<lastmod>2014-11-13T12:41:37-00:00</lastmod>
+<lastmod>2014-11-16T19:39:21-00:00</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://csparpa.github.io/blog/archives.html</loc>
-<lastmod>2014-11-13T12:41:37-00:00</lastmod>
+<lastmod>2014-11-16T19:39:21-00:00</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://csparpa.github.io/blog/tags.html</loc>
-<lastmod>2014-11-13T12:41:37-00:00</lastmod>
+<lastmod>2014-11-16T19:39:21-00:00</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://csparpa.github.io/blog/categories.html</loc>
-<lastmod>2014-11-13T12:41:37-00:00</lastmod>
+<lastmod>2014-11-16T19:39:21-00:00</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -109,6 +109,34 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://csparpa.github.io/blog/2012/12/command-line-software-design-5-advices.html</loc>
+<lastmod>2012-12-10T01:00:00-00:00</lastmod>
+<changefreq>always</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
+<loc>http://csparpa.github.io/blog/2012/11/httpbin.html</loc>
+<lastmod>2012-11-15T01:00:00-00:00</lastmod>
+<changefreq>always</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
+<loc>http://csparpa.github.io/blog/2012/10/how-to-install-mongodb-on-windows-as-a-service.html</loc>
+<lastmod>2012-10-29T01:00:00-00:00</lastmod>
+<changefreq>always</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
+<loc>http://csparpa.github.io/blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html</loc>
+<lastmod>2012-09-19T01:00:00-00:00</lastmod>
+<changefreq>always</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
 <loc>http://csparpa.github.io/blog/category/career.html</loc>
 <lastmod>2014-11-09T18:32:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
@@ -151,6 +179,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://csparpa.github.io/blog/category/tools.html</loc>
+<lastmod>2012-11-15T01:00:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://csparpa.github.io/blog/tag/pelican.html</loc>
 <lastmod>2014-11-01T13:49:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
@@ -158,8 +193,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://csparpa.github.io/blog/tag/humour.html</loc>
-<lastmod>2013-02-22T01:00:00+00:50</lastmod>
+<loc>http://csparpa.github.io/blog/tag/nosql.html</loc>
+<lastmod>2012-10-29T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -167,6 +202,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://csparpa.github.io/blog/tag/pyowm.html</loc>
 <lastmod>2013-12-13T01:00:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://csparpa.github.io/blog/tag/testing.html</loc>
+<lastmod>2012-11-15T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -228,6 +270,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://csparpa.github.io/blog/tag/humour.html</loc>
+<lastmod>2013-02-22T01:00:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://csparpa.github.io/blog/tag/flask.html</loc>
 <lastmod>2013-03-06T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
@@ -249,6 +298,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://csparpa.github.io/blog/tag/modding.html</loc>
+<lastmod>2012-09-19T01:00:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://csparpa.github.io/blog/tag/json.html</loc>
 <lastmod>2013-10-29T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
@@ -256,8 +312,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://csparpa.github.io/blog/tag/opensource.html</loc>
-<lastmod>2013-10-07T01:00:00+00:50</lastmod>
+<loc>http://csparpa.github.io/blog/tag/vmware.html</loc>
+<lastmod>2013-05-08T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -270,8 +326,29 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://csparpa.github.io/blog/tag/skills.html</loc>
+<lastmod>2014-11-09T18:32:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://csparpa.github.io/blog/tag/android.html</loc>
+<lastmod>2012-09-19T01:00:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://csparpa.github.io/blog/tag/memcached.html</loc>
 <lastmod>2013-12-13T01:00:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://csparpa.github.io/blog/tag/opensource.html</loc>
+<lastmod>2013-10-07T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -312,8 +389,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://csparpa.github.io/blog/tag/vmware.html</loc>
-<lastmod>2013-05-08T01:00:00+00:50</lastmod>
+<loc>http://csparpa.github.io/blog/tag/recruitment.html</loc>
+<lastmod>2014-11-09T18:32:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -347,15 +424,15 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://csparpa.github.io/blog/tag/recruitment.html</loc>
-<lastmod>2014-11-09T18:32:00+00:50</lastmod>
+<loc>http://csparpa.github.io/blog/tag/database.html</loc>
+<lastmod>2012-10-29T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://csparpa.github.io/blog/tag/skills.html</loc>
-<lastmod>2014-11-09T18:32:00+00:50</lastmod>
+<loc>http://csparpa.github.io/blog/tag/windows.html</loc>
+<lastmod>2012-10-29T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -363,6 +440,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://csparpa.github.io/blog/tag/adapter.html</loc>
 <lastmod>2013-12-13T01:00:00+00:50</lastmod>
+<changefreq>hourly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://csparpa.github.io/blog/tag/mobile.html</loc>
+<lastmod>2012-09-19T01:00:00+00:50</lastmod>
 <changefreq>hourly</changefreq>
 <priority>0.5</priority>
 </url>
