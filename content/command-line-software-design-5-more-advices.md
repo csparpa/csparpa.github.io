@@ -10,7 +10,7 @@ Ok, folks, ready to take off with 5 more CLMs (Command-Line Modules) design advi
 
 ### 1. Provide meaningful messages
 
-**AKA: "What am I doing? I am existing..."**s
+**AKA: "What am I doing? I am existing..."**
 
 Your CLM should provide insight into what it is currently doing. The difficult part is to decide how much detail you want to provide to the user...and you might argue: "Ok, but you can always use log level filtering and then let the user decide the verbosity" – this is perfectly right, but I'm talking about on-screen messages. My advice is to print out a specific message which conveys what the CLM is currently doing, with a detail level which should be just enough for the user not to say "It is talking rubbish"! So, what is really vital is that you avoid using simple and generalistic messages like "Computing" or "Executing" and – on the other hand – that you avoid using hyper-detailed expressions such as "Inverting matrix – computing determinant of the 3rd 2×2 submatrix" *if they are not meaningful to the user*. Of course if the focus of your CLM is matricial inversion that shall be fine, but it shouldn't be if your CLM is – in example – focused on a higher-level problem which is solved using matricial inversion.  
 
