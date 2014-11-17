@@ -167,7 +167,7 @@ What you need to do is, once you've installed all the plugins, add the following
 &lt;h3&gt;Where to go from here&lt;/h3&gt;
 &lt;p&gt;Now you can upload the contents of the &lt;code&gt;output&lt;/code&gt; folder 'as are' to your web hosting provider.&lt;br /&gt;
 Don't forget to setup your Google Analytics account to crawl to the domain you publish the pages under.&lt;br /&gt;
-Visit the  &lt;a href="http://docs.getpelican.com/en/3.4.0/tips.html"&gt;Pelican tips page&lt;/a&gt; which also explains how to integrate Pelican into GitHub pages.&lt;/p&gt;</summary><category term="python"></category><category term="blogging"></category><category term="pelican"></category></entry><entry><title>How to use Memcached with PyOWM</title><link href="http://csparpa.github.io/blog/2013/12/how-to-use-memcached-with-pyowm.html" rel="alternate"></link><updated>2013-12-13T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-12-13:blog/2013/12/how-to-use-memcached-with-pyowm.html</id><summary type="html">&lt;p&gt;This is just a little demonstration on how you can quickly change the basic cache provider provided by the &lt;a href="https://github.com/csparpa/pyowm"&gt;PyOWM library&lt;/a&gt;.&lt;br /&gt;
+Visit the  &lt;a href="http://docs.getpelican.com/en/3.4.0/tips.html"&gt;Pelican tips page&lt;/a&gt; which also explains how to integrate Pelican into GitHub pages.&lt;/p&gt;</summary><category term="Python"></category><category term="blogging"></category><category term="Pelican"></category></entry><entry><title>How to use Memcached with PyOWM</title><link href="http://csparpa.github.io/blog/2013/12/how-to-use-memcached-with-pyowm.html" rel="alternate"></link><updated>2013-12-13T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-12-13:blog/2013/12/how-to-use-memcached-with-pyowm.html</id><summary type="html">&lt;p&gt;This is just a little demonstration on how you can quickly change the basic cache provider provided by the &lt;a href="https://github.com/csparpa/pyowm"&gt;PyOWM library&lt;/a&gt;.&lt;br /&gt;
 For this purpose we'll use Memcached, which – simply put – is a key/value in-memory data store: this turns it into a perfect caching mechanism.&lt;/p&gt;
 &lt;h3&gt;Requirements&lt;/h3&gt;
 &lt;p&gt;This demo requires that you work on a Linux env, as Memcached originally is shipped for Unix-like systems via packet distribution systems (but can nevertheless be compiled from source).&lt;br /&gt;
@@ -273,7 +273,7 @@ Now let's try it out:&lt;/p&gt;
 &lt;p&gt;Time saving should be at a glance!&lt;/p&gt;
 &lt;h3&gt;More cache adapters for PyOWM&lt;/h3&gt;
 &lt;p&gt;In a similar way it is possible to write adapters for plugging other cache/storage providers (Redis, MongoDB, etc..) into the PyOWM library.  &lt;/p&gt;
-&lt;p&gt;This post stimulated me to write more adapters, you can find them &lt;a href="https://github.com/csparpa/pyowm-cache-adapters"&gt;on my GitHub repo&lt;/a&gt;.&lt;/p&gt;</summary><category term="python"></category><category term="github"></category><category term="software"></category><category term="adapter"></category><category term="cache"></category><category term="linux"></category><category term="memcached"></category><category term="pyowm"></category></entry><entry><title>How to convert VMWare virtual machines to Virtual Box</title><link href="http://csparpa.github.io/blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html" rel="alternate"></link><updated>2013-05-08T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-05-08:blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html</id><summary type="html">&lt;h3&gt;Where I started from&lt;/h3&gt;
+&lt;p&gt;This post stimulated me to write more adapters, you can find them &lt;a href="https://github.com/csparpa/pyowm-cache-adapters"&gt;on my GitHub repo&lt;/a&gt;.&lt;/p&gt;</summary><category term="Python"></category><category term="GitHub"></category><category term="software"></category><category term="adapter"></category><category term="cache"></category><category term="Linux"></category><category term="Memcached"></category><category term="PyOWM"></category></entry><entry><title>How to convert VMWare virtual machines to Virtual Box</title><link href="http://csparpa.github.io/blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html" rel="alternate"></link><updated>2013-05-08T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-05-08:blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html</id><summary type="html">&lt;h3&gt;Where I started from&lt;/h3&gt;
 &lt;p&gt;This is my situation: I'm on a Windows7 x86 host, and I have an old Ubuntu 10.04 virtual machine with VMWare Tools installed on it.  &lt;/p&gt;
 &lt;p&gt;My need is to turn it into an OVF appliance, so that I can run it on Virtual Box, no matter where what architecture it will be run on.&lt;/p&gt;
 &lt;h3&gt;Steps&lt;/h3&gt;
@@ -303,7 +303,7 @@ Now let's try it out:&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Not as difficult as it may seem…. Hope this helps!&lt;/p&gt;</summary><category term="vmware"></category><category term="virtualbox"></category><category term="conversion"></category></entry><entry><title>How to deploy Flask applications to Apache webserver</title><link href="http://csparpa.github.io/blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html" rel="alternate"></link><updated>2013-03-06T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-03-06:blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html</id><summary type="html">&lt;h3&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;Not as difficult as it may seem…. Hope this helps!&lt;/p&gt;</summary><category term="VMWare"></category><category term="Virtualbox"></category><category term="conversion"></category></entry><entry><title>How to deploy Flask applications to Apache webserver</title><link href="http://csparpa.github.io/blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html" rel="alternate"></link><updated>2013-03-06T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-03-06:blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html</id><summary type="html">&lt;h3&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;This is a simple guide explaining how I managed to configure Apache 2.2 httpd server on a Windows 2012 server platform so that it can serve a Python webapplication I wrote using the &lt;a href="http://flask.pocoo.org/"&gt;Flask micro-framework&lt;/a&gt;.  &lt;/p&gt;
 &lt;p&gt;The guide is valid, with a very little modification, also on Linux environments (you geeks know how to do)&lt;/p&gt;
 &lt;h3&gt;Why I needed to to this&lt;/h3&gt;
@@ -382,7 +382,7 @@ WSGIScriptAlias /flasktest d:/webapps/test/test.wsgi
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://code.google.com/p/modwsgi/wiki/QuickConfigurationGuide"&gt;This guide&lt;/a&gt; helped me a lot in understanding how to setup Apache WSGI.&lt;/li&gt;
 &lt;li&gt;I also found &lt;a href="https://beagle.whoi.edu/redmine/projects/ibt/wiki/Deploying_Flask_Apps_with_Apache_and_Mod_WSGI?version=3"&gt;this tutorial&lt;/a&gt; which is far more comprehensive than mine and covers Flask deployment on Apache on Debian/Ubuntu environments&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="software"></category><category term="webserver"></category><category term="webapps"></category><category term="python"></category><category term="Flask"></category></entry><entry><title>How to install MongoDB on Windows as a service</title><link href="http://csparpa.github.io/blog/2012/10/how-to-install-mongodb-on-windows-as-a-service.html" rel="alternate"></link><updated>2012-10-29T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-10-29:blog/2012/10/how-to-install-mongodb-on-windows-as-a-service.html</id><summary type="html">&lt;h3&gt;Introduction&lt;/h3&gt;
+&lt;/ul&gt;</summary><category term="software"></category><category term="webserver"></category><category term="webapps"></category><category term="Python"></category><category term="Flask"></category></entry><entry><title>How to install MongoDB on Windows as a service</title><link href="http://csparpa.github.io/blog/2012/10/how-to-install-mongodb-on-windows-as-a-service.html" rel="alternate"></link><updated>2012-10-29T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-10-29:blog/2012/10/how-to-install-mongodb-on-windows-as-a-service.html</id><summary type="html">&lt;h3&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;I’m showing you a quick procedure to install MongoDB as a service on Windows platforms (I simply gathered the hints explained in the &lt;a href="http://www.mongodb.org/display/DOCS/Windows"&gt;official documentation page&lt;/a&gt; and adapted the whole stuff to my specific case).  &lt;/p&gt;
 &lt;h3&gt;Requirements&lt;/h3&gt;
 &lt;p&gt;In my example, I’m installing MongoDB version 2.2.0 on a Windows Server 2003 R2 machine and my goal is to have it available as a service.  &lt;/p&gt;
@@ -442,7 +442,7 @@ C:\&amp;gt; C:\mongodb-2.2.0\bin\mongod.exe --remove
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;and if no error message appears – have fun!&lt;/p&gt;</summary><category term="software"></category><category term="NoSQL"></category><category term="database"></category><category term="windows"></category></entry><entry><title>Installing Android 4.1 Jelly Bean on LG Optimus One (LG P500)</title><link href="http://csparpa.github.io/blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html" rel="alternate"></link><updated>2012-09-19T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-09-19:blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html</id><summary type="html">&lt;h3&gt;A Happy LG Optimus One owner’s story&lt;/h3&gt;
+&lt;p&gt;and if no error message appears – have fun!&lt;/p&gt;</summary><category term="software"></category><category term="NoSQL"></category><category term="database"></category><category term="Windows"></category><category term="MongoDB"></category></entry><entry><title>Installing Android 4.1 Jelly Bean on LG Optimus One (LG P500)</title><link href="http://csparpa.github.io/blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html" rel="alternate"></link><updated>2012-09-19T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-09-19:blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html</id><summary type="html">&lt;h3&gt;A Happy LG Optimus One owner’s story&lt;/h3&gt;
 &lt;p&gt;I’m a happy owner of an LG Optimus One: not only because it proved many times to be a performing device, but also because – a few days after I bought it – I managed to replace the custom Android it had on board (themed by TIM: ugly!!!) with a simple and plain Android 2.2.1 Froyo stock ROM. This I did, despite many warnings I read about phone brick and license invalidation. About six-months after, I had the same fever and replaced Froyo with Gingebread: no problems this time, as well.  &lt;/p&gt;
 &lt;p&gt;Last monday, after reading that someone (&lt;a href="http://aokp.co/"&gt;Android Open Kang Project&lt;/a&gt; team) built an unoffical Android 4.1 Jelly Bean port for LG Optimus One, I took a fancy to it…”Danger is my business” – I thought. So, let’s go replace my current Android with the one on the crest of waves!!!  &lt;/p&gt;
 &lt;p&gt;I am reporting the steps I followed: they took about 3 hours, considering also the conclusive phone re-configuration and apps re-install.  &lt;/p&gt;
@@ -485,4 +485,107 @@ C:\&amp;gt; C:\mongodb-2.2.0\bin\mongod.exe --remove
 &lt;li&gt;Flashed the gapps from the .zip archive on the SD card&lt;/li&gt;
 &lt;li&gt;Rebooted phone&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;Hope this helps for all of you who whish to try out Jelly Bean on LG Optimus One!&lt;/p&gt;</summary><category term="software"></category><category term="android"></category><category term="modding"></category><category term="mobile"></category></entry></feed>
+&lt;p&gt;Hope this helps for all of you who whish to try out Jelly Bean on LG Optimus One!&lt;/p&gt;</summary><category term="software"></category><category term="Android"></category><category term="modding"></category><category term="mobile"></category></entry><entry><title>How to install MongoDB on Ubuntu</title><link href="http://csparpa.github.io/blog/2012/07/how-to-install-mongodb-on-ubuntu.html" rel="alternate"></link><updated>2012-07-09T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-07-09:blog/2012/07/how-to-install-mongodb-on-ubuntu.html</id><summary type="html">&lt;p&gt;This is a quick-guide to install MongoDB on Ubuntu 12.04 (if you want to know how to install it also on Fedora Core 11, please check out one of my old posts.  &lt;/p&gt;
+&lt;h3&gt;Steps&lt;/h3&gt;
+&lt;p&gt;Here is all you have to do:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo touch /etc/apt/sources.list.d/10gen.list
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;line&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$(echo &amp;quot;&lt;/span&gt;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&lt;span class="s2"&gt;&amp;quot;)&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$line&amp;quot;&lt;/span&gt; &amp;gt; /etc/apt/sources.list.d/10gen.list
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-get update
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And then you can install MongoDB with:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-get install mongodb-10gen
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Enjoy!&lt;/p&gt;</summary><category term="Linux"></category><category term="NoSQL"></category><category term="MongoDB"></category><category term="database"></category><category term="Ubuntu"></category></entry><entry><title>How to install MongoDB on Fedora</title><link href="http://csparpa.github.io/blog/2012/03/how-to-install-mongodb-on-fedora.html" rel="alternate"></link><updated>2012-03-18T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-03-18:blog/2012/03/how-to-install-mongodb-on-fedora.html</id><summary type="html">&lt;p&gt;During the last days, I've been delving into NoSQL datastores study and now I've got the chance to use MongoDB for a real-life need (of course, something relating to work issues). In order to reach my target, I needed a fresh installation of one of the most promising NoSQL technologies: the document-oriented datastore MongoDB.  &lt;/p&gt;
+&lt;h3&gt;Requirements&lt;/h3&gt;
+&lt;p&gt;Here is how I managed to install MongoDB 2.0.3 on a Fedora Core 11 host. You can easily adapt the steps I went through to your operational environment.  &lt;/p&gt;
+&lt;p&gt;We're about to issue every command as &lt;code&gt;root&lt;/code&gt; user.  &lt;/p&gt;
+&lt;h3&gt;Steps&lt;/h3&gt;
+&lt;p&gt;First, I downloaded, extracted and placed the Mongo stuff (I didn't use the 10gen repo, but just a &lt;code&gt;tar.gz&lt;/code&gt; from MongoDB website):  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /opt
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; wget http://fastdl.mongodb.org/linux/mongodb-linux-i686-2.0.3.tgz
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; tar xvf mongodb-linux-i686-2.0.3.tgz
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; mv mongodb-linux-i686-2.0.3.tg mongodb-2.0.3
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I decided that my databases would go under &lt;code&gt;/usr/data/mongodb&lt;/code&gt; and that MongoDB log file would be &lt;code&gt;/var/log/mongodb.log&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;As I wanted my MongoDB server instance to be started/stopped as a demon, I prepared the following &lt;code&gt;init.d&lt;/code&gt; script named &lt;code&gt;mongodb&lt;/code&gt; and placed it under &lt;code&gt;/etc/init.d/&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="nb"&gt;source&lt;/span&gt; /etc/rc.d/init.d/functions
+&lt;span class="nv"&gt;prog&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;mongod&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;mongod&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/opt/mongodb-2.0.3/bin/mongod&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
+
+start&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;$&amp;quot;Starting $prog: &amp;quot;&lt;/span&gt;
+  &lt;span class="c"&gt;#This is the fundamental call to start the MongoDB server instance&lt;/span&gt;
+  daemon &lt;span class="nv"&gt;$mongod&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;--fork --journal --dbpath /usr/data/mongodb \&lt;/span&gt;
+&lt;span class="s2"&gt;  --logpath /var/log/mongodb.log \&lt;/span&gt;
+&lt;span class="s2"&gt;  --logappend 2&amp;amp;gt;&amp;amp;amp;1 &amp;amp;gt;&amp;amp;gt;/var/log/mongodb.log&amp;quot;&lt;/span&gt;
+  &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt;
+  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt; &amp;amp;amp;&amp;amp;amp; touch /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+stop&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;$&amp;quot;Stopping $prog: &amp;quot;&lt;/span&gt;
+  killproc &lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt;
+  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt; &amp;amp;amp;&amp;amp;amp; rm -f /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$1&amp;quot;&lt;/span&gt; in
+ start&lt;span class="o"&gt;)&lt;/span&gt;
+  start
+  ;;
+ stop&lt;span class="o"&gt;)&lt;/span&gt;
+  stop
+  ;;
+ restart&lt;span class="o"&gt;)&lt;/span&gt;
+  stop
+  start
+  ;;
+ status&lt;span class="o"&gt;)&lt;/span&gt;
+  status &lt;span class="nv"&gt;$mongod&lt;/span&gt;
+  &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
+  ;;
+ *&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;$&amp;quot;Usage: $0 {start|stop|restart|status}&amp;quot;&lt;/span&gt;
+  &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;span class="k"&gt;esac&lt;/span&gt;
+
+&lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then, I opened my Iptables firewall's &lt;code&gt;INPUT&lt;/code&gt; chain so that port 27017 (the port MongoDB server is listening to) is not blocked: I opened the file &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; and added the following rule before of the &lt;code&gt;COMMIT&lt;/code&gt; statement:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;-A INPUT -p tcp -m tcp -m multiport --ports 27017 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and restarted iptables with:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; service iptables restart
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;That's it. Finally, I started the server instance with:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; service mongodb start
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and tested the whole thing opening the Mongo Javascript shell like this:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /opt/mongodb-2.0.3/bin
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; ./mongo
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and everything was fine.&lt;/p&gt;</summary><category term="Linux"></category><category term="NoSQL"></category><category term="MongoDB"></category><category term="database"></category><category term="Fedora"></category></entry></feed>

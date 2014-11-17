@@ -171,7 +171,7 @@ What you need to do is, once you've installed all the plugins, add the following
 &lt;h3&gt;Where to go from here&lt;/h3&gt;
 &lt;p&gt;Now you can upload the contents of the &lt;code&gt;output&lt;/code&gt; folder 'as are' to your web hosting provider.&lt;br /&gt;
 Don't forget to setup your Google Analytics account to crawl to the domain you publish the pages under.&lt;br /&gt;
-Visit the  &lt;a href="http://docs.getpelican.com/en/3.4.0/tips.html"&gt;Pelican tips page&lt;/a&gt; which also explains how to integrate Pelican into GitHub pages.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Sat, 01 Nov 2014 13:49:00 +0100</pubDate><guid>tag:csparpa.github.io,2014-11-01:blog/2014/11/setup-static-blog-with-pelican.html</guid><category>python</category><category>blogging</category><category>pelican</category></item><item><title>Meditation on the Zen of Python</title><link>http://csparpa.github.io/blog/2014/01/meditation-on-the-zen-of-python.html</link><description>&lt;h3&gt;Read it&lt;/h3&gt;
+Visit the  &lt;a href="http://docs.getpelican.com/en/3.4.0/tips.html"&gt;Pelican tips page&lt;/a&gt; which also explains how to integrate Pelican into GitHub pages.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Sat, 01 Nov 2014 13:49:00 +0100</pubDate><guid>tag:csparpa.github.io,2014-11-01:blog/2014/11/setup-static-blog-with-pelican.html</guid><category>Python</category><category>blogging</category><category>Pelican</category></item><item><title>Meditation on the Zen of Python</title><link>http://csparpa.github.io/blog/2014/01/meditation-on-the-zen-of-python.html</link><description>&lt;h3&gt;Read it&lt;/h3&gt;
 &lt;p&gt;If you have ever programmed anything in Python, you probably used the &lt;code&gt;import&lt;/code&gt; statement: the modules of the Python standard library 
 can be imported into your code or into the interpreter. Take a look at the standard library folders and you'll find the &lt;code&gt;this.py&lt;/code&gt; module... what is that?
 Not much a self-explicative name for a Python module, huh? And you – Java lovers – forget about the Java &lt;code&gt;this&lt;/code&gt; keyword: you're far afield.  &lt;/p&gt;
@@ -263,7 +263,7 @@ And so goes for Python design guidelines.&lt;/p&gt;
 &lt;h3&gt;... and considering that "now is better than never"...&lt;/h3&gt;
 &lt;p&gt;... while writing this post, I scribbeld (it was funny!) &lt;a href="https://github.com/csparpa/betterzen"&gt;a revised version of the Zen of Python&lt;/a&gt;.&lt;br /&gt;
 It shows a few additional features (get random aphorisms, seek for specified keywords) that can help developers to better read and lookup the original Zen of Python.
-Features that – hopefully – comply with what the Zen itself says ;-)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Wed, 22 Jan 2014 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2014-01-22:blog/2014/01/meditation-on-the-zen-of-python.html</guid><category>zen</category><category>python</category><category>mantra</category><category>github</category><category>software</category></item><item><title>How to use Memcached with PyOWM</title><link>http://csparpa.github.io/blog/2013/12/how-to-use-memcached-with-pyowm.html</link><description>&lt;p&gt;This is just a little demonstration on how you can quickly change the basic cache provider provided by the &lt;a href="https://github.com/csparpa/pyowm"&gt;PyOWM library&lt;/a&gt;.&lt;br /&gt;
+Features that – hopefully – comply with what the Zen itself says ;-)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Wed, 22 Jan 2014 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2014-01-22:blog/2014/01/meditation-on-the-zen-of-python.html</guid><category>zen</category><category>Python</category><category>mantra</category><category>GitHub</category><category>software</category></item><item><title>How to use Memcached with PyOWM</title><link>http://csparpa.github.io/blog/2013/12/how-to-use-memcached-with-pyowm.html</link><description>&lt;p&gt;This is just a little demonstration on how you can quickly change the basic cache provider provided by the &lt;a href="https://github.com/csparpa/pyowm"&gt;PyOWM library&lt;/a&gt;.&lt;br /&gt;
 For this purpose we'll use Memcached, which – simply put – is a key/value in-memory data store: this turns it into a perfect caching mechanism.&lt;/p&gt;
 &lt;h3&gt;Requirements&lt;/h3&gt;
 &lt;p&gt;This demo requires that you work on a Linux env, as Memcached originally is shipped for Unix-like systems via packet distribution systems (but can nevertheless be compiled from source).&lt;br /&gt;
@@ -369,7 +369,7 @@ Now let's try it out:&lt;/p&gt;
 &lt;p&gt;Time saving should be at a glance!&lt;/p&gt;
 &lt;h3&gt;More cache adapters for PyOWM&lt;/h3&gt;
 &lt;p&gt;In a similar way it is possible to write adapters for plugging other cache/storage providers (Redis, MongoDB, etc..) into the PyOWM library.  &lt;/p&gt;
-&lt;p&gt;This post stimulated me to write more adapters, you can find them &lt;a href="https://github.com/csparpa/pyowm-cache-adapters"&gt;on my GitHub repo&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Fri, 13 Dec 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-12-13:blog/2013/12/how-to-use-memcached-with-pyowm.html</guid><category>python</category><category>github</category><category>software</category><category>adapter</category><category>cache</category><category>linux</category><category>memcached</category><category>pyowm</category></item><item><title>Web APIs design: an improvable example</title><link>http://csparpa.github.io/blog/2013/10/web-apis-design-an-improvable-example.html</link><description>&lt;p&gt;Today I want to speak about the &lt;a href="http://bugs.openweathermap.org/projects/api/wiki/API_2_5"&gt;OWM web API 2.5&lt;/a&gt; and its design. As this API follows a versioning scheme, this analysis holds for version 2.5 (which then I suppose is not changing in time!)&lt;/p&gt;
+&lt;p&gt;This post stimulated me to write more adapters, you can find them &lt;a href="https://github.com/csparpa/pyowm-cache-adapters"&gt;on my GitHub repo&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Fri, 13 Dec 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-12-13:blog/2013/12/how-to-use-memcached-with-pyowm.html</guid><category>Python</category><category>GitHub</category><category>software</category><category>adapter</category><category>cache</category><category>Linux</category><category>Memcached</category><category>PyOWM</category></item><item><title>Web APIs design: an improvable example</title><link>http://csparpa.github.io/blog/2013/10/web-apis-design-an-improvable-example.html</link><description>&lt;p&gt;Today I want to speak about the &lt;a href="http://bugs.openweathermap.org/projects/api/wiki/API_2_5"&gt;OWM web API 2.5&lt;/a&gt; and its design. As this API follows a versioning scheme, this analysis holds for version 2.5 (which then I suppose is not changing in time!)&lt;/p&gt;
 &lt;p&gt;First let me clearly state that I'm writing this post as a "gathering of thoughts” I've had during the first draft development of the PyOWM library, and it is not meant to be a negative criticism – but rather a positive review – to the  API architects/developers. I just want to write here my ideas so that the OWM API can be improved in future versions – and I will commit myself to help with this process, if needed.  &lt;/p&gt;
 &lt;p&gt;I found this activity also very educational because it made me think again to all that books and articles I've read on the Internet about API design and – good grief – they were damn right!  &lt;/p&gt;
 &lt;p&gt;As I said, developing the PyOWM library I had to write code interfacing with the OWM web API, which basically meant I had to setup an HTTP client and some kind of parsing module in order to read the API's responses, squeeze useful data out of them and inject data into my custom object model to the benefit of users. These funny tasks lead me, nevertheless, to crash onto a few improvable API design features that made my work unreasonably more complicated and error-prone. And a bug also came into sight.  &lt;/p&gt;
@@ -547,7 +547,7 @@ Content-Type: application/json; charset=utf-8
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Again, a 200 status code (that means: "Ok, everything went smoothly”) and – surprisingly – an empty data list. What I would have expected is a 404 HTTP status code, telling me: "Hey, this station is not listed in my meteostations database”! So in this case, an error condition is wrongly mapped onto a non-error condition. And what if I query for an existing meteostation and it has no data available? How can I discern the "not found” case from the "found but no data available” case?&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Tue, 29 Oct 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-10-29:blog/2013/10/web-apis-design-an-improvable-example.html</guid><category>API</category><category>design</category><category>HTTP</category><category>JSON</category><category>OpenWeatherMap</category><category>pyowm</category></item><item><title>My first GitHub project</title><link>http://csparpa.github.io/blog/2013/10/my-first-github-project.html</link><description>&lt;p&gt;It's been a while since I wrote here:  lately I've spent a lot of my spare time to organize and code my first  GitHub project ever.  &lt;/p&gt;
+&lt;p&gt;Again, a 200 status code (that means: "Ok, everything went smoothly”) and – surprisingly – an empty data list. What I would have expected is a 404 HTTP status code, telling me: "Hey, this station is not listed in my meteostations database”! So in this case, an error condition is wrongly mapped onto a non-error condition. And what if I query for an existing meteostation and it has no data available? How can I discern the "not found” case from the "found but no data available” case?&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Tue, 29 Oct 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-10-29:blog/2013/10/web-apis-design-an-improvable-example.html</guid><category>API</category><category>design</category><category>HTTP</category><category>JSON</category><category>OpenWeatherMap</category><category>PyOWM</category></item><item><title>My first GitHub project</title><link>http://csparpa.github.io/blog/2013/10/my-first-github-project.html</link><description>&lt;p&gt;It's been a while since I wrote here:  lately I've spent a lot of my spare time to organize and code my first  GitHub project ever.  &lt;/p&gt;
 &lt;h3&gt;Why an open source project on GitHub?&lt;/h3&gt;
 &lt;p&gt;The reasons I decided to setup a GitHub account and launch an open source project are quite simple:  &lt;/p&gt;
 &lt;ul&gt;
@@ -569,7 +569,7 @@ A few minutes after that question raised in my mind I ran into the OpenWeatherMa
 &lt;p&gt;Do you want to help my open source project grow? There are infinite ways you can help: report issues, submit new feature requests, test on specific architectures, port to different Python versions, mention it in your blogs/user communities... and of course help in coding if you are able to!  &lt;/p&gt;
 &lt;h3&gt;Visit on GitHub&lt;/h3&gt;
 &lt;p&gt;Visit the GitHub page of the &lt;a href="http://github.com/csparpa/pyowm"&gt;PyOWM library&lt;/a&gt;.  &lt;/p&gt;
-&lt;p&gt;Thank you and cheers! ;-)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Mon, 07 Oct 2013 01:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2013-10-07:blog/2013/10/my-first-github-project.html</guid><category>software</category><category>development</category><category>opensource</category><category>github</category></item><item><title>How to convert VMWare virtual machines to Virtual Box</title><link>http://csparpa.github.io/blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html</link><description>&lt;h3&gt;Where I started from&lt;/h3&gt;
+&lt;p&gt;Thank you and cheers! ;-)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Mon, 07 Oct 2013 01:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2013-10-07:blog/2013/10/my-first-github-project.html</guid><category>software</category><category>development</category><category>opensource</category><category>GitHub</category><category>PyOWM</category></item><item><title>How to convert VMWare virtual machines to Virtual Box</title><link>http://csparpa.github.io/blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html</link><description>&lt;h3&gt;Where I started from&lt;/h3&gt;
 &lt;p&gt;This is my situation: I'm on a Windows7 x86 host, and I have an old Ubuntu 10.04 virtual machine with VMWare Tools installed on it.  &lt;/p&gt;
 &lt;p&gt;My need is to turn it into an OVF appliance, so that I can run it on Virtual Box, no matter where what architecture it will be run on.&lt;/p&gt;
 &lt;h3&gt;Steps&lt;/h3&gt;
@@ -599,7 +599,7 @@ A few minutes after that question raised in my mind I ran into the OpenWeatherMa
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Not as difficult as it may seem…. Hope this helps!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Wed, 08 May 2013 01:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2013-05-08:blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html</guid><category>vmware</category><category>virtualbox</category><category>conversion</category></item><item><title>Command-line software design: 5 more advices</title><link>http://csparpa.github.io/blog/2013/04/command-line-software-design-5-more-advices.html</link><description>&lt;p&gt;Ok, folks, ready to take off with 5 more CLMs (Command-Line Modules) design advices?  This is part II of a posts strip, part I contains the first 5 advices.&lt;/p&gt;
+&lt;p&gt;Not as difficult as it may seem…. Hope this helps!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Wed, 08 May 2013 01:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2013-05-08:blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html</guid><category>VMWare</category><category>Virtualbox</category><category>conversion</category></item><item><title>Command-line software design: 5 more advices</title><link>http://csparpa.github.io/blog/2013/04/command-line-software-design-5-more-advices.html</link><description>&lt;p&gt;Ok, folks, ready to take off with 5 more CLMs (Command-Line Modules) design advices?  This is part II of a posts strip, part I contains the first 5 advices.&lt;/p&gt;
 &lt;h3&gt;1. Provide meaningful messages&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;AKA: "What am I doing? I am existing..."&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Your CLM should provide insight into what it is currently doing. The difficult part is to decide how much detail you want to provide to the user...and you might argue: "Ok, but you can always use log level filtering and then let the user decide the verbosity" – this is perfectly right, but I'm talking about on-screen messages. My advice is to print out a specific message which conveys what the CLM is currently doing, with a detail level which should be just enough for the user not to say "It is talking rubbish"! So, what is really vital is that you avoid using simple and generalistic messages like "Computing" or "Executing" and – on the other hand – that you avoid using hyper-detailed expressions such as "Inverting matrix – computing determinant of the 3rd 2×2 submatrix" &lt;em&gt;if they are not meaningful to the user&lt;/em&gt;. Of course if the focus of your CLM is matricial inversion that shall be fine, but it shouldn't be if your CLM is – in example – focused on a higher-level problem which is solved using matricial inversion.  &lt;/p&gt;
@@ -796,7 +796,7 @@ WSGIScriptAlias /flasktest d:/webapps/test/test.wsgi
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://code.google.com/p/modwsgi/wiki/QuickConfigurationGuide"&gt;This guide&lt;/a&gt; helped me a lot in understanding how to setup Apache WSGI.&lt;/li&gt;
 &lt;li&gt;I also found &lt;a href="https://beagle.whoi.edu/redmine/projects/ibt/wiki/Deploying_Flask_Apps_with_Apache_and_Mod_WSGI?version=3"&gt;this tutorial&lt;/a&gt; which is far more comprehensive than mine and covers Flask deployment on Apache on Debian/Ubuntu environments&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Wed, 06 Mar 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-03-06:blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html</guid><category>software</category><category>webserver</category><category>webapps</category><category>python</category><category>Flask</category></item><item><title>Hamletic Javascript</title><link>http://csparpa.github.io/blog/2013/02/hamletic-javascript.html</link><description>&lt;p&gt;&lt;img alt="Hamletic Javascript" src="/blog/img/hamletic-javascript.png" title="Hamletic Javascript" /&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Fri, 22 Feb 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-02-22:blog/2013/02/hamletic-javascript.html</guid><category>software</category><category>javascript</category><category>humour</category></item><item><title>Server is unwilling to perform</title><link>http://csparpa.github.io/blog/2013/01/server-is-unwilling-to-perform.html</link><description>&lt;p&gt;&lt;img alt="Server is unwilling to perform" src="/blog/img/server-unwilling.png" title="Server is unwilling to perform" /&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Fri, 11 Jan 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-01-11:blog/2013/01/server-is-unwilling-to-perform.html</guid><category>software</category><category>ldap</category><category>humour</category></item><item><title>Command-line software design: 5 advices</title><link>http://csparpa.github.io/blog/2012/12/command-line-software-design-5-advices.html</link><description>&lt;p&gt;During the last years I developed several command-line utility tools, using several languages and for different environments. Attempts, learning and – of course – errors led me to clear my mind up and to adopt a series of design guidelines which I find very useful for any kind of command-line tool development – ranging from the simplest script to the most articulated modules – and which I'm willing to share. As you'll notice, the guidelines can be generalized, as they simply represent common sense approaches in SW design!  &lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Wed, 06 Mar 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-03-06:blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html</guid><category>software</category><category>webserver</category><category>webapps</category><category>Python</category><category>Flask</category></item><item><title>Hamletic Javascript</title><link>http://csparpa.github.io/blog/2013/02/hamletic-javascript.html</link><description>&lt;p&gt;&lt;img alt="Hamletic Javascript" src="/blog/img/hamletic-javascript.png" title="Hamletic Javascript" /&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Fri, 22 Feb 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-02-22:blog/2013/02/hamletic-javascript.html</guid><category>software</category><category>Javascript</category><category>humour</category></item><item><title>Server is unwilling to perform</title><link>http://csparpa.github.io/blog/2013/01/server-is-unwilling-to-perform.html</link><description>&lt;p&gt;&lt;img alt="Server is unwilling to perform" src="/blog/img/server-unwilling.png" title="Server is unwilling to perform" /&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Fri, 11 Jan 2013 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2013-01-11:blog/2013/01/server-is-unwilling-to-perform.html</guid><category>software</category><category>LDAP</category><category>humour</category></item><item><title>Command-line software design: 5 advices</title><link>http://csparpa.github.io/blog/2012/12/command-line-software-design-5-advices.html</link><description>&lt;p&gt;During the last years I developed several command-line utility tools, using several languages and for different environments. Attempts, learning and – of course – errors led me to clear my mind up and to adopt a series of design guidelines which I find very useful for any kind of command-line tool development – ranging from the simplest script to the most articulated modules – and which I'm willing to share. As you'll notice, the guidelines can be generalized, as they simply represent common sense approaches in SW design!  &lt;/p&gt;
 &lt;p&gt;Here I'm reporting just a few in "humurous" terms :-) (I'll share more with you in future posts as they come out from oblivion).  &lt;/p&gt;
 &lt;p&gt;From now on, CLM = Command Line Module&lt;/p&gt;
 &lt;h3&gt;1. Provide a synopsis describing the module's purposes&lt;/h3&gt;
@@ -973,7 +973,7 @@ C:\&amp;gt; C:\mongodb-2.2.0\bin\mongod.exe --remove
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;and if no error message appears – have fun!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Mon, 29 Oct 2012 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2012-10-29:blog/2012/10/how-to-install-mongodb-on-windows-as-a-service.html</guid><category>software</category><category>NoSQL</category><category>database</category><category>windows</category></item><item><title>Installing Android 4.1 Jelly Bean on LG Optimus One (LG P500)</title><link>http://csparpa.github.io/blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html</link><description>&lt;h3&gt;A Happy LG Optimus One owner’s story&lt;/h3&gt;
+&lt;p&gt;and if no error message appears – have fun!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Mon, 29 Oct 2012 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2012-10-29:blog/2012/10/how-to-install-mongodb-on-windows-as-a-service.html</guid><category>software</category><category>NoSQL</category><category>database</category><category>Windows</category><category>MongoDB</category></item><item><title>Installing Android 4.1 Jelly Bean on LG Optimus One (LG P500)</title><link>http://csparpa.github.io/blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html</link><description>&lt;h3&gt;A Happy LG Optimus One owner’s story&lt;/h3&gt;
 &lt;p&gt;I’m a happy owner of an LG Optimus One: not only because it proved many times to be a performing device, but also because – a few days after I bought it – I managed to replace the custom Android it had on board (themed by TIM: ugly!!!) with a simple and plain Android 2.2.1 Froyo stock ROM. This I did, despite many warnings I read about phone brick and license invalidation. About six-months after, I had the same fever and replaced Froyo with Gingebread: no problems this time, as well.  &lt;/p&gt;
 &lt;p&gt;Last monday, after reading that someone (&lt;a href="http://aokp.co/"&gt;Android Open Kang Project&lt;/a&gt; team) built an unoffical Android 4.1 Jelly Bean port for LG Optimus One, I took a fancy to it…”Danger is my business” – I thought. So, let’s go replace my current Android with the one on the crest of waves!!!  &lt;/p&gt;
 &lt;p&gt;I am reporting the steps I followed: they took about 3 hours, considering also the conclusive phone re-configuration and apps re-install.  &lt;/p&gt;
@@ -1016,4 +1016,186 @@ C:\&amp;gt; C:\mongodb-2.2.0\bin\mongod.exe --remove
 &lt;li&gt;Flashed the gapps from the .zip archive on the SD card&lt;/li&gt;
 &lt;li&gt;Rebooted phone&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;Hope this helps for all of you who whish to try out Jelly Bean on LG Optimus One!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Wed, 19 Sep 2012 01:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2012-09-19:blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html</guid><category>software</category><category>android</category><category>modding</category><category>mobile</category></item></channel></rss>
+&lt;p&gt;Hope this helps for all of you who whish to try out Jelly Bean on LG Optimus One!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Wed, 19 Sep 2012 01:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2012-09-19:blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html</guid><category>software</category><category>Android</category><category>modding</category><category>mobile</category></item><item><title>How to install MongoDB on Ubuntu</title><link>http://csparpa.github.io/blog/2012/07/how-to-install-mongodb-on-ubuntu.html</link><description>&lt;p&gt;This is a quick-guide to install MongoDB on Ubuntu 12.04 (if you want to know how to install it also on Fedora Core 11, please check out one of my old posts.  &lt;/p&gt;
+&lt;h3&gt;Steps&lt;/h3&gt;
+&lt;p&gt;Here is all you have to do:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo touch /etc/apt/sources.list.d/10gen.list
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;line&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$(echo &amp;quot;&lt;/span&gt;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&lt;span class="s2"&gt;&amp;quot;)&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$line&amp;quot;&lt;/span&gt; &amp;gt; /etc/apt/sources.list.d/10gen.list
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-get update
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And then you can install MongoDB with:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-get install mongodb-10gen
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Enjoy!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Mon, 09 Jul 2012 01:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2012-07-09:blog/2012/07/how-to-install-mongodb-on-ubuntu.html</guid><category>Linux</category><category>NoSQL</category><category>MongoDB</category><category>database</category><category>Ubuntu</category></item><item><title>The yes command</title><link>http://csparpa.github.io/blog/2012/06/the-yes-command.html</link><description>&lt;p&gt;The dumbest "yes-man" Linux command: &lt;code&gt;yes&lt;/code&gt;!  &lt;/p&gt;
+&lt;p&gt;It has only one aim: to continuously repeat what you tell it. Useful if pipelined with interactive cmd line installers (where you usually have to type &lt;code&gt;y&lt;/code&gt; a lot of times in order to accept the default values) and similar boring operations.  &lt;/p&gt;
+&lt;p&gt;So, for example if you go with:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; yes &lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;it keeps on printing the cmd line arguments followed by a new line character (&lt;code&gt;CTRL+C&lt;/code&gt; to stop execution):  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;... and if you do not specify any argument, it just says:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;y
+y
+y
+y
+&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Yes, man! :-)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Fri, 22 Jun 2012 01:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2012-06-22:blog/2012/06/the-yes-command.html</guid><category>Linux</category><category>shell</category></item><item><title>How to install MongoDB on Fedora</title><link>http://csparpa.github.io/blog/2012/03/how-to-install-mongodb-on-fedora.html</link><description>&lt;p&gt;During the last days, I've been delving into NoSQL datastores study and now I've got the chance to use MongoDB for a real-life need (of course, something relating to work issues). In order to reach my target, I needed a fresh installation of one of the most promising NoSQL technologies: the document-oriented datastore MongoDB.  &lt;/p&gt;
+&lt;h3&gt;Requirements&lt;/h3&gt;
+&lt;p&gt;Here is how I managed to install MongoDB 2.0.3 on a Fedora Core 11 host. You can easily adapt the steps I went through to your operational environment.  &lt;/p&gt;
+&lt;p&gt;We're about to issue every command as &lt;code&gt;root&lt;/code&gt; user.  &lt;/p&gt;
+&lt;h3&gt;Steps&lt;/h3&gt;
+&lt;p&gt;First, I downloaded, extracted and placed the Mongo stuff (I didn't use the 10gen repo, but just a &lt;code&gt;tar.gz&lt;/code&gt; from MongoDB website):  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /opt
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; wget http://fastdl.mongodb.org/linux/mongodb-linux-i686-2.0.3.tgz
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; tar xvf mongodb-linux-i686-2.0.3.tgz
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; mv mongodb-linux-i686-2.0.3.tg mongodb-2.0.3
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I decided that my databases would go under &lt;code&gt;/usr/data/mongodb&lt;/code&gt; and that MongoDB log file would be &lt;code&gt;/var/log/mongodb.log&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;As I wanted my MongoDB server instance to be started/stopped as a demon, I prepared the following &lt;code&gt;init.d&lt;/code&gt; script named &lt;code&gt;mongodb&lt;/code&gt; and placed it under &lt;code&gt;/etc/init.d/&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="nb"&gt;source&lt;/span&gt; /etc/rc.d/init.d/functions
+&lt;span class="nv"&gt;prog&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;mongod&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;mongod&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/opt/mongodb-2.0.3/bin/mongod&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
+
+start&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;$&amp;quot;Starting $prog: &amp;quot;&lt;/span&gt;
+  &lt;span class="c"&gt;#This is the fundamental call to start the MongoDB server instance&lt;/span&gt;
+  daemon &lt;span class="nv"&gt;$mongod&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;--fork --journal --dbpath /usr/data/mongodb \&lt;/span&gt;
+&lt;span class="s2"&gt;  --logpath /var/log/mongodb.log \&lt;/span&gt;
+&lt;span class="s2"&gt;  --logappend 2&amp;amp;gt;&amp;amp;amp;1 &amp;amp;gt;&amp;amp;gt;/var/log/mongodb.log&amp;quot;&lt;/span&gt;
+  &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt;
+  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt; &amp;amp;amp;&amp;amp;amp; touch /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+stop&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;$&amp;quot;Stopping $prog: &amp;quot;&lt;/span&gt;
+  killproc &lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt;
+  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt; &amp;amp;amp;&amp;amp;amp; rm -f /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$1&amp;quot;&lt;/span&gt; in
+ start&lt;span class="o"&gt;)&lt;/span&gt;
+  start
+  ;;
+ stop&lt;span class="o"&gt;)&lt;/span&gt;
+  stop
+  ;;
+ restart&lt;span class="o"&gt;)&lt;/span&gt;
+  stop
+  start
+  ;;
+ status&lt;span class="o"&gt;)&lt;/span&gt;
+  status &lt;span class="nv"&gt;$mongod&lt;/span&gt;
+  &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
+  ;;
+ *&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;$&amp;quot;Usage: $0 {start|stop|restart|status}&amp;quot;&lt;/span&gt;
+  &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;span class="k"&gt;esac&lt;/span&gt;
+
+&lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then, I opened my Iptables firewall's &lt;code&gt;INPUT&lt;/code&gt; chain so that port 27017 (the port MongoDB server is listening to) is not blocked: I opened the file &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; and added the following rule before of the &lt;code&gt;COMMIT&lt;/code&gt; statement:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;-A INPUT -p tcp -m tcp -m multiport --ports 27017 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and restarted iptables with:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; service iptables restart
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;That's it. Finally, I started the server instance with:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; service mongodb start
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and tested the whole thing opening the Mongo Javascript shell like this:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /opt/mongodb-2.0.3/bin
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; ./mongo
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and everything was fine.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Sun, 18 Mar 2012 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2012-03-18:blog/2012/03/how-to-install-mongodb-on-fedora.html</guid><category>Linux</category><category>NoSQL</category><category>MongoDB</category><category>database</category><category>Fedora</category></item><item><title>My first impact on Windows 8</title><link>http://csparpa.github.io/blog/2012/03/my-first-impact-on-windows-8.html</link><description>&lt;p&gt;I’ve just tried to install the Windows 8 Consumer Preview ISO image on VMware Player...  &lt;/p&gt;
+&lt;p&gt;...and that’s the result... :-S  &lt;/p&gt;
+&lt;p&gt;&lt;img alt="My first impact on Windows 8" src="/blog/img/blue-screen-win8.png" title="Windows 8 BSoD" /&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Thu, 01 Mar 2012 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2012-03-01:blog/2012/03/my-first-impact-on-windows-8.html</guid><category>software</category><category>VMWare</category><category>humour</category><category>Windows</category></item><item><title>How to change Linux shell login message</title><link>http://csparpa.github.io/blog/2012/02/how-to-change-linux-shell-login-message.html</link><description>&lt;p&gt;Your wish is to change that ugly message which is always appearing when you log into a shell (eg: bash) on your Linux system?  &lt;/p&gt;
+&lt;p&gt;Then, edit this file:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;/etc/motd
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and everything you put into it will appear just after logging in.  &lt;/p&gt;
+&lt;p&gt;In order to disable login messages, simply make sure to add to file &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; the following line: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;PrintMotd no
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The login message can also be dynamically generated... and in fact that's what actually happens in many systems (eg: my Ubuntu distro shows how many packages updates are available for downloading into the shell login message).&lt;br /&gt;
+In order to create dynamic login messages, I suggest to:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;prepare a shell script that echoes the desired content for the login message&lt;/li&gt;
+&lt;li&gt;disable &lt;code&gt;motd&lt;/code&gt; file printing at login&lt;/li&gt;
+&lt;li&gt;launch your script at any login by adding the its command-line to the &lt;code&gt;/etc/profile&lt;/code&gt; script, which is a system-wide startup script&lt;/li&gt;
+&lt;/ol&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Fri, 03 Feb 2012 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2012-02-03:blog/2012/02/how-to-change-linux-shell-login-message.html</guid><category>Linux</category><category>shell</category></item><item><title>Hungry sudoers</title><link>http://csparpa.github.io/blog/2011/12/hungry-sudoers.html</link><description>&lt;p&gt;&lt;img alt="Hungry sudoers" src="/blog/img/hungry-sudoers.png" title="Hungry sudoers" /&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Sun, 04 Dec 2011 01:00:00 +0100</pubDate><guid>tag:csparpa.github.io,2011-12-04:blog/2011/12/hungry-sudoers.html</guid><category>software</category><category>Linux</category><category>humour</category></item><item><title>Linux paths manipulation</title><link>http://csparpa.github.io/blog/2011/10/linux-paths-manipulation.html</link><description>&lt;p&gt;Sometimes – when geeking around in Linux – you need to play with things like filenames, paths and so on. Here's a quick reference that uses &lt;em&gt;readlink&lt;/em&gt;, &lt;em&gt;basename&lt;/em&gt; and &lt;em&gt;dirname&lt;/em&gt; commands.  &lt;/p&gt;
+&lt;p&gt;You have a folder structure like, say:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;/opt/
+   |_ goofy.txt
+   |_ test/
+       |_ mickey.txt
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, let's get inside:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /opt
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;and let's start playing:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# ABSOLUTE PATHS &lt;/span&gt;
+&lt;span class="c"&gt;# Get absolute path of goofy.txt&amp;lt;/span&amp;gt;&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; readlink -f goofy.txt          &lt;span class="c"&gt;# Gives: /opt/goofy.txt&lt;/span&gt;
+&lt;span class="c"&gt;# ...and of mickey.txt&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; readlink -f &lt;span class="nb"&gt;test&lt;/span&gt;/mickey.txt    &lt;span class="c"&gt;# Gives: /opt/test/mickey.txt&lt;/span&gt;
+
+&lt;span class="c"&gt;# FILENAMES &lt;/span&gt;
+&lt;span class="c"&gt;# Get filename for mickey.txt without extension&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; basename &lt;span class="nb"&gt;test&lt;/span&gt;/mickey.txt .txt    &lt;span class="c"&gt;# Gives: mickey&lt;/span&gt;
+
+&lt;span class="c"&gt;# BASE DIRECTORIES &lt;/span&gt;
+&lt;span class="c"&gt;# Get base directory relatively to the current directory&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname goofy.txt          &lt;span class="c"&gt;# Gives: .&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="nb"&gt;test&lt;/span&gt;/mickey.txt    &lt;span class="c"&gt;# Gives: test&lt;/span&gt;
+&lt;span class="c"&gt;#...and then absolutely&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="s2"&gt;&amp;quot;$(readlink -f goofy.txt)&amp;quot;&lt;/span&gt;        &lt;span class="c"&gt;# Gives: /opt&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="s2"&gt;&amp;quot;$(readlink -f test/mickey.txt)&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# Gives: /opt/test&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As you can see, it's just... for playing :-)&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Tue, 25 Oct 2011 01:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2011-10-25:blog/2011/10/linux-paths-manipulation.html</guid><category>Linux</category><category>shell</category></item></channel></rss>
