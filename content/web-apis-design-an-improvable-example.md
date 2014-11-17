@@ -1,7 +1,7 @@
 ﻿Title: Web APIs design: an improvable example
 Date: 2013-10-29 01:00
 Category: design
-Tags:  API, design, HTTP, JSON, OpenWeatherMap, pyowm
+Tags:  API, design, HTTP, JSON, OpenWeatherMap, PyOWM
 Slug: web-apis-design-an-improvable-example
 Authors: csparpa
 Summary: Digression on the Open Weather Map web API and ways to improve its design

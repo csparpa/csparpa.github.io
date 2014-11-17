@@ -1,7 +1,7 @@
 ﻿Title: How to deploy Flask applications to Apache webserver
 Date: 2013-03-06 01:00
 Category: howtos
-Tags: software, webserver, webapps, python, Flask
+Tags: software, webserver, webapps, Python, Flask
 Slug: how-to-deploy-flask-applications-to-apache-webserver
 Authors: csparpa
 Summary: How to deploy your Flask applications to WSGI-compatible webservers such as Apache

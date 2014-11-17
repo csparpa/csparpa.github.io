@@ -1,7 +1,7 @@
 Title: My first GitHub project
 Date: 2013-10-07 01:00
 Category: PyOWM
-Tags: software, development, opensource, github
+Tags: software, development, opensource, GitHub, PyOWM
 Slug: my-first-github-project
 Authors: csparpa
 Summary: My first open source SW project ever and the reasons behind it.

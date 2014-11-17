@@ -1,7 +1,7 @@
 ﻿Title: How to install MongoDB on Windows as a service
 Date: 2012-10-29 01:00
 Category: howtos
-Tags: software, NoSQL, database, windows
+Tags: software, NoSQL, database, Windows, MongoDB
 Slug: how-to-install-mongodb-on-windows-as-a-service
 Authors: csparpa
 Summary: How to install the MongoDB NoSQL datastore on Windows as a system service

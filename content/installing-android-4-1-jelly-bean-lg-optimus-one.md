@@ -1,7 +1,7 @@
 ﻿Title: Installing Android 4.1 Jelly Bean on LG Optimus One (LG P500)
 Date: 2012-09-19 01:00
 Category: howtos
-Tags: software, android, modding, mobile
+Tags: software, Android, modding, mobile
 Slug: installing-android-4-1-jelly-bean-lg-optimus-one
 Authors: csparpa
 Summary: How to install Android 4.1 on LG Optimus One (LG P500)

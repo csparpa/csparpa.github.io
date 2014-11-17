@@ -1,7 +1,7 @@
 ﻿Title: Meditation on the Zen of Python
 Date: 2014-01-22 01:00
 Category: Python
-Tags: zen, python, mantra, github, software
+Tags: zen, Python, mantra, GitHub, software
 Slug: meditation-on-the-zen-of-python
 Authors: csparpa
 Summary: The Zen of Python does not obey the Zen of Python

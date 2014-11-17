@@ -1,7 +1,7 @@
 ﻿Title: How to convert VMWare virtual machines to Virtual Box
 Date: 2013-05-08 01:00
 Category: howtos
-Tags: vmware, virtualbox, conversion
+Tags: VMWare, Virtualbox, conversion
 Slug: how-to-convert-vmware-virtual-machines-to-virtual-box
 Authors: csparpa
 Summary: How to convert virtual machines from VMWare format (.vmx) to Virtual Box format (.ovf)

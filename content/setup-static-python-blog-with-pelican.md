@@ -1,7 +1,7 @@
 Title: Setup a static Python-powered blog/website with Pelican
 Date: 2014-11-01 13:49
 Category: howtos
-Tags: python, blogging, pelican
+Tags: Python, blogging, Pelican
 Slug: setup-static-blog-with-pelican
 Authors: csparpa
 Summary: How to setup a static Python-powered blog/website in 10 minutes using Pelican

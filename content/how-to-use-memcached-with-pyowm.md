@@ -1,7 +1,7 @@
 ﻿Title: How to use Memcached with PyOWM
 Date: 2013-12-13 01:00
 Category: howtos
-Tags: python, github, software, adapter, cache, linux, memcached, pyowm
+Tags: Python, GitHub, software, adapter, cache, Linux, Memcached, PyOWM
 Slug: how-to-use-memcached-with-pyowm
 Authors: csparpa
 Summary: Quickly plug custom cache providers into the PyOWM library
