@@ -9,6 +9,9 @@ echo '***Copying images to blog...'
 mkdir output/blog/img
 cp images/*.png output/blog/img
 cp images/favicon.ico output/blog
+echo '***Copying resource files to blog...'
+mkdir output/blog/res
+cp resources/* output/blog/res
 echo '***Copying static website to ./output/ folder...'
 cp -R website/* output/
 if [ -f extra/CNAME ]; then
