@@ -30,8 +30,8 @@ but first of all _you_ must respect.
     - be _concise_ and leave _cliffhangers_: don't tell the whole story! Just provide fundamental facts, but let people come back to you to ask for more detail
     - _never lie about yourself_: if you do, you are doomed to eternal unsuccess. What you need to do, instead, is try to hide as much as possible your weaknesses (in terms of technical, behavioural, organisational debts) or -
 even better - to show them under a positive view, as things you're currently keen on improving.
-    - let the advertisement be pleasant to the customer's eyes_: the text should be clear and readable. So you need to use proper fonts, sizes, colours and to align contents consistently.
-    - double-checking for _typos_ (if you still make grammar mistakes, please go back to school...)  
+    - _let the advertisement be pleasant to the customer's eyes_: the text should be clear and readable. So you need to use proper fonts, sizes, colours and to align contents consistently.
+    - double-check for _typos_ (if you still make grammar mistakes, please go back to school...)  
 
 3. **Show your passion and hunger**: show how much _passion_ and _commitment_ you put into the things you've made/built/worked on! This conveys your emotional status to the people so they can feel your enthusiasm. And also let people know that you're not
 sitting down and waiting for change to come: give evidence that you _embrace change_, are _proactive_ and _eager to improve yourself and your skills_ in any possible way.
@@ -74,11 +74,11 @@ Also, absolutely avoid repetitions of any kind: every important fact/skill shoul
 
 #### Raw structure
 
-1. **Headline**. All of your names and surnames, and a short tagline saying what your profession is (or what profession you desire to do in your life). Any photos? The decision depends on you: if you choose to attach one, be it professionally-looking!
-2. **Contact points**. Make sure you include at least your e-mail address and mobile number, then you can add your address and a few optional links: eg, to your Linkedin account (which should only complement - not replace - your full CV under any circumstance!), to your personal website, etc. I suggest to avoid putting your social network references, unless your employer specifically asks for them.
+1. **Headline**. All of your names and surnames, and a short [optional] tagline saying what your profession is (or what profession you desire to do in your life). I especially like to use eye-catching sentences for the tagline, as they create expectations/curiosity in readers. Any photos? The decision depends on you: if you choose to attach one, make sure you look professional!
+2. **Contact points**. Make sure you include at least your e-mail address and mobile number, then you can add your address and a few optional links: eg, to your Linkedin account (which should only complement - never replace - your full CV!), to your personal website, etc. I suggest to avoid putting your social network references, unless your employer specifically asks for them.
 3. **Personal profile** [optional]. This seems to be a very opinionated section: in my experience, this part is widely used in the UK and almost always neglected in Italy.
 It's a concise and brilliant introduction to yourself, where you especially focus on your soft skills: think of it as a "speed-date" description of yourself as a professional. Provided you keep it brief, it can give a good reminder of your good parts (skills and potential), but the risk is to overlap the concepts you explain in the cover letter. So you might consider to avoid putting this when you have the chance to send a cover letter along with your CV.
-4. **Skills**. The most fundamental part in your CV, believe it or not. Please note that _you must be ready to prove that you own each of the skills you list here_! So don't exagerate. Advice: don't list everything you can do/use (leave out the skills that are not pertaining to the job spec or the company's business) and leave out the "obvious" things for a computer literate - like using Skype or the ability to browse the Internet... Also, this section is a good place where to talk about your soft and organisational skills, but consider to move your soft skills to the "Personal profile" section or to the cover letter.
+4. **Skills**. The most fundamental part in your CV, believe it or not. Put here _all the skills that match the ones required by the job spec_ you're addressing. Please note that _you must be ready to prove that you own each of the skills you list here_! So don't exagerate. Advice: don't list everything you can do/use (leave out the skills that are not pertaining to the job spec or the company's business) and leave out the "obvious" things for a computer literate - like using Skype or the ability to browse the Internet... Also, this section is a good place where to talk about your soft and organisational skills, but consider to move your soft skills to the "Personal profile" section or to the cover letter.
 As one could have multiple cross-concerning skills, it's a good practice to catalogue them into subsections. Of course many more could be added to the template (eg: mobile computing, operating systems, embedded systems, etc...). I recommend to put at least the following categories:  
 
     - _Programming languages_
@@ -91,10 +91,10 @@ As one could have multiple cross-concerning skills, it's a good practice to cata
     - _Open source contributions_ (put references to your GitHub/BitBucket/etc.. contributions or projects)
     - _Databases_ (put here RDSs and NoSQL datastores you know)  
   
-5. **Work experience**. List the most important work experiences of your life relative to the job spec! You should also put the major roles you had in the projects you list. It's better to list work experiences in reverse chronological order and to add name, address and website link for each past employer.
+5. **Work experience**. List the most important work experiences of your life relative to the job spec! You should also put the major roles you had in the projects you list. It's better to list work experiences in reverse chronological order (along with start/end dates) and to add name, address and website link for each past employer.
 _Make any concrete achievements you had and SW projects you worked on stand out!_ Achievements not only include writing working software systems but also improving the SW development practices, mentoring colleagues, boost to automatisation of repetitive tasks, documenting patterns/procedures, enforcing specific development/testing methodologies, focus attention on SW quality/security/usability.
 6. **Education** [optional but adviced]. I would say this section can be omitted, especially if you come from a non software-related background and/or you have ebough experience in the industry and therefore there is no need to show that you have a pertaining academic background. Usually, experience is exchanged 3:1 against knowledge! Nevertheless, please do add to this section any _certifications_, _master courses_, _MBAs_, etc.. you obtained along with marks.
-7. **Spoken languages**. List all the languages you currently speak/write along with a honest estimate of your proficiency. In Italy, experiences
+7. **Spoken languages**. List all the languages you currently speak/write along with a honest estimate of your proficiency.
 8. **Hobbies** [optional but adviced]. Work could be biggest thing in our life if we consider the amount of time we spend at it, but honestly should only be one half of it if we consider the passion and interest we put to itm the remaining part should be dedicated to personal hobbies.
 If you want to give a complete view on yourself, you need to tell about your major interests outside of work. Remember that people having lots of personal interests 
 look dynamic and more interesting to potential employers than people "who just commit hard when working": making the most out of diverse leisure activities helps
@@ -102,11 +102,12 @@ to keep your mind and energies fresh and not to be overwhelmed by huge workloads
 
 #### Styling
 - the font is Arial 10 for paragraph text and 12 for titles
-- I only use colour black
-- I use tables to align content and make their borders invisible
-- Sections are clearly identifiable as they are kept separate one from each other
-- I use a lot of bullet lists: they're clear and concise
-- The name+surname is repeated in the footer of each page, along with page number
+- I only use colour black for text
+- sections are clearly identifiable as they are kept separate one from each other
+- I use tables to align content: one table for each section. And I also make their borders invisible
+- all the provided web links have their corresponding URLs as text and are clickable
+- I use a lot of bullet lists (also indented): they're clear and concise
+- the name+surname is repeated in the footer of each page, along with page number
 
 ### The cover letter
 Think of a cover letter as the "positioning" of your advertisement: if you place an outstanding and appealing ad somewhere nobody can see, there's no point in
@@ -130,3 +131,12 @@ Generally speaking, the best advices for writing a smashing cover letter are:
 3. Compare both against the job spec and match job spec keywords. If your CV+cover are not matching at least 90% of the job spec's keywords, then you need to change them accordingly
 4. Have your CV+cover read by a fellow professional (eg: another developer, an IT manager, etc.)
 5. Put yourself in the shoes of a potential employer: would you give a chance to someone with your profile? Sincerely. If the answer is not a full "yes!", then somethig must be changed in your CV+cover.
+
+### Managing your online work profiles
+I've been tempted a lot of times to write down my CV using Markdown, compile it to plain HTML and host it as a page of my personal website. That is cool for sure, but this only helps the proliferation of duplicated work profiles I have on a plethora of websites (such as Linkedin, job notification boards, etc..): this means that every time I need to update my CV with - in example - a new job position or a new skill I've acquired, I need to add/modify each and every profile in a consistent way.  
+
+I don't like it: _duplication is the root of evil_, in software development as in CV writing! The ideal situation would be: write once and deploy everywhere, so _try to keep at minimum the number of work profiles you have online_!  
+
+My advice is to only keep one profile on the most used work network, _Linkedin_, and keep it in sync with your "plain-old" CV on paper.  
+
+Then also _make sure your Linkedin profile is read by as many people as possible_! This involves building and managing your social networks, subscribing to user groups discussing thing you've worked with or would love to (this helps you to find like-minded people and also gives recruiters visibility on you)... and of course, again, selling your product: add the link to your Linkedin profile to your e-mail signature and share it on the social networks, also put it on your personal website pages!
