@@ -32,7 +32,7 @@
 	a
 	{
 		color: #3B95C6;
-		text-decoration: underline;
+		text-decoration: none;
 		-moz-transition: color .2s ease-in-out;
 		-webkit-transition: color .2s ease-in-out;
 		-o-transition: color .2s ease-in-out;
@@ -75,6 +75,7 @@
 	h1
 	{
 		font-weight: 300;
+        text-align: center;
 	}
 	
 		h1 strong
@@ -178,7 +179,7 @@
 	
 	p, ul, ol, dl, table
 	{
-		margin-bottom: 1.5em;
+		margin-bottom: 1.0em;
 	}
 	
 	section,
@@ -977,9 +978,16 @@
 		{
 		}
 	
-			#top p a
+			#top p
 			{
 				color: inherit;
+			}
+            
+            #top p.subheader
+			{
+				font-size: 1.9em;
+                color: #676767;
+                text-align: center;
 			}
 
 /*********************************************************************************/
@@ -1006,3 +1014,14 @@
 		{
 			color: #777;
 		}
+
+span.underlined {border-bottom: 1px dotted #676767;}
+span.keyword { font-size: 1.2em; }
+a.keyword { font-size: 1.2em; }
+a.twitter { border-bottom: 1px dotted #35c0b2; color: #35c0b2;}
+a.github { border-bottom: 1px dotted #585858; color: #585858;}
+a.blog { border-bottom: 1px dotted #ba2e52; color: #ba2e52;}
+a.talks  { border-bottom: 1px dotted #9621ce; color:#9621ce;}
+a.linkedin  { border-bottom: 1px dotted #6c7808; color:#6c7808;}
+a.panoramio  { border-bottom: 1px dotted #e38024; color:#e38024;}
+a.delicious  { border-bottom: 1px dotted #626799; color:#626799;}
