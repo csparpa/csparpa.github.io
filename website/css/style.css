@@ -1025,3 +1025,17 @@ a.talks  { border-bottom: 1px dotted #9621ce; color:#9621ce;}
 a.linkedin  { border-bottom: 1px dotted #6c7808; color:#6c7808;}
 a.panoramio  { border-bottom: 1px dotted #e38024; color:#e38024;}
 a.delicious  { border-bottom: 1px dotted #626799; color:#626799;}
+
+.black_overlay{
+	display: none;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index: 9999;
+	-moz-opacity: 0.8;
+	opacity:.80;
+	filter: alpha(opacity=80);
+}
