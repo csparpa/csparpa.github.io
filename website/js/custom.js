@@ -25,7 +25,15 @@ $(document).ready(function(){
 
 	//talks link
 	$('#talks').on('click', function(){
-    //alert('talks');
+    var talks = $('#talks_popup');
+    $(talks).fadeIn('slow');
+    talks.center();
+    var overlay = $('#black_overlay');
+    $(overlay).fadeIn('slow');
+    $(overlay).on('click', function(){
+      $(talks).fadeOut('slow');
+      $(this).fadeOut('slow');
+    });
 	});
 
 });
