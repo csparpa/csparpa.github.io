@@ -1026,6 +1026,7 @@ a.linkedin  { border-bottom: 1px dotted #6c7808; color:#6c7808;}
 a.panoramio  { border-bottom: 1px dotted #e38024; color:#e38024;}
 a.delicious  { border-bottom: 1px dotted #626799; color:#626799;}
 
+.qr_popup { display:none; z-index: 9999;}
 .black_overlay{
 	display: none;
 	position: absolute;
