@@ -18,6 +18,13 @@ if [ -f extra/CNAME ]; then
     echo '***Copying CNAME settings to ./output folder...'
     cp extra/CNAME output/
 fi
+echo '***Minifying CSS files...'
+mkdir output/css/min
+for f in output/css/*.css
+do
+   filename="$(basename $f)"
+   python -m csscompressor -o "output/css/min/$filename" "$f"
+done
 echo '***Pushing to GitHub pages on csparpa.github.io@master...'
 ghp-import output
 git push http://github.com/csparpa/csparpa.github.io gh-pages:master

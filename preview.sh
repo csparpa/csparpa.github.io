@@ -18,6 +18,13 @@ if [ -f extra/CNAME ]; then
     echo '***Copying CNAME settings to ./output folder...'
     cp extra/CNAME output/
 fi
+echo '***Minifying CSS files...'
+mkdir output/css/min
+for f in output/css/*.css
+do
+   filename="$(basename $f)"
+   python -m csscompressor -o "output/css/min/$filename" "$f"
+done
 echo '***Serving preview on http://localhost:8000...'
 cd output/
 python -m SimpleHTTPServer &> /dev/null
