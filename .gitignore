@@ -1,3 +1,4 @@
+workflow.txt
 *.pyc
 cache/
 output/
