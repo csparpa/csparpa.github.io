@@ -27,7 +27,7 @@ ARTICLE_URL = "{date:%Y}/{date:%m}/{slug}.html"
 ARTICLE_SAVE_AS = "{date:%Y}/{date:%m}/{slug}.html"
 
 # Pelican plugins
-PLUGIN_PATHS = [u'plugins']
+PLUGIN_PATHS = [u'blog_plugins']
 PLUGINS = [u'sitemap']
 
 # Social widget
@@ -53,7 +53,7 @@ SOCIAL = (('GitHub', 'https://github.com/csparpa'),
 DEFAULT_PAGINATION = 5
 
 # The graphical theme for the blog
-THEME = 'themes/fresh'
+THEME = 'blog_themes/fresh'
 
 # Configuration for the 'sitemap' plugin
 SITEMAP = {

@@ -46,4 +46,4 @@ SOCIAL = (('GitHub', 'https://github.com/csparpa'),
 DEFAULT_PAGINATION = 5
 
 # The graphical theme for the blog
-THEME = 'themes/fresh'
+THEME = 'blog_themes/fresh'
