@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="author" content="csparpa" />
+    <meta name="robots" content="index, follow"/>
+
+    <meta property="og:title" content="Web APIs design: an improvable example"/>
+    <meta property="og:url" content="../../2013/10/web-apis-design-an-improvable-example.html"/>
+    <meta property="og:site_name" content="Vorsprung durch Informatik"/>
+    <meta property="og:type" content="article"/>
+
+    <link rel="canonical" href="../../2013/10/web-apis-design-an-improvable-example.html" />
+
+    <title>Web APIs design: an improvable example | Vorsprung durch Informatik</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../theme/css/main.css" />
+    <link href="http://csparpa.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Vorsprung durch Informatik Atom Feed" />
+
+    <script type="text/javascript">var switchTo5x=true;</script>
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">
+        stLight.options({
+            publisher: "",
+            doNotHash: false,
+            doNotCopy: false,
+            hashAddressBar: false
+        });
+    </script>
+</head>
+
+<body id="index">
+    <div class="row-fluid">
+        <div class="span10 offset1">
+            <header id="banner" >
+                <h1>
+                    <a style="display: inline-block;" href="../../">Vorsprung durch Informatik </a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="display: inline-block;" href="http://csparpa.github.io"><img src="../../img/csparpa.png" /></a>
+                </h1>
+                <nav class="navbar">
+                    <div class="navbar-inner">
+                        <ul class="nav">
+                            <li><a href="../..">HOME</a></li>
+                            <li><a href="../../archives.html">Archives</a></li>
+                            <li><a href="../../categories.html">Categories</a></li>
+                            <li><a href="../../tags.html">Tags</a></li>
+                        </ul>
+
+                    </div>
+                </nav>
+            </header><!-- /#banner -->
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span10 offset1">
+            <div class="row-fluid">
+<div class="span10 offset1">
+  <section>
+    <article>
+      <header>
+        <h1 class="entry-title">
+          <a href="../../2013/10/web-apis-design-an-improvable-example.html" rel="bookmark"
+             title="Permalink to Web APIs design: an improvable example">Web APIs design: an improvable example</a></h1>
+      </header>
+      <div class="entry-content">
+<footer class="post-info">
+    <address class="vcard author">
+        by <a class="url fn" href="../../author/csparpa.html">csparpa</a>
+    </address>
+
+    in <a href="../../category/design.html">design</a>
+
+    on 2013-10-29
+
+        |
+        tags:         <a href="../../tag/api.html">API</a>
+        <a href="../../tag/design.html">design</a>
+        <a href="../../tag/http.html">HTTP</a>
+        <a href="../../tag/json.html">JSON</a>
+        <a href="../../tag/openweathermap.html">OpenWeatherMap</a>
+        <a href="../../tag/pyowm.html">PyOWM</a>
+
+
+        |
+        <a href="../../2013/10/web-apis-design-an-improvable-example.html#disqus_thread">comments</a>
+
+    
+</footer><!-- /.post-info -->
+
+        <p>Today I want to speak about the <a href="http://bugs.openweathermap.org/projects/api/wiki/API_2_5">OWM web API 2.5</a> and its design. As this API follows a versioning scheme, this analysis holds for version 2.5 (which then I suppose is not changing in time!)</p>
+<p>First let me clearly state that I'm writing this post as a "gathering of thoughts” I've had during the first draft development of the PyOWM library, and it is not meant to be a negative criticism – but rather a positive review – to the  API architects/developers. I just want to write here my ideas so that the OWM API can be improved in future versions – and I will commit myself to help with this process, if needed.  </p>
+<p>I found this activity also very educational because it made me think again to all that books and articles I've read on the Internet about API design and – good grief – they were damn right!  </p>
+<p>As I said, developing the PyOWM library I had to write code interfacing with the OWM web API, which basically meant I had to setup an HTTP client and some kind of parsing module in order to read the API's responses, squeeze useful data out of them and inject data into my custom object model to the benefit of users. These funny tasks lead me, nevertheless, to crash onto a few improvable API design features that made my work unreasonably more complicated and error-prone. And a bug also came into sight.  </p>
+<p>Be warned: this is a quite long post ;-)  </p>
+<h3>Design oddities</h3>
+<p>I found the following ones:</p>
+<ol>
+<li>mismatch between endpoint naming and features that endpoints implement</li>
+<li>inconsistent formatting of JSON data returned by different endpoints when queried for the same (or similar) data entities</li>
+<li>lack of use of proper status codes in HTTP headers for error signaling</li>
+<li>certain endpoints map on 200 (Ok) HTTP status codes also 404 (Not Found) error conditions</li>
+</ol>
+<p>And there is something more… I won't blame anybody  of these, but they really should be taken into account:</p>
+<ul>
+<li>the API is poorly documented</li>
+<li>the API is not RESTful</li>
+</ul>
+<p>Let's dig into each point.  </p>
+<h3>Endpoints: naming vs features</h3>
+<p>The API lets you basically retrieve different weather datasets (observations, forecasts, historic data) about places in the world.
+The most simple and natural feature for the API is to let you query for the currently observed weather in a location: this can be specified in a twofold manner, either by passing the API a toponym or a lat/lon couple.  </p>
+<p>The related endpoints are:  </p>
+<div class="highlight"><pre>#Feature: retrieve current weather - location is specified via toponym
+http://api.openweathermap.org/data/2.5/weather?q=London,uk
+
+#Feature: retrieve current weather - location is specified via lat/lon
+http://api.openweathermap.org/data/2.5/weather?lat=57&amp;lon=-2.15
+</pre></div>
+
+
+<p>Here the naming seems to quite proper with regards to the implemented feature: great!  </p>
+<p>Things worsen when you consider these API features: find the current weather conditions in all the locations having certain characteristics, such as having toponyms that are similar/equal to a given string or being in the neighborhood of a given lat/lon couple.<br />
+Here are the related endpoints:  </p>
+<div class="highlight"><pre>#Feature: retrieve current weathers in all the locations whose names exactly equal to the string &quot;London&quot;
+http://api.openweathermap.org/data/2.5/find?q=London&amp;type=accurate
+
+#Feature: retrieve current weathers in all the locations whose names contains the string &quot;London&quot;
+http://api.openweathermap.org/data/2.5/find?q=London&amp;type=like
+
+#Feature: retrieve current weathers in all the locations in the neighborhoods of a lat/lon couple
+http://api.openweathermap.org/data/2.5/find?lat=57&amp;lon=-2.15
+</pre></div>
+
+
+<p>Now, this lays down three questions:  </p>
+<ol>
+<li>what the heck does "neighborhood” mean? The API documentation is silent about this topic. One could suppose that the API is performing a geographic search based on a circle with center into the specified lat/lon couple and a certain radius – and this is effectively what has been done in a prior (and now dismissed) version of the API. But nobody knows if this guess is true and – above all – what is the value for the radius , as it cannot be specified by the user.</li>
+<li>we know for sure that behind the API a geocoder is in action (for those who don't know what a geocoder is: it is a SW module that performs direct mapping between geographic labels – such as addresses, city names, toponyms into a geographic coordinates couple or even a geographic feature on a map. Sometimes geocoders also perform the reverse mapping): for this reason, we have a "smell” here… the "find” endpoint is implementing a geocoder-like feature: it should not be responsibility of the API to behave like that, or at least, if this responsibility is implemented it should be kept separate from the weather data provisioning. So, in my opinion, there should be an endpoint providing geocoding queries and another one providing current weather data on a single location: then, queries for current weather data on X multiple locations can be done with X API requests for current weather on a each single location. You think that users won't do that? Yes, they shouldn't: an automatic HTTP client should. Indeed, that's what APIs are meant to do: automatize :-)</li>
+<li>isn't the "accurate” parameter unnecessary? A "like” query should also give as results literal word matchings!</li>
+</ol>
+<p>Another feature: retrieve weather forecasts for a location. You can get forecasts for every 3-hours of the next 5 days or for every of the next 14 days.  </p>
+<p>Here are the endpoints:</p>
+<div class="highlight"><pre>#Feature: retrieve 3h weather forecast for a location
+http://api.openweathermap.org/data/2.5/forecast?q=London
+
+#Feature: retrieve daily weather forecast for a location
+http://api.openweathermap.org/data/2.5/forecast/daily?q=London
+</pre></div>
+
+
+<p>Again, questions:</p>
+<ol>
+<li>good naming here, but it can be improved. I would use "/forecast/daily” for daily forecast and "/forecast/3h” for 3-hours forecast. A viable alternative could be using a single endpoint "/forecast” along with a "interval=[daily|3h]” query parameter.</li>
+<li>only results coming from the daily forecast query can be paged by the user: the user can control how many results are returned by the API through an optional parameter named "cnt”. This is not possible with regards to the 3-hours forecast query: why?</li>
+<li>why isn't it possible to specify a forecast through a lon/lat couple? Maybe it is a design decision, but it creates asimmetry with the previously described API features.</li>
+<li>why isn't it possible to query for weather forecasts for all the locations having name similar to a given string or being in the neighborhood of a specific lon/lat couple? Guess it's due to API designers laziness…</li>
+</ol>
+<h3>Same conceptual entities, different JSON representations</h3>
+<p>Clients of data API expect returned data to be structured using some kind of language or convention and  they also expect that structured data is organized in chunks or logical groups  that clearly convey cohesion and hierarchy. In our specific case, the description language used by the API can either be JSON or XML (but we will only rely on JSON from now on): this is a consolidated practice among the web APIs  and this sounds good. At this point, we want to inspect the JSON returned by a query for current weather data on London,UK:  </p>
+<div class="highlight"><pre>#Payload of response to request:
+#GET http://api.openweathermap.org/data/2.5/weather?q=London,uk
+{
+  &quot;coord&quot;: {
+     &quot;lon&quot;: -0.12574,
+     &quot;lat&quot;: 51.50853 },
+  &quot;sys&quot;: {
+     &quot;country&quot;: &quot;GB&quot;,
+     &quot;sunrise&quot;: 1378877413,
+     &quot;sunset&quot;: 1378923812 },
+  &quot;weather&quot;: [{
+     &quot;id&quot;: 521,
+     &quot;main&quot;: &quot;Rain&quot;,
+     &quot;description&quot;: &quot;proximity shower rain&quot;,
+     &quot;icon&quot;: &quot;09d&quot; }],
+  &quot;base&quot;: &quot;gdps stations&quot;,
+  &quot;main&quot;: {
+       &quot;temp&quot;: 288.88,
+       &quot;pressure&quot;: 1021,
+       &quot;humidity&quot;: 63,
+       &quot;temp_min&quot;: 287.15,
+       &quot;temp_max&quot;: 290.37 },
+  &quot;wind&quot;: {
+       &quot;speed&quot;: 4.6,
+       &quot;deg&quot;: 330 },
+  &quot;clouds&quot;: {
+       &quot;all&quot;: 75 },
+  &quot;dt&quot;: 1378899070,
+  &quot;id&quot;: 2643743,
+  &quot;name&quot;: &quot;London&quot;,
+  &quot;cod&quot;: 200
+}
+</pre></div>
+
+
+<p>The "coord”, "country”, "id” and "name” JSON root elements refer to a single logical entity: the location for which the current weather is given (London, UK). Can you see it? Wouldn't have it been better to group all the location info into a single JSON element? For example, like this:  </p>
+<div class="highlight"><pre>{
+...
+&quot;location&quot;:
+{
+  &quot;coord&quot;: {
+     &quot;lon&quot;: -0.12574,
+     &quot;lat&quot;: 51.50853 },
+  &quot;country&quot;: &quot;GB&quot;,
+  &quot;name&quot;: &quot;London&quot;,
+  &quot;id&quot;: 2643743
+}
+ ...
+}
+</pre></div>
+
+
+<p>Another legitimate question is: why location information spread out from the data regarding current weather? Here the API is clearly returning more data than it has been asked for. But what is really obscure is that location info are structured in different ways if returned by different endpoints. In example, if we ask for the daily weather forecast on London,UK we get:  </p>
+<div class="highlight"><pre>#Payload of response to request:
+#GET http://api.openweathermap.org/data/2.5/forecast/daily?q=London
+{
+&quot;city&quot; : {
+  &quot;coord&quot; : {
+     &quot;lat&quot; : 51.50853,
+     &quot;lon&quot; : -0.12573999999999999 },
+   &quot;country&quot; : &quot;GB&quot;,
+   &quot;id&quot; : 2643743,
+   &quot;name&quot; : &quot;London&quot;,
+   &quot;population&quot; : 1000000},
+...
+}
+</pre></div>
+
+
+<p>Now data is structured! Magic? No: an evil art! And it drives me – and everyone else who is developing  a client library for this API – literally mad to parse the JSON: each endpoint, in practice, needs a specific JSON parser in order to parse the same data entities, and this introduces complexity into the code. Had the data been structured uniformly across the different endpoints, just one parser would be needed.  </p>
+<h3>HTTP status codes are neglected</h3>
+<p>This is one of the main shortcomings of this API: it does not convey error conditions through a proper use of HTTP status codes. The API users want to receive a 200 (OK) status code in the HTTP response's header – along with data – whenever a GET request is a hit: this means that the endpoint exists and is correctly invoked by the clients; the same way, users want to receive a 4xx or 5xx status code whenever something goes wrong with their request: this can happen for several reasons, either due to clients or the server itself. But, to be short: a user expects a non-200 status code to be returned whenever something goes wrong with its request.  s</p>
+<p>The OWM API <strong>always returns a 200 HTTP status code</strong>, no matter what happens. But, if something goes wrong with a client's request, it returns the right HTTP status code and an explanation message into the HTTP response's payload! An example: we want to query for current weather on a non-existent location (the folkloristic: "sev082hfrv2qvf2vunr”)  </p>
+<div class="highlight"><pre>#HTTP request
+GET /data/2.5/weather?q=sev082hfrv2qvf2vunr HTTP/1.1
+#HTTP response headers
+HTTP/1.1 200 OK
+Server: nginx
+Content-Type: application/json; charset=utf-8
+...
+#HTTP response payload
+{&quot;message&quot;:&quot;Error: Not found city&quot;,&quot;cod&quot;:&quot;404&quot;}
+</pre></div>
+
+
+<p>The JSON payload is clear: the location has not been found and a 404 (Not Found) error code has been returned. However the code is returned <strong>into the payload</strong>, so the clients have to first presume that the request was a success, then parse the payload and find out that it wasn't! The API is mis-using the HTTP protocol, which is a very nasty behaviour for clients and <em>blows the API away from RESTfulness</em>, as well.  </p>
+<h3>"Not found” is different from "Found but no data available”</h3>
+<p>The improper usage of HTTP status codes is particularly problematic in the case of queries to historic weather data registred by meteostations. A meteostation is identified by a unique integer number and when historic data is queried, the API returns a JSON list of data measurements for the desired meteostation. So, an empty list means: no data for the desired meteostation. Now, if I want to get historic data for a station that is not present in the API's meteostations collection (like, say, station number -2147483648), I get:  </p>
+<div class="highlight"><pre>#HTTP request
+GET /data/2.5/history/station?id=-2147483648&amp;type=tick HTTP/1.1
+#HTTP response headers
+HTTP/1.1 200 OK
+Server: nginx
+Content-Type: application/json; charset=utf-8
+...
+#HTTP response payload
+{
+&quot;message&quot;:&quot;&quot;,
+&quot;cod&quot;:&quot;200&quot;,
+&quot;type&quot;:&quot;tick&quot;,
+&quot;station_id&quot;:-2147483648,
+&quot;calctime&quot;:&quot; tick = 0.294 total=0.2954&quot;,
+&quot;cnt&quot;:0,
+&quot;list&quot;:[]
+}
+</pre></div>
+
+
+<p>Again, a 200 status code (that means: "Ok, everything went smoothly”) and – surprisingly – an empty data list. What I would have expected is a 404 HTTP status code, telling me: "Hey, this station is not listed in my meteostations database”! So in this case, an error condition is wrongly mapped onto a non-error condition. And what if I query for an existing meteostation and it has no data available? How can I discern the "not found” case from the "found but no data available” case?</p>
+
+      </div><!-- /.entry-content -->
+      <div class="comments">
+        <h2>Comments</h2>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+          var disqus_identifier = "2013/10/web-apis-design-an-improvable-example.html";
+          (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//csparpa.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+        </script>
+      </div>
+
+    </article>
+  </section>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="site-footer">
+        <div class="row-fluid">
+            <div class="span10 offset1">
+                <address style="font-size: 10px;">
+                    <p>
+                        Claudio Sparpaglione - all rights reserved
+                    </p>
+                    <p>
+                        Powered by <a href="http://getpelican.com/">Pelican</a> and themed with <a href="http://github.com/jsliang/pelican-fresh/">Fresh</a>, by <a href="http://jsliang.com/">jsliang</a> and <a href="https://github.com/jsliang/pelican-fresh/graphs/contributors">contributors</a>.
+                    </p>
+                </address>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-56547669-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'csparpa';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds/pyowm.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2013-10-07T01:00:00+02:00</updated><entry><title>My first GitHub project</title><link href="http://csparpa.github.io/blog/2013/10/my-first-github-project.html" rel="alternate"></link><updated>2013-10-07T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-10-07:blog/2013/10/my-first-github-project.html</id><summary type="html">&lt;p&gt;It's been a while since I wrote here:  lately I've spent a lot of my spare time to organize and code my first  GitHub project ever.  &lt;/p&gt;
+&lt;h3&gt;Why an open source project on GitHub?&lt;/h3&gt;
+&lt;p&gt;The reasons I decided to setup a GitHub account and launch an open source project are quite simple:  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;I've been living on the shoulders of the open source community for years and I've always been proud of what it gave me. The best way to be thankful is to give my commitment and code for free to everyone!&lt;/li&gt;
+&lt;li&gt;GitHub is a nice place where programmers can show their skills to the world (friends, fellow programmers, potential new employers). I mean: not only coding skills, also organizational and communication skills, as well as mind openness.&lt;/li&gt;
+&lt;li&gt;My desire is to use GitHub to link and cohoperate with others like me, sharing my same interests&lt;/li&gt;
+&lt;li&gt;I'm sure that open source cohoperation will teach me a lot of things: I have a lot to learn from the code masters&lt;/li&gt;
+&lt;li&gt;Last, but not least, it's a good chance to practice with a few languages - first of all, Python&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;The PyOWM library&lt;/h3&gt;
+&lt;p&gt;So the question was: what will my open source project be about?&lt;br /&gt;
+A few minutes after that question raised in my mind I ran into the OpenWeatherMap website, which basically is a web portal disseminating world weather data that are openly contributed by the user community. I noticed that the site provided a data web API, that had been created ages before and, of course, lots of code projects have been popping out since regarding this API. I took a look at the client wrapping libraries that have been created for the API and noticed that no Python client wrapper were mentioned; I also googled a bit and I found that only one attempt of Py-wrapping this API had been made since (pretty rough, not supporting the latest API version and its last commit dates back to more to the beginning of the year).  &lt;/p&gt;
+&lt;p&gt;So, it was a deal: a Python client wrapping library that could allow users to interact with the OpenWeatherMap web API via a simple object-oriented model.  &lt;/p&gt;
+&lt;p&gt;The &lt;a href="https://github.com/csparpa/pyowm"&gt;PyOWM&lt;/a&gt; library was conceptually born.&lt;/p&gt;
+&lt;h3&gt;State of the art&lt;/h3&gt;
+&lt;p&gt;I worked hard to shape the library, and now most of the web API features are covered. I've developed it using a Test-Driven approach and keeping it as minimalist as possible. I hope this work will be useful to as many people as possible.  &lt;/p&gt;
+&lt;p&gt;Now I need to "sponsorize" my creation with the OpenWeatherMap keepers, the OWM community users and gather help to test and improve the library.  &lt;/p&gt;
+&lt;h3&gt;How to contribute&lt;/h3&gt;
+&lt;p&gt;Do you want to help my open source project grow? There are infinite ways you can help: report issues, submit new feature requests, test on specific architectures, port to different Python versions, mention it in your blogs/user communities... and of course help in coding if you are able to!  &lt;/p&gt;
+&lt;h3&gt;Visit on GitHub&lt;/h3&gt;
+&lt;p&gt;Visit the GitHub page of the &lt;a href="http://github.com/csparpa/pyowm"&gt;PyOWM library&lt;/a&gt;.  &lt;/p&gt;
+&lt;p&gt;Thank you and cheers! ;-)&lt;/p&gt;</summary><category term="software"></category><category term="development"></category><category term="opensource"></category><category term="GitHub"></category><category term="PyOWM"></category></entry></feed>
