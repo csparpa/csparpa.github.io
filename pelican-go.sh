@@ -13,7 +13,8 @@ function clear_pyc {
 
 function clear_output_dir {
   echo '***Clearing ./output folder...'
-  rm -rf output/*
+  rm -Rf output/
+  mkdir output
 }
 
 function compile_blog_content {
