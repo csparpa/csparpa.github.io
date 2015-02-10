@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds/all-en.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2014-11-09T18:32:00+01:00</updated><entry><title>Guidelines for writing a good CV in the software development industry</title><link href="http://csparpa.github.io/blog/2014/11/writing-a-good-cv-in-the-software-development-industry.html" rel="alternate"></link><updated>2014-11-09T18:32:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2014-11-09:blog/2014/11/writing-a-good-cv-in-the-software-development-industry.html</id><summary type="html">&lt;p&gt;Writing a good CV is the key to obtaining your dream job and successfully start/boost your career.&lt;br /&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds/all-en.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2015-02-10T10:41:00+01:00</updated><entry><title>Serve minified CSS and Javascript on a Pelican-powered blog</title><link href="http://csparpa.github.io/blog/2015/02/minify-resources-for-pelican-blog.html" rel="alternate"></link><updated>2015-02-10T10:41:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2015-02-10:blog/2015/02/minify-resources-for-pelican-blog.html</id><summary type="html">&lt;h3&gt;Summary&lt;/h3&gt;
+&lt;p&gt;In this short tutorial I'll show you how to wire minified CSS and Javascript into your Pelican-powered blog - I did it on my own one (the one you're currently reading!)&lt;/p&gt;
+&lt;h3&gt;How minification works&lt;/h3&gt;
+&lt;p&gt;"Minification" is the process of compressing the content of CSS and Javascript files by:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;removing characters (like whitespaces and tabs) the processor/interpreter is insensitive to&lt;/li&gt;
+&lt;li&gt;replacing long variable names with shorter ones (eg: naming variables with just one or two letters)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This is helpful as it decreases the size of &lt;code&gt;.css&lt;/code&gt; and &lt;code&gt;.js&lt;/code&gt; files and therefore when these files will be sent over the wire they'll take less time (and bandwidth) to be delivered.&lt;/p&gt;
+&lt;p&gt;A shortcoming is that minified code is no longer readable by humans, but this seldom is a problem as minification is a one-way process and one can automate it in order to keep the unminified source files apart.&lt;/p&gt;
+&lt;h3&gt;Requirements&lt;/h3&gt;
+&lt;p&gt;You can read in &lt;a href="http://csparpa.github.io/blog/2014/11/setup-static-blog-with-pelican.html"&gt;my previous post&lt;/a&gt; how to setup a weblog using the Pelican library.&lt;/p&gt;
+&lt;p&gt;In order to install the dependencies we'll need, you need to install the &lt;code&gt;pip&lt;/code&gt; package manager&lt;/p&gt;
+&lt;h3&gt;Install minifiers&lt;/h3&gt;
+&lt;p&gt;There are lots of CSS and Javascript minifiers out there.&lt;/p&gt;
+&lt;p&gt;I've looked specifically for Python minifiers and found &lt;code&gt;jsmin&lt;/code&gt; for Javascript minification and &lt;code&gt;csscompressor&lt;/code&gt; for CSS minification.&lt;/p&gt;
+&lt;p&gt;You can install them with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; pip install jsmin
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; pip install csscompressor
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Use minifiers&lt;/h3&gt;
+&lt;p&gt;Their usage is very simple:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Minify a Javascript file&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; python -m jsmin my.js &amp;gt; my-minified.js
+
+&lt;span class="c"&gt;# Minify a CSS file&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; python -m csscompressor -o my-minified.css my.css
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The minifiers output shall be put into your blog's css and js folders, getting served by your webserver.&lt;/p&gt;
+&lt;p&gt;You can (and you should) add the resource minification commands to your automatic blog-build script - and if you don't have one, go make it! ;)&lt;/p&gt;</summary><category term="Python"></category><category term="blogging"></category><category term="Pelican"></category><category term="Javascript"></category><category term="CSS"></category><category term="minify"></category></entry><entry><title>Guidelines for writing a good CV in the software development industry</title><link href="http://csparpa.github.io/blog/2014/11/writing-a-good-cv-in-the-software-development-industry.html" rel="alternate"></link><updated>2014-11-09T18:32:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2014-11-09:blog/2014/11/writing-a-good-cv-in-the-software-development-industry.html</id><summary type="html">&lt;p&gt;Writing a good CV is the key to obtaining your dream job and successfully start/boost your career.&lt;br /&gt;
 But if you're a software craftsman, writing a good CV isn't so easy and there is a plenty of
 reasons why you should give the maximum relevance to it.  &lt;/p&gt;
 &lt;p&gt;Please note that in this post I'm talking about CV writing for &lt;em&gt;technical&lt;/em&gt; positions: this means that the formats won't be
