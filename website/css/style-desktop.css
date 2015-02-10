@@ -203,14 +203,16 @@
 		{
 			display: inline-block;
 			box-shadow: -1px 0px 0px 0px rgba(255,255,255,0.1);
-			padding: 0 0.2em 0 0.2em;
+			border-right: solid 1px;
+			padding-right: 15px;
+			padding-left: 15px;
 		}
 		
-		#copyright li:first-child
+		#copyright li:last-child
 		{
-			border: 0;
+			border-right: 0;
 			box-shadow: none;
-			padding-left: 0;
+			padding-right: 0;
 		}
         
 		#copyright li a
