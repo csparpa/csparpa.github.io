@@ -1,8 +1,0 @@
-1. git checkout sources
-2. write blog post drafts / edit website material
-3. bash pelican-go.bash preview
-4. bash pelican-go.bash publish
-5. your material is online on github!
-6. don't forget to push local modifications to sources:
-     git commit .....
-     git push origin sources
