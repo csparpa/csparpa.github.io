@@ -5,24 +5,20 @@
     <meta name="author" content="csparpa" />
     <meta name="robots" content="index, follow"/>
 
-    <meta property="og:title" content="The yes command"/>
-    <meta property="og:url" content="../../2012/06/the-yes-command.html"/>
+    <meta property="og:title" content="Serve minified CSS and Javascript on a Pelican-powered blog"/>
+    <meta property="og:url" content="../../2015/02/minify-resources-for-pelican-blog.html"/>
     <meta property="og:site_name" content="Vorsprung durch Informatik"/>
     <meta property="og:type" content="article"/>
 
-    <link rel="canonical" href="../../2012/06/the-yes-command.html" />
+    <link rel="canonical" href="../../2015/02/minify-resources-for-pelican-blog.html" />
 
-    <title>The yes command | Vorsprung durch Informatik</title>
+    <title>Serve minified CSS and Javascript on a Pelican-powered blog | Vorsprung durch Informatik</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" />
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" />
 
     <link rel="stylesheet" type="text/css" href="../../theme/css/main.css" />
-<<<<<<< HEAD
-    <link href="http://csparpa.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Vorsprung durch Informatik Atom Feed" />
-=======
->>>>>>> 7961d4370e0bef15463ad074dae809659b06583a
 
     <script type="text/javascript">var switchTo5x=true;</script>
     <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
@@ -66,8 +62,8 @@
     <article>
       <header>
         <h1 class="entry-title">
-          <a href="../../2012/06/the-yes-command.html" rel="bookmark"
-             title="Permalink to The yes command">The yes command</a></h1>
+          <a href="../../2015/02/minify-resources-for-pelican-blog.html" rel="bookmark"
+             title="Permalink to Serve minified CSS and Javascript on a Pelican-powered blog">Serve minified CSS and Javascript on a Pelican-powered blog</a></h1>
       </header>
       <div class="entry-content">
 <footer class="post-info">
@@ -75,66 +71,59 @@
         by <a class="url fn" href="../../author/csparpa.html">csparpa</a>
     </address>
 
-    in <a href="../../category/linux.html">Linux</a>
+    in <a href="../../category/howtos.html">howtos</a>
 
-    on 2012-06-22
+    on 2015-02-10
 
         |
-        tags:         <a href="../../tag/linux.html">Linux</a>
-        <a href="../../tag/shell.html">shell</a>
+        tags:         <a href="../../tag/python.html">Python</a>
+        <a href="../../tag/blogging.html">blogging</a>
+        <a href="../../tag/pelican.html">Pelican</a>
+        <a href="../../tag/javascript.html">Javascript</a>
+        <a href="../../tag/css.html">CSS</a>
+        <a href="../../tag/minify.html">minify</a>
 
 
-<<<<<<< HEAD
-        |
-        <a href="../../2012/06/the-yes-command.html#disqus_thread">comments</a>
-=======
->>>>>>> 7961d4370e0bef15463ad074dae809659b06583a
 
     
 </footer><!-- /.post-info -->
 
-        <p>The dumbest "yes-man" Linux command: <code>yes</code>!  </p>
-<p>It has only one aim: to continuously repeat what you tell it. Useful if pipelined with interactive cmd line installers (where you usually have to type <code>y</code> a lot of times in order to accept the default values) and similar boring operations.  </p>
-<p>So, for example if you go with:  </p>
-<div class="highlight"><pre><span class="nv">$&gt;</span> yes <span class="nb">test</span>
+        <h3>Summary</h3>
+<p>In this short tutorial I'll show you how to wire minified CSS and Javascript into your Pelican-powered blog - I did it on my own one (the one you're currently reading!)</p>
+<h3>How minification works</h3>
+<p>"Minification" is the process of compressing the content of CSS and Javascript files by:</p>
+<ul>
+<li>removing characters (like whitespaces and tabs) the processor/interpreter is insensitive to</li>
+<li>replacing long variable names with shorter ones (eg: naming variables with just one or two letters)</li>
+</ul>
+<p>This is helpful as it decreases the size of <code>.css</code> and <code>.js</code> files and therefore when these files will be sent over the wire they'll take less time (and bandwidth) to be delivered.</p>
+<p>A shortcoming is that minified code is no longer readable by humans, but this seldom is a problem as minification is a one-way process and one can automate it in order to keep the unminified source files apart.</p>
+<h3>Requirements</h3>
+<p>You can read in <a href="http://csparpa.github.io/blog/2014/11/setup-static-blog-with-pelican.html">my previous post</a> how to setup a weblog using the Pelican library.</p>
+<p>In order to install the dependencies we'll need, you need to install the <code>pip</code> package manager</p>
+<h3>Install minifiers</h3>
+<p>There are lots of CSS and Javascript minifiers out there.</p>
+<p>I've looked specifically for Python minifiers and found <code>jsmin</code> for Javascript minification and <code>csscompressor</code> for CSS minification.</p>
+<p>You can install them with:</p>
+<div class="highlight"><pre><span class="nv">$&gt;</span> pip install jsmin
+<span class="nv">$&gt;</span> pip install csscompressor
 </pre></div>
 
 
-<p>it keeps on printing the cmd line arguments followed by a new line character (<code>CTRL+C</code> to stop execution):  </p>
-<div class="highlight"><pre><span class="nb">test</span>
-<span class="nb">test</span>
-<span class="nb">test</span>
-<span class="o">[</span>...<span class="o">]</span>
+<h3>Use minifiers</h3>
+<p>Their usage is very simple:</p>
+<div class="highlight"><pre><span class="c"># Minify a Javascript file</span>
+<span class="nv">$&gt;</span> python -m jsmin my.js &gt; my-minified.js
+
+<span class="c"># Minify a CSS file</span>
+<span class="nv">$&gt;</span> python -m csscompressor -o my-minified.css my.css
 </pre></div>
 
 
-<p>... and if you do not specify any argument, it just says:  </p>
-<div class="highlight"><pre>y
-y
-y
-y
-<span class="o">[</span>...<span class="o">]</span>
-</pre></div>
-
-
-<p>Yes, man! :-)</p>
+<p>The minifiers output shall be put into your blog's css and js folders, getting served by your webserver.</p>
+<p>You can (and you should) add the resource minification commands to your automatic blog-build script - and if you don't have one, go make it! ;)</p>
 
       </div><!-- /.entry-content -->
-<<<<<<< HEAD
-      <div class="comments">
-        <h2>Comments</h2>
-        <div id="disqus_thread"></div>
-        <script type="text/javascript">
-          var disqus_identifier = "2012/06/the-yes-command.html";
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = '//csparpa.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-      </div>
-=======
->>>>>>> 7961d4370e0bef15463ad074dae809659b06583a
 
     </article>
   </section>
@@ -168,18 +157,6 @@ y
       ga('send', 'pageview');
 
     </script>
-<<<<<<< HEAD
-<script type="text/javascript">
-    var disqus_shortname = 'csparpa';
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-=======
->>>>>>> 7961d4370e0bef15463ad074dae809659b06583a
     <script src="//code.jquery.com/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
 </body>
