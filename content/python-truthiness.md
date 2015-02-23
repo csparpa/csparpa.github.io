@@ -13,16 +13,17 @@ Today I just want to share with you how to check truth values in Python. **Truth
 
 Each Python built-in type has a truthiness value:
 
- Type         |     True when   |   False when 
-:------------:|:---------------:|:--------------:
- `NoneType`   |  never          |  always
- `bool`       |  `True`         |  `False`
- `str`        |  non-empty      |  empty
- `int`        |  not `0`        |  `0`
- `tuple       |  non-empty      |  empty
- `list`       |  non-empty      |  empty
- `dict`       |  non-empty      |  empty
- `set`        |  non-empty      |  empty
+ Type          |     True when             |   False when 
+:-------------:|:-------------------------:|:--------------:
+ `NoneType`    |  never                    |  always
+ `bool`        |  `True`                   |  `False`
+ `str`         |  non-empty                |  empty
+ `int`         |  not `0`                  |  `0`
+ `tuple        |  non-empty                |  empty
+ `list`        |  non-empty                |  empty
+ `dict`        |  non-empty                |  empty
+ `set`         |  non-empty                |  empty
+ custom object |  `bool(obj)` gives `True` |  `bool(obj)` gives `False`
 
 
 ### Checking truthiness ###
