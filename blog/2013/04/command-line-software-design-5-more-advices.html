@@ -19,6 +19,13 @@
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" />
 
     <link rel="stylesheet" type="text/css" href="../../theme/css/main.css" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    <link href="http://csparpa.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Vorsprung durch Informatik Atom Feed" />
+=======
+>>>>>>> 7961d4370e0bef15463ad074dae809659b06583a
+>>>>>>> 7b40ebdb912aeecb45ca6183df3ca2106d297554
 
     <script type="text/javascript">var switchTo5x=true;</script>
     <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
@@ -81,6 +88,14 @@
         <a href="../../tag/shell.html">shell</a>
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        |
+        <a href="../../2013/04/command-line-software-design-5-more-advices.html#disqus_thread">comments</a>
+=======
+>>>>>>> 7961d4370e0bef15463ad074dae809659b06583a
+>>>>>>> 7b40ebdb912aeecb45ca6183df3ca2106d297554
 
     
 </footer><!-- /.post-info -->
@@ -164,6 +179,7 @@ claudio@laptop:~<span class="nv">$ </span><span class="nb">echo</span> <span cla
 <p>and here is the code (as you can see I'm using the <code>cat</code> executable which lies in the <code>/bin</code> path on my Linux system):  </p>
 <div class="highlight"><pre><span class="c">#!/bin/bash</span>
 
+<<<<<<< HEAD
 <span class="nv">inputfile</span><span class="o">=</span><span class="s2">&quot;$1&quot;</span>
 <span class="nv">outputdir</span><span class="o">=</span><span class="s2">&quot;$2&quot;</span>
 
@@ -171,6 +187,15 @@ claudio@laptop:~<span class="nv">$ </span><span class="nb">echo</span> <span cla
 
 <span class="nb">cd</span> <span class="s2">&quot;$bindir&quot;</span>
 cat <span class="s2">&quot;$inputfile&quot;</span> &gt; <span class="s2">&quot;$outputdir/result.out&quot;</span>
+=======
+<span class="nv">inputfile</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+<span class="nv">outputdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span>
+
+<span class="nv">bindir</span><span class="o">=</span><span class="s2">&quot;/bin&quot;</span>
+
+<span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$bindir</span><span class="s2">&quot;</span>
+cat <span class="s2">&quot;</span><span class="nv">$inputfile</span><span class="s2">&quot;</span> &gt; <span class="s2">&quot;</span><span class="nv">$outputdir</span><span class="s2">/result.out&quot;</span>
+>>>>>>> 7961d4370e0bef15463ad074dae809659b06583a
 </pre></div>
 
 
@@ -179,9 +204,15 @@ cat <span class="s2">&quot;$inputfile&quot;</span> &gt; <span class="s2">&quot;$
 claudio@laptop:~<span class="nv">$ </span>mkdir output  <span class="c">#we create the output folder</span>
 claudio@laptop:~<span class="nv">$ </span>tree .
 .
+<<<<<<< HEAD
 |-- copier.bash
 <span class="sb">`</span>-- output
 1 directory, 1 file
+=======
+<span class="p">|</span>-- copier.bash
+<span class="sb">`</span>-- output
+<span class="m">1</span> directory, <span class="m">1</span> file
+>>>>>>> 7961d4370e0bef15463ad074dae809659b06583a
 claudio@laptop:~<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;italia has got talent&quot;</span> &gt; input.txt <span class="c">#we create the input file</span>
 claudio@laptop:~<span class="nv">$ </span>bash copier.bash input.txt output        <span class="c">#we run the script</span>
 copier.bash: line 9: output/result.out: No such file or directory
@@ -206,6 +237,24 @@ italia has got talent
 <p>You can see that: one must know in advance that absolute paths must be used. And consider that we were lucky to have a textual CLM, what if we had a compiled one? Lesson learn: never use <code>cd</code> and leverage absolute paths!</p>
 
       </div><!-- /.entry-content -->
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+      <div class="comments">
+        <h2>Comments</h2>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+          var disqus_identifier = "2013/04/command-line-software-design-5-more-advices.html";
+          (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//csparpa.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+        </script>
+      </div>
+=======
+>>>>>>> 7961d4370e0bef15463ad074dae809659b06583a
+>>>>>>> 7b40ebdb912aeecb45ca6183df3ca2106d297554
 
     </article>
   </section>
@@ -239,6 +288,21 @@ italia has got talent
       ga('send', 'pageview');
 
     </script>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<script type="text/javascript">
+    var disqus_shortname = 'csparpa';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+=======
+>>>>>>> 7961d4370e0bef15463ad074dae809659b06583a
+>>>>>>> 7b40ebdb912aeecb45ca6183df3ca2106d297554
     <script src="//code.jquery.com/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
 </body>
