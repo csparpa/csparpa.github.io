@@ -74,9 +74,21 @@ function serve_preview {
 }
 
 function publish_to_github {
-  echo '***Pushing to GitHub pages on csparpa.github.io@master...'
-  ghp-import output
-  git push http://github.com/csparpa/csparpa.github.io gh-pages:master
+  echo '***Pushing to csparpa.github.io@master...'
+  tempdir="$(mktemp)"
+  cp -R output/* "$tempdir"
+  echo "$tempdir"
+  git checkout master
+  cp -R "$tempdir/*" .
+  echo 'Modifications:'
+  git status
+  #git add -A
+  #staged_files="$(git diff --cached --numstat | wc -l)"
+  # if [ $staged_files -ne 0]; then
+  #   echo 'No local modifications to be pushed'
+  # else:
+  #   git push https://csparpa@github.com/csparpa/csparpa.github.io.git master
+  # fi
 }
 
 # actual action script
