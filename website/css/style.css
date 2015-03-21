@@ -1025,6 +1025,8 @@ a.talks  { border-bottom: 1px dotted #9621ce; color:#9621ce;}
 a.linkedin  { border-bottom: 1px dotted #6c7808; color:#6c7808;}
 a.panoramio  { border-bottom: 1px dotted #e38024; color:#e38024;}
 a.delicious  { border-bottom: 1px dotted #626799; color:#626799;}
+a.talk { border-bottom: 1px dotted #1756b4; color:#1756b4;}
+a.slides { border-bottom: 1px dotted #1c9112; color:#1c9112;}
 
 .generic_popup { display:none; z-index: 9999;}
 .talks_popup {
