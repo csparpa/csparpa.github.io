@@ -75,7 +75,7 @@ function serve_preview {
 
 function publish_to_github {
   echo '***Pushing to csparpa.github.io@master...'
-  tempdir="$(mktemp)"
+  tempdir="$(mktemp -d)"
   cp -R output/* "$tempdir"
   echo "$tempdir"
   git checkout master
