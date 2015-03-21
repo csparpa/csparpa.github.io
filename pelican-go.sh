@@ -79,7 +79,7 @@ function publish_to_github {
   cp -R output/* "$tempdir"
   echo "$tempdir"
   git checkout master
-  cp -R "$tempdir/*" .
+  cp -R "$tempdir"/* .
   echo 'Modifications:'
   git status
   #git add -A
