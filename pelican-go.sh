@@ -82,13 +82,14 @@ function publish_to_github {
   cp -R "$tempdir"/* .
   echo 'Modifications:'
   git status
-  #git add -A
-  #staged_files="$(git diff --cached --numstat | wc -l)"
-  # if [ $staged_files -ne 0]; then
-  #   echo 'No local modifications to be pushed'
-  # else:
-  #   git push https://csparpa@github.com/csparpa/csparpa.github.io.git master
-  # fi
+  git add -A
+  staged_files="$(git diff --cached --numstat | wc -l)"
+   if [ $staged_files -ne 0]; then
+     echo 'No local modifications to be pushed'
+   else:
+     git commit -m "Automatic commit"
+     git push https://csparpa@github.com/csparpa/csparpa.github.io.git master
+   fi
 }
 
 # actual action script
@@ -115,8 +116,8 @@ if [ "$#" -eq 1 ]; then
     deploy_blog_images
     deploy_blog_resources
     deploy_website
-    minify_website_css
-    minify_website_javascript
+    #minify_website_css
+    #minify_website_javascript
     publish_to_github
     exitcode=0
   fi
