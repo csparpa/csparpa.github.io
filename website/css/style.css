@@ -1037,6 +1037,25 @@ a.slides { border-bottom: 1px dotted #1c9112; color:#1c9112;}
   padding-top: 50px;
   border-radius: 20px;
  }
+ .email_popup {
+  font-family: 'Ubuntu Mono', sans-serif;
+  font-size: 1.5em;
+  background: white;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  border-radius: 20px;
+ }
+ .location_popup {
+  font-size: 1.5em;
+  background: white;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  border-radius: 20px;
+ }
 .black_overlay{
 	display: none;
 	position: absolute;
