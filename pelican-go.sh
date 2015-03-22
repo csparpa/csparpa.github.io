@@ -84,10 +84,10 @@ function publish_to_github {
   git status
   git add -A
   staged_files="$(git diff --cached --numstat | wc -l)"
-   if [ $staged_files -ne 0]; then
+   if [ $staged_files -ne 0 ]; then
      echo 'No local modifications to be pushed'
-   else:
-     git commit -m "Automatic commit"
+   else
+     git commit -m "Automatic commit (pelican-go.sh)"
      git push https://csparpa@github.com/csparpa/csparpa.github.io.git master
    fi
 }
