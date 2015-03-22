@@ -16,7 +16,7 @@ $(document).ready(function(){
     $(qr).fadeIn('slow');
     qr.center();
     var overlay = $('#black_overlay');
-    $(overlay).fadeIn('slow');
+    $(overlay).fadeIn('fast');
     $(overlay).on('click', function(){
       $(qr).fadeOut('slow');
       $(this).fadeOut('slow');
@@ -26,7 +26,7 @@ $(document).ready(function(){
 	//talks link
 	$('#talks').on('click', function(){
     var talks = $('#talks_popup');
-    $(talks).fadeIn('slow');
+    $(talks).fadeIn('fast');
     talks.center();
     var overlay = $('#black_overlay');
     $(overlay).fadeIn('slow');
