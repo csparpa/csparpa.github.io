@@ -2,3 +2,4 @@ workflow.txt
 *.pyc
 cache/
 output/
+pelican-go.sh~
