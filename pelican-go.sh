@@ -106,8 +106,8 @@ if [ "$#" -eq 1 ]; then
     deploy_blog_images
     deploy_blog_resources
     deploy_website
-    minify_website_css
-    minify_website_javascript
+    #minify_website_css
+    #minify_website_javascript
     serve_preview "8000"
     exitcode=0
   elif [ "$mode" == 'publish' ]; then
