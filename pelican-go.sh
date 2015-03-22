@@ -74,21 +74,23 @@ function serve_preview {
 }
 
 function publish_to_github {
-  echo '***Pushing to csparpa.github.io@master...'
+  echo '***Staging mofications to Git...'
   tempdir="$(mktemp -d)"
   cp -R output/* "$tempdir"
-  echo "$tempdir"
   git checkout master
   cp -R "$tempdir"/* .
-  echo 'Modifications:'
+  echo '     -- Modifications:'
   git status
   git add -A
   staged_files="$(git diff --cached --numstat | wc -l)"
    if [ $staged_files -ne 0 ]; then
-     echo 'No local modifications to be pushed'
+     echo 'No modifications to staged'
    else
+     echo '***Pushing to csparpa.github.io@master...'
      git commit -m "Automatic commit (pelican-go.sh)"
      git push https://csparpa@github.com/csparpa/csparpa.github.io.git master
+     git checkout sources
+     echo '     -- Back on sources branch now'
    fi
 }
 
@@ -116,8 +118,8 @@ if [ "$#" -eq 1 ]; then
     deploy_blog_images
     deploy_blog_resources
     deploy_website
-    #minify_website_css
-    #minify_website_javascript
+    minify_website_css
+    minify_website_javascript
     publish_to_github
     exitcode=0
   fi
