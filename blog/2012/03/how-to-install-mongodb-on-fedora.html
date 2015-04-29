@@ -109,47 +109,47 @@
 <span class="nv">RETVAL</span><span class="o">=</span>0
 
 start<span class="o">()</span> <span class="o">{</span>
-  <span class="nb">echo</span> -n <span class="nv">$&quot;</span>Starting <span class="nv">$prog</span>: <span class="s2">&quot;</span>
-<span class="s2">  #This is the fundamental call to start the MongoDB server instance</span>
-<span class="s2">  daemon </span><span class="nv">$mongod</span><span class="s2"> &quot;</span>--fork --journal --dbpath /usr/data/mongodb <span class="se">\</span>
-  --logpath /var/log/mongodb.log <span class="se">\</span>
-  --logappend 2<span class="p">&amp;</span>gt<span class="p">;&amp;</span>amp<span class="p">;</span><span class="m">1</span> <span class="p">&amp;</span>gt<span class="p">;&amp;</span>gt<span class="p">;</span>/var/log/mongodb.log<span class="s2">&quot;</span>
-<span class="s2">  RETVAL=</span><span class="nv">$?</span><span class="s2"></span>
-<span class="s2">  echo</span>
-<span class="s2">  [ </span><span class="nv">$RETVAL</span><span class="s2"> -eq 0 ] &amp;amp;&amp;amp; touch /var/lock/subsys/</span><span class="nv">$prog</span><span class="s2"></span>
-<span class="s2">  return </span><span class="nv">$RETVAL</span><span class="s2"></span>
-<span class="s2">}</span>
-
-<span class="s2">stop() {</span>
-<span class="s2">  echo -n </span><span class="nv">$&quot;</span><span class="s2">Stopping </span><span class="nv">$prog</span><span class="s2">: &quot;</span>
-  killproc <span class="nv">$prog</span>
+  <span class="nb">echo</span> -n <span class="s2">$&quot;Starting $prog: &quot;</span>
+  <span class="c">#This is the fundamental call to start the MongoDB server instance</span>
+  daemon <span class="nv">$mongod</span> <span class="s2">&quot;--fork --journal --dbpath /usr/data/mongodb \</span>
+<span class="s2">  --logpath /var/log/mongodb.log \</span>
+<span class="s2">  --logappend 2&amp;gt;&amp;amp;1 &amp;gt;&amp;gt;/var/log/mongodb.log&quot;</span>
   <span class="nv">RETVAL</span><span class="o">=</span><span class="nv">$?</span>
   <span class="nb">echo</span>
-  <span class="o">[</span> <span class="nv">$RETVAL</span> -eq <span class="m">0</span> <span class="o">]</span> <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> rm -f /var/lock/subsys/<span class="nv">$prog</span>
+  <span class="o">[</span> <span class="nv">$RETVAL</span> -eq 0 <span class="o">]</span> &amp;amp;&amp;amp; touch /var/lock/subsys/<span class="nv">$prog</span>
   <span class="k">return</span> <span class="nv">$RETVAL</span>
 <span class="o">}</span>
 
-<span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> in
+stop<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> -n <span class="s2">$&quot;Stopping $prog: &quot;</span>
+  killproc <span class="nv">$prog</span>
+  <span class="nv">RETVAL</span><span class="o">=</span><span class="nv">$?</span>
+  <span class="nb">echo</span>
+  <span class="o">[</span> <span class="nv">$RETVAL</span> -eq 0 <span class="o">]</span> &amp;amp;&amp;amp; rm -f /var/lock/subsys/<span class="nv">$prog</span>
+  <span class="k">return</span> <span class="nv">$RETVAL</span>
+<span class="o">}</span>
+
+<span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
  start<span class="o">)</span>
   start
-  <span class="p">;;</span>
+  ;;
  stop<span class="o">)</span>
   stop
-  <span class="p">;;</span>
+  ;;
  restart<span class="o">)</span>
   stop
   start
-  <span class="p">;;</span>
+  ;;
  status<span class="o">)</span>
   status <span class="nv">$mongod</span>
   <span class="nv">RETVAL</span><span class="o">=</span><span class="nv">$?</span>
-  <span class="p">;;</span>
+  ;;
  *<span class="o">)</span>
-  <span class="nb">echo</span> <span class="nv">$&quot;</span>Usage: <span class="nv">$0</span> <span class="o">{</span>start<span class="p">|</span>stop<span class="p">|</span>restart<span class="p">|</span>status<span class="o">}</span><span class="s2">&quot;</span>
-<span class="s2">  RETVAL=1</span>
-<span class="s2">esac</span>
+  <span class="nb">echo</span> <span class="s2">$&quot;Usage: $0 {start|stop|restart|status}&quot;</span>
+  <span class="nv">RETVAL</span><span class="o">=</span>1
+<span class="k">esac</span>
 
-<span class="s2">exit </span><span class="nv">$RETVAL</span><span class="s2"></span>
+<span class="nb">exit</span> <span class="nv">$RETVAL</span>
 </pre></div>
 
 

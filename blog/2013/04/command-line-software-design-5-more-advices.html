@@ -164,13 +164,13 @@ claudio@laptop:~<span class="nv">$ </span><span class="nb">echo</span> <span cla
 <p>and here is the code (as you can see I'm using the <code>cat</code> executable which lies in the <code>/bin</code> path on my Linux system):  </p>
 <div class="highlight"><pre><span class="c">#!/bin/bash</span>
 
-<span class="nv">inputfile</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
-<span class="nv">outputdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span>
+<span class="nv">inputfile</span><span class="o">=</span><span class="s2">&quot;$1&quot;</span>
+<span class="nv">outputdir</span><span class="o">=</span><span class="s2">&quot;$2&quot;</span>
 
 <span class="nv">bindir</span><span class="o">=</span><span class="s2">&quot;/bin&quot;</span>
 
-<span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$bindir</span><span class="s2">&quot;</span>
-cat <span class="s2">&quot;</span><span class="nv">$inputfile</span><span class="s2">&quot;</span> &gt; <span class="s2">&quot;</span><span class="nv">$outputdir</span><span class="s2">/result.out&quot;</span>
+<span class="nb">cd</span> <span class="s2">&quot;$bindir&quot;</span>
+cat <span class="s2">&quot;$inputfile&quot;</span> &gt; <span class="s2">&quot;$outputdir/result.out&quot;</span>
 </pre></div>
 
 
@@ -179,9 +179,9 @@ cat <span class="s2">&quot;</span><span class="nv">$inputfile</span><span class=
 claudio@laptop:~<span class="nv">$ </span>mkdir output  <span class="c">#we create the output folder</span>
 claudio@laptop:~<span class="nv">$ </span>tree .
 .
-<span class="p">|</span>-- copier.bash
+|-- copier.bash
 <span class="sb">`</span>-- output
-<span class="m">1</span> directory, <span class="m">1</span> file
+1 directory, 1 file
 claudio@laptop:~<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;italia has got talent&quot;</span> &gt; input.txt <span class="c">#we create the input file</span>
 claudio@laptop:~<span class="nv">$ </span>bash copier.bash input.txt output        <span class="c">#we run the script</span>
 copier.bash: line 9: output/result.out: No such file or directory

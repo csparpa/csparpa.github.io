@@ -988,6 +988,8 @@
 				font-size: 1.9em;
                 color: #676767;
                 text-align: center;
+                position: relative;
+  				bottom: 10px;
 			}
 
 /*********************************************************************************/
@@ -1036,6 +1038,7 @@ a.slides { border-bottom: 1px dotted #1c9112; color:#1c9112;}
   padding-bottom: 50px;
   padding-top: 50px;
   border-radius: 20px;
+  line-height: 35px;
  }
  .email_popup {
   font-family: 'Ubuntu Mono', sans-serif;
@@ -1055,6 +1058,7 @@ a.slides { border-bottom: 1px dotted #1c9112; color:#1c9112;}
   padding-bottom: 50px;
   padding-top: 50px;
   border-radius: 20px;
+  line-height: 35px;
  }
 .black_overlay{
 	display: none;
@@ -1062,7 +1066,7 @@ a.slides { border-bottom: 1px dotted #1c9112; color:#1c9112;}
 	top: 0%;
 	left: 0%;
 	width: 100%;
-	height: 150%;
+	height: 100%;
 	background-color: black;
 	z-index: 9999;
 	-moz-opacity: 0.8;

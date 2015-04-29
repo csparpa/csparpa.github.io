@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds/all-en.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2015-02-23T11:00:00+01:00</updated><entry><title>Check truthiness in Python</title><link href="http://csparpa.github.io/blog/2015/02/python-truthiness.html" rel="alternate"></link><updated>2015-02-23T11:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2015-02-23:blog/2015/02/python-truthiness.html</id><summary type="html">&lt;p&gt;Today I just want to share with you how to check truth values in Python. &lt;strong&gt;Truthiness&lt;/strong&gt; is the boolean meaning of a value, and sometimes checking it can save you a lot of hassle. &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds%5Call-en.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2015-02-23T11:00:00+01:00</updated><entry><title>Check truthiness in Python</title><link href="http://csparpa.github.io/blog/2015/02/python-truthiness.html" rel="alternate"></link><updated>2015-02-23T11:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2015-02-23:blog/2015/02/python-truthiness.html</id><summary type="html">&lt;p&gt;Today I just want to share with you how to check truth values in Python. &lt;strong&gt;Truthiness&lt;/strong&gt; is the boolean meaning of a value, and sometimes checking it can save you a lot of hassle. &lt;/p&gt;
 &lt;h3&gt;In Python veritas&lt;/h3&gt;
 &lt;p&gt;Each Python built-in type has a truthiness value:&lt;/p&gt;
 &lt;table&gt;
@@ -566,7 +566,7 @@ First we install Memcached and the relative Python bindings:  &lt;/p&gt;
 
 &lt;p&gt;(if you don't get any error, then PyOWM was installed correctly).  &lt;/p&gt;
 &lt;p&gt;Finally, let's start Memcached:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; memcached &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; memcached &amp;amp;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -858,8 +858,8 @@ A few minutes after that question raised in my mind I ran into the OpenWeatherMa
 &lt;li&gt;I made sure (e.g: using VMWare Player or Workstation) that the virtual appliance is powered off;&lt;/li&gt;
 &lt;li&gt;Opened a Command Prompt, moved to the VMWare Player/Workstation installation dir and executed the OVF conversion tool. Be aware that this conversion may take some time, depending on how big is your VMX appliance. I did it as follows (replace the paths as needed):&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$&amp;gt; cd &amp;quot;C:\Program Files\VMware\VMware Workstation\OVFTool&amp;quot;
-$&amp;gt; ovftool.exe &amp;quot;C:\Users\claudio\Documents\Virtual Machines\ubuntu1004\ubuntu1004.vmx&amp;quot; &amp;quot;C:\Users\claudio\Documents\Virtual Machines\converted-to-virtualbox\ubuntu1004.ovf&amp;quot;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Program Files\VMware\VMware Workstation\OVFTool&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ovftool&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Users\claudio\Documents\Virtual Machines\ubuntu1004\ubuntu1004.vmx&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Users\claudio\Documents\Virtual Machines\converted-to-virtualbox\ubuntu1004.ovf&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -958,13 +958,13 @@ claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;ech
 &lt;p&gt;and here is the code (as you can see I'm using the &lt;code&gt;cat&lt;/code&gt; executable which lies in the &lt;code&gt;/bin&lt;/code&gt; path on my Linux system):  &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 
-&lt;span class="nv"&gt;inputfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;outputdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;inputfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$1&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;outputdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$2&amp;quot;&lt;/span&gt;
 
 &lt;span class="nv"&gt;bindir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/bin&amp;quot;&lt;/span&gt;
 
-&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$bindir&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-cat &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$inputfile&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$outputdir&lt;/span&gt;&lt;span class="s2"&gt;/result.out&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$bindir&amp;quot;&lt;/span&gt;
+cat &lt;span class="s2"&gt;&amp;quot;$inputfile&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class="s2"&gt;&amp;quot;$outputdir/result.out&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -973,9 +973,9 @@ cat &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$inputf
 claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir output  &lt;span class="c"&gt;#we create the output folder&lt;/span&gt;
 claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;tree .
 .
-&lt;span class="p"&gt;|&lt;/span&gt;-- copier.bash
+|-- copier.bash
 &lt;span class="sb"&gt;`&lt;/span&gt;-- output
-&lt;span class="m"&gt;1&lt;/span&gt; directory, &lt;span class="m"&gt;1&lt;/span&gt; file
+1 directory, 1 file
 claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;italia has got talent&amp;quot;&lt;/span&gt; &amp;gt; input.txt &lt;span class="c"&gt;#we create the input file&lt;/span&gt;
 claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash copier.bash input.txt output        &lt;span class="c"&gt;#we run the script&lt;/span&gt;
 copier.bash: line 9: output/result.out: No such file or directory
@@ -1005,7 +1005,7 @@ italia has got talent
 &lt;h3&gt;Steps&lt;/h3&gt;
 &lt;h4&gt;1. Flask app&lt;/h4&gt;
 &lt;p&gt;We choose a folder in which we place the Python code. For instance,  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;D:\webapps\test
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nl"&gt;D:&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;webapps&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;test&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1301,8 +1301,8 @@ C:\&amp;gt; C:\mongodb-2.2.0\bin\mongod.exe --remove
 &lt;p&gt;Here is all you have to do:  &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
 &lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo touch /etc/apt/sources.list.d/10gen.list
-&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;line&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$line&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &amp;gt; /etc/apt/sources.list.d/10gen.list
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;line&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$(echo &amp;quot;&lt;/span&gt;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&lt;span class="s2"&gt;&amp;quot;)&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$line&amp;quot;&lt;/span&gt; &amp;gt; /etc/apt/sources.list.d/10gen.list
 &lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-get update
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -1358,47 +1358,47 @@ y
 &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
 
 start&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="nv"&gt;$&amp;quot;&lt;/span&gt;Starting &lt;span class="nv"&gt;$prog&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="s2"&gt;  #This is the fundamental call to start the MongoDB server instance&lt;/span&gt;
-&lt;span class="s2"&gt;  daemon &lt;/span&gt;&lt;span class="nv"&gt;$mongod&lt;/span&gt;&lt;span class="s2"&gt; &amp;quot;&lt;/span&gt;--fork --journal --dbpath /usr/data/mongodb &lt;span class="se"&gt;\&lt;/span&gt;
-  --logpath /var/log/mongodb.log &lt;span class="se"&gt;\&lt;/span&gt;
-  --logappend 2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;/var/log/mongodb.log&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="s2"&gt;  RETVAL=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
-&lt;span class="s2"&gt;  echo&lt;/span&gt;
-&lt;span class="s2"&gt;  [ &lt;/span&gt;&lt;span class="nv"&gt;$RETVAL&lt;/span&gt;&lt;span class="s2"&gt; -eq 0 ] &amp;amp;amp;&amp;amp;amp; touch /var/lock/subsys/&lt;/span&gt;&lt;span class="nv"&gt;$prog&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
-&lt;span class="s2"&gt;  return &lt;/span&gt;&lt;span class="nv"&gt;$RETVAL&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
-&lt;span class="s2"&gt;}&lt;/span&gt;
-
-&lt;span class="s2"&gt;stop() {&lt;/span&gt;
-&lt;span class="s2"&gt;  echo -n &lt;/span&gt;&lt;span class="nv"&gt;$&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Stopping &lt;/span&gt;&lt;span class="nv"&gt;$prog&lt;/span&gt;&lt;span class="s2"&gt;: &amp;quot;&lt;/span&gt;
-  killproc &lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;$&amp;quot;Starting $prog: &amp;quot;&lt;/span&gt;
+  &lt;span class="c"&gt;#This is the fundamental call to start the MongoDB server instance&lt;/span&gt;
+  daemon &lt;span class="nv"&gt;$mongod&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;--fork --journal --dbpath /usr/data/mongodb \&lt;/span&gt;
+&lt;span class="s2"&gt;  --logpath /var/log/mongodb.log \&lt;/span&gt;
+&lt;span class="s2"&gt;  --logappend 2&amp;amp;gt;&amp;amp;amp;1 &amp;amp;gt;&amp;amp;gt;/var/log/mongodb.log&amp;quot;&lt;/span&gt;
   &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
   &lt;span class="nb"&gt;echo&lt;/span&gt;
-  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; rm -f /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt; &amp;amp;amp;&amp;amp;amp; touch /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
-&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; in
+stop&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;$&amp;quot;Stopping $prog: &amp;quot;&lt;/span&gt;
+  killproc &lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt;
+  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt; &amp;amp;amp;&amp;amp;amp; rm -f /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$1&amp;quot;&lt;/span&gt; in
  start&lt;span class="o"&gt;)&lt;/span&gt;
   start
-  &lt;span class="p"&gt;;;&lt;/span&gt;
+  ;;
  stop&lt;span class="o"&gt;)&lt;/span&gt;
   stop
-  &lt;span class="p"&gt;;;&lt;/span&gt;
+  ;;
  restart&lt;span class="o"&gt;)&lt;/span&gt;
   stop
   start
-  &lt;span class="p"&gt;;;&lt;/span&gt;
+  ;;
  status&lt;span class="o"&gt;)&lt;/span&gt;
   status &lt;span class="nv"&gt;$mongod&lt;/span&gt;
   &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
-  &lt;span class="p"&gt;;;&lt;/span&gt;
+  ;;
  *&lt;span class="o"&gt;)&lt;/span&gt;
-  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$&amp;quot;&lt;/span&gt;Usage: &lt;span class="nv"&gt;$0&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;start&lt;span class="p"&gt;|&lt;/span&gt;stop&lt;span class="p"&gt;|&lt;/span&gt;restart&lt;span class="p"&gt;|&lt;/span&gt;status&lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="s2"&gt;  RETVAL=1&lt;/span&gt;
-&lt;span class="s2"&gt;esac&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;$&amp;quot;Usage: $0 {start|stop|restart|status}&amp;quot;&lt;/span&gt;
+  &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;span class="k"&gt;esac&lt;/span&gt;
 
-&lt;span class="s2"&gt;exit &lt;/span&gt;&lt;span class="nv"&gt;$RETVAL&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
+&lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1473,8 +1473,8 @@ In order to create dynamic login messages, I suggest to:&lt;/p&gt;
 &lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname goofy.txt          &lt;span class="c"&gt;# Gives: .&lt;/span&gt;
 &lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="nb"&gt;test&lt;/span&gt;/mickey.txt    &lt;span class="c"&gt;# Gives: test&lt;/span&gt;
 &lt;span class="c"&gt;#...and then absolutely&lt;/span&gt;
-&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;readlink -f goofy.txt&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;        &lt;span class="c"&gt;# Gives: /opt&lt;/span&gt;
-&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;readlink -f &lt;span class="nb"&gt;test&lt;/span&gt;/mickey.txt&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# Gives: /opt/test&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="s2"&gt;&amp;quot;$(readlink -f goofy.txt)&amp;quot;&lt;/span&gt;        &lt;span class="c"&gt;# Gives: /opt&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="s2"&gt;&amp;quot;$(readlink -f test/mickey.txt)&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# Gives: /opt/test&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

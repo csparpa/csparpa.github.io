@@ -114,8 +114,8 @@
 <span class="nv">$&gt;</span> dirname goofy.txt          <span class="c"># Gives: .</span>
 <span class="nv">$&gt;</span> dirname <span class="nb">test</span>/mickey.txt    <span class="c"># Gives: test</span>
 <span class="c">#...and then absolutely</span>
-<span class="nv">$&gt;</span> dirname <span class="s2">&quot;</span><span class="k">$(</span>readlink -f goofy.txt<span class="k">)</span><span class="s2">&quot;</span>        <span class="c"># Gives: /opt</span>
-<span class="nv">$&gt;</span> dirname <span class="s2">&quot;</span><span class="k">$(</span>readlink -f <span class="nb">test</span>/mickey.txt<span class="k">)</span><span class="s2">&quot;</span>  <span class="c"># Gives: /opt/test</span>
+<span class="nv">$&gt;</span> dirname <span class="s2">&quot;$(readlink -f goofy.txt)&quot;</span>        <span class="c"># Gives: /opt</span>
+<span class="nv">$&gt;</span> dirname <span class="s2">&quot;$(readlink -f test/mickey.txt)&quot;</span>  <span class="c"># Gives: /opt/test</span>
 </pre></div>
 
 
