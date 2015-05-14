@@ -30,8 +30,8 @@ ARTICLE_SAVE_AS = "{date:%Y}/{date:%m}/{slug}.html"
 GOOGLE_ANALYTICS = 'UA-56547669-1'
 
 # Feed generation
-FEED_ALL_ATOM = None
-CATEGORY_FEED_ATOM = None
+FEED_ALL_ATOM = 'feeds/all.atom.xml'
+FEED_ALL_RSS = 'feeds/all.rss.xml'
 
 # Blogroll links
 LINKS = (('Website', 'http://csparpa.tk'),
