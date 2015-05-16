@@ -36,7 +36,7 @@ $(document).ready(function(){
         });
 	});
 
-    // email icon
+    // email link
     $('#email').on('click', function(){
         var email = $('#email_popup');
         $(email).fadeIn('fast');
@@ -50,7 +50,7 @@ $(document).ready(function(){
     });
 
 
-    // location icon
+    // location link
     $('#location').on('click', function(){
         var location = $('#location_popup');
         $(location).fadeIn('fast');
@@ -61,5 +61,11 @@ $(document).ready(function(){
           $(location).fadeOut('fast');
           $(this).fadeOut('fast');
         });
+    });
+
+    // close popups
+    $('.close_popup').on('click', function(){
+      $(this).parent().fadeOut('fast');
+      $('#black_overlay').fadeOut('fast');
     });
 });
