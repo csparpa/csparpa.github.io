@@ -94,8 +94,8 @@
 <p>Here is all you have to do:  </p>
 <div class="highlight"><pre><span class="nv">$&gt;</span> sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
 <span class="nv">$&gt;</span> sudo touch /etc/apt/sources.list.d/10gen.list
-<span class="nv">$&gt;</span> <span class="nv">line</span><span class="o">=</span><span class="s2">&quot;$(echo &quot;</span>deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen<span class="s2">&quot;)&quot;</span>
-<span class="nv">$&gt;</span> sudo <span class="nb">echo</span> <span class="s2">&quot;$line&quot;</span> &gt; /etc/apt/sources.list.d/10gen.list
+<span class="nv">$&gt;</span> <span class="nv">line</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
+<span class="nv">$&gt;</span> sudo <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$line</span><span class="s2">&quot;</span> &gt; /etc/apt/sources.list.d/10gen.list
 <span class="nv">$&gt;</span> sudo apt-get update
 </pre></div>
 

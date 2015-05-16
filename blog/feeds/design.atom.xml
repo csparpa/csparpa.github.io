@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds%5Cdesign.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2013-10-29T01:00:00+01:00</updated><entry><title>Web APIs design: an improvable example</title><link href="http://csparpa.github.io/blog/2013/10/web-apis-design-an-improvable-example.html" rel="alternate"></link><updated>2013-10-29T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-10-29:blog/2013/10/web-apis-design-an-improvable-example.html</id><summary type="html">&lt;p&gt;Today I want to speak about the &lt;a href="http://bugs.openweathermap.org/projects/api/wiki/API_2_5"&gt;OWM web API 2.5&lt;/a&gt; and its design. As this API follows a versioning scheme, this analysis holds for version 2.5 (which then I suppose is not changing in time!)&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds/design.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2013-10-29T01:00:00+01:00</updated><entry><title>Web APIs design: an improvable example</title><link href="http://csparpa.github.io/blog/2013/10/web-apis-design-an-improvable-example.html" rel="alternate"></link><updated>2013-10-29T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-10-29:blog/2013/10/web-apis-design-an-improvable-example.html</id><summary type="html">&lt;p&gt;Today I want to speak about the &lt;a href="http://bugs.openweathermap.org/projects/api/wiki/API_2_5"&gt;OWM web API 2.5&lt;/a&gt; and its design. As this API follows a versioning scheme, this analysis holds for version 2.5 (which then I suppose is not changing in time!)&lt;/p&gt;
 &lt;p&gt;First let me clearly state that I'm writing this post as a "gathering of thoughts” I've had during the first draft development of the PyOWM library, and it is not meant to be a negative criticism – but rather a positive review – to the  API architects/developers. I just want to write here my ideas so that the OWM API can be improved in future versions – and I will commit myself to help with this process, if needed.  &lt;/p&gt;
 &lt;p&gt;I found this activity also very educational because it made me think again to all that books and articles I've read on the Internet about API design and – good grief – they were damn right!  &lt;/p&gt;
 &lt;p&gt;As I said, developing the PyOWM library I had to write code interfacing with the OWM web API, which basically meant I had to setup an HTTP client and some kind of parsing module in order to read the API's responses, squeeze useful data out of them and inject data into my custom object model to the benefit of users. These funny tasks lead me, nevertheless, to crash onto a few improvable API design features that made my work unreasonably more complicated and error-prone. And a bug also came into sight.  &lt;/p&gt;
@@ -256,13 +256,13 @@ claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;ech
 &lt;p&gt;and here is the code (as you can see I'm using the &lt;code&gt;cat&lt;/code&gt; executable which lies in the &lt;code&gt;/bin&lt;/code&gt; path on my Linux system):  &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 
-&lt;span class="nv"&gt;inputfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$1&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;outputdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$2&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;inputfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;outputdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 
 &lt;span class="nv"&gt;bindir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/bin&amp;quot;&lt;/span&gt;
 
-&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$bindir&amp;quot;&lt;/span&gt;
-cat &lt;span class="s2"&gt;&amp;quot;$inputfile&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class="s2"&gt;&amp;quot;$outputdir/result.out&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$bindir&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+cat &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$inputfile&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$outputdir&lt;/span&gt;&lt;span class="s2"&gt;/result.out&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -271,9 +271,9 @@ cat &lt;span class="s2"&gt;&amp;quot;$inputfile&amp;quot;&lt;/span&gt; &amp;gt; 
 claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir output  &lt;span class="c"&gt;#we create the output folder&lt;/span&gt;
 claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;tree .
 .
-|-- copier.bash
+&lt;span class="p"&gt;|&lt;/span&gt;-- copier.bash
 &lt;span class="sb"&gt;`&lt;/span&gt;-- output
-1 directory, 1 file
+&lt;span class="m"&gt;1&lt;/span&gt; directory, &lt;span class="m"&gt;1&lt;/span&gt; file
 claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;italia has got talent&amp;quot;&lt;/span&gt; &amp;gt; input.txt &lt;span class="c"&gt;#we create the input file&lt;/span&gt;
 claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash copier.bash input.txt output        &lt;span class="c"&gt;#we run the script&lt;/span&gt;
 copier.bash: line 9: output/result.out: No such file or directory
