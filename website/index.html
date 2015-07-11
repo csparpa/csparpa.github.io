@@ -37,12 +37,14 @@
     <meta name="google-site-verification" content="ny7YUOBZmY-ASh-vA5Ym0JBYv26XmXw7Mjm6bqzQrA4"/>
   </head>
   <body>
-      <div class="wrapper wrapper-style1 wrapper-first">
-        <div id="black_overlay" class="black_overlay"></div>
+      <div id="black_overlay" class="black_overlay"></div>
+      <div class="wrapper wrapper-style1 wrapper-first">  
         <div id="qr_popup" class="generic_popup">
-        	<img src="images/qrcode.png" />
+                <a id="close_qr_popup" class="close_popup" href="javascript:void(0)"></a>
+        	<img src="images/qrcode.png" class="qr_img" />
 				</div>
 				<div id="talks_popup" class="generic_popup talks_popup">
+                                        <a id="close_talks_popup" class="close_popup" href="javascript:void(0)"></a>
 					<header>
 						<h1>My public talks</h1>
 					</header>
@@ -53,9 +55,11 @@
           </p>
 				</div>
         <div id="email_popup" class="generic_popup email_popup">
+           <a id="close_email_popup" class="close_popup" href="javascript:void(0)"></a>
           <span title="My e-mail address">csparpa{at}gmail{dotcom}</span>
         </div>
         <div id="location_popup" class="generic_popup location_popup">
+          <a id="close_location_popup" class="close_popup" href="javascript:void(0)"></a>
           <span>I'm currently based in <a href="https://goo.gl/maps/7TY4T" target="_rel">Milan (Italy)</a>.<br/>
             I am Chief Technology Officer at WalletSaver.
           </span>
@@ -72,7 +76,7 @@
               <header>
                 <h1>Hi, I'm <strong>Claudio Sparpaglione</strong></h1>
               </header>
-              <p class="subheader"><span class="underlined">I'm a Software Engineer on his road to perfection</span></p>
+              <p class="subheader">I'm a Software Engineer on his road to perfection</p>
               <p>
                     I come from <span class="keyword" style="color:#db0707">Italy</span> and love <span class="keyword" style="color:#1c9112;">Python</span>,
                     <span class="keyword" style="color:#1756b4">open source software</span>, clever music, <span class="keyword" style="color:#b07a08">good beer</span> and nice friends!
@@ -94,7 +98,6 @@
           <div class="wrapper">
             <footer>
               <ul id="copyright">
-                <li>&copy; 2015 Claudio Sparpaglione</li>
                 <li>
                   <a id="qr_code" href="javascript:void(0)" title="A QR code summarising my contact points">QR code</a>
                 </li>
@@ -102,15 +105,12 @@
                   <a href="http://pgpkeys.mit.edu:11371/pks/lookup?op=get&search=0x1F299D21E3F1E7F5" title="My PGP key" target="_blank">PGP key</a>
                 </li>
                 <li>
-                  <a id="email" href="javascript:void(0)">
-                    <img src="images/email.png" class="email" alt="My e-mail contact" title="My e-mail contact"/>
-                  </a>
+                  <a id="email" href="javascript:void(0)" class="email" alt="My e-mail contact" title="My e-mail contact">E-mail</a>
                 </li>
                 <li>
-                  <a id="location" href="javascript:void(0)">
-                    <img src="images/info.png" class="location" alt="Where am I based now?" title="Where am I based now?"/>
-                  </a>
+                  <a id="location" href="javascript:void(0)" class="location" alt="My current location and job" title="My current location and job">Location</a>
                 </li>
+                <li>&copy; 2015 Claudio Sparpaglione</li>
               </ul>
             </footer>
           </div>

@@ -186,3 +186,54 @@
 	{
 		font-size: 1em;
 	}
+
+        #copyright a
+        {
+            border-bottom: dotted 1px rgb(136, 136, 136);
+        }
+        #copyright li
+        {
+            margin: 10px 10px 10px 10px;
+        }
+
+.talks_popup {
+  background: white;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  border-radius: 20px;
+  line-height: 35px;
+  color: white;
+  background: rgb(136, 136, 136);
+ }
+ .email_popup {
+  font-family: 'Ubuntu Mono', sans-serif;
+  font-size: 1.5em;
+  background: cyan;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  border-radius: 20px;
+  color: white;
+  background: rgb(136, 136, 136);
+ }
+ .location_popup {
+  font-size: 1.5em;
+  background: white;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  border-radius: 20px;
+  color: white;
+  background: rgb(136, 136, 136);
+  line-height: 35px;
+ }
+ .location_popup a {
+   color: white;
+   border-bottom: dotted 1px white;
+ }
+a.talk { border-bottom: 1px dotted white; color:white;}
+a.slides { border-bottom: 1px dotted white; color:white;}
