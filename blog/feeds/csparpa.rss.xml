@@ -1,5 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vorsprung durch Informatik</title><link>http://csparpa.github.io/blog/</link><description></description><atom:link href="http://csparpa.github.io/blog/feeds/csparpa.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 23 Feb 2015 11:00:00 +0100</lastBuildDate><item><title>Check truthiness in Python</title><link>http://csparpa.github.io/blog/2015/02/python-truthiness.html</link><description>&lt;p&gt;Today I just want to share with you how to check truth values in Python. &lt;strong&gt;Truthiness&lt;/strong&gt; is the boolean meaning of a value, and sometimes checking it can save you a lot of hassle. &lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vorsprung durch Informatik</title><link>http://csparpa.github.io/blog/</link><description></description><atom:link href="http://csparpa.github.io/blog/feeds%5Ccsparpa.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 01 Oct 2016 17:00:00 +0200</lastBuildDate><item><title>How to setup centralized logging on your Django apps using Logstash and Amazon EC2</title><link>http://csparpa.github.io/blog/2016/10/django-centralized-logging-on-ec2-with-logstash.html</link><description>&lt;p&gt;This post is a step-by-step guide on how to realize a centralized logging
+solution for your Django apps.&lt;/p&gt;
+&lt;p&gt;We will instrument an Amazon EC2 instance running Ubuntu 14.04 to collect logs
+from a locally-running Django app through the use of the "ELK" stack, which includes
+Logstash as a log aggregator, and Docker as a containerization platform.&lt;/p&gt;
+&lt;h2&gt;Centralized logging&lt;/h2&gt;
+&lt;p&gt;Centralized logging is a monitoring technique that allows you to view all of your
+applications' log messages on a single hub that acts as a collector and as unique
+storage provider for them, and also gives you some degree of "log-browsability".&lt;/p&gt;
+&lt;p&gt;The centralized logging solution that we'll setup gives you the following
+advantages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the setup is very easily and quickly reproducible&lt;/li&gt;
+&lt;li&gt;logs from different hosts flow to a single collector host&lt;/li&gt;
+&lt;li&gt;logs are persisted by the collector: no more need to logrotate on the hosts
+    (you can always do it as a backup strategy) and fault-tolerance
+    in case of complete failure of the origin hosts&lt;/li&gt;
+&lt;li&gt;logs are saved almost in real-time&lt;/li&gt;
+&lt;li&gt;logs are saved along with metadata that allows you to query them (eg: filter
+    them by timespan, by origin host, by words in the log content, etc..)&lt;/li&gt;
+&lt;li&gt;you get a nice web-based UI to browse/query the logs&lt;/li&gt;
+&lt;li&gt;depending on what your log messages contain, you might be able to track down
+    the full track of a high-level that gets decomposed into multiple sub-requests
+    flowing through many parts of a complex system (eg: a microservices based
+    architecture) with only one query. This for example can be done if you put
+    correlation IDs into your requests: then you query for those IDs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And - as nothing comes completely free of charge, these are the cons:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the collector is a Single Point of Failure unless you provide load balancing
+    for it&lt;/li&gt;
+&lt;li&gt;the collector could quickly get out of disk space, depending on how many
+    hosts you collect from and the logs flow rate&lt;/li&gt;
+&lt;li&gt;log centralization relies on network efficiency: no network, no centralized
+    logging - so you need to provide a local backup where to write your logs
+    just in case.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It is worth mentioning that the solution we're going to provide can be
+effectively used not only to track application-level logs but also to chunk and
+collect system-level logs (eg: syslog, dmesg, etc..)&lt;/p&gt;
+&lt;h2&gt;Logstash&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.elastic.co/products/logstash"&gt;Logstash&lt;/a&gt; is the log aggregating
+solution we're going to use. It is a daemon + command-line tool that just
+accepts and stores all the log messages that you send it, but provides no way
+of indexing and querying the logs. Furthermore, it comes without any graphical
+user interface.&lt;/p&gt;
+&lt;p&gt;So if we want to effectively leverage Logstash we need to bind it with another
+solution that allows to index and query for logs and possibly another solution
+that allows us to do all of this in a human-friendly fashion.&lt;/p&gt;
+&lt;h2&gt;Introducing the ELK stack&lt;/h2&gt;
+&lt;p&gt;"ELK" is the short of &lt;a href="https://www.elastic.co/products/elasticsearch"&gt;Elasticsearch&lt;/a&gt;,
+&lt;a href="https://www.elastic.co/products/logstash"&gt;Logstash&lt;/a&gt; and &lt;a href="https://www.elastic.co/products/kibana"&gt;Kibana&lt;/a&gt;.
+This application stack provides us exactly what we need:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Logstash&lt;/em&gt; - collects logs from hosts, these are handed over to...&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Elasticsearch&lt;/em&gt; - indexes and stores logs, that can be seen using...&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Kibana&lt;/em&gt; - a rich web-based user interface&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Installing and configuring three different applications is too much, we'll
+use a quicker solution: Docker. But first, let's setup our EC2 instance.&lt;/p&gt;
+&lt;h1&gt;Steps&lt;/h1&gt;
+&lt;p&gt;&lt;a name="#guide"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Setup of EC2 instance&lt;/h2&gt;
+&lt;p&gt;When you setup the instance, make sure it instantiates Ubuntu 14.04 AMI and
+mounts a good capacity volume (this depends on the logs frequency of course,
+but I would advice at least 32 GB) and at least 2 GB of RAM (a t2.small could be
+fine)&lt;/p&gt;
+&lt;p&gt;Install Docker 1.9 by running the following commands as root user:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="n"&gt;adv&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;keyserver&lt;/span&gt; &lt;span class="n"&gt;hkp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;deb https://apt.dockerproject.org/repo ubuntu-trusty main&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;tee&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sources&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;update&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;engine&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;usermod&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;aG&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;ubuntu&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then logout and login again as user ubuntu.&lt;/p&gt;
+&lt;p&gt;Now install Docker-compose with the following commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;curl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/docker/compose/releases/download/1.5.2/docker-compose-`uname -s`-`uname -m` &amp;gt; $ /usr/local/bin/docker-compose&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;compose&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now you need to edit the security groups for your instance. We will need to
+expose the following host ports to the machines that "produce" logs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;TCP 5000 (Logstash)&lt;/li&gt;
+&lt;li&gt;TCP 9200 (Elasticsearch REST JSON interface)&lt;/li&gt;
+&lt;li&gt;TCP 9300 (Elasticsearch transport protocol)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;and the following port to the Internet (but be aware that our Kibana setup
+won't provide any kind of authentication mechanism!):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;TCP 5601 (Kibana web UI)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Also, you may want to assign a DNS name to the EC2 instance so you can
+easily reach Kibana. Let's assume that you use &lt;code&gt;logs.mydomain.com&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Moreover, the Django hosts will need to publish their logs to Logstash possibly
+not through a public network. Encrypting logs is out of the scope of this tutorials:
+as a security measure we can bind a private DNS name to the private IP of your
+EC2 instance (you can use Route53 on AWS for that purpose) and have Django
+publish logs on that name. Let's assume the private IP of our instance is:
+&lt;code&gt;13.0.0.13&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;Setup Docker containers for ELK applications&lt;/h2&gt;
+&lt;p&gt;As I told before, we want to leverage Docker to quickly spin-up our ELK stack.
+I found a very good Github project by Anthony Lapenna: &lt;a href="https://github.com/deviantony/docker-elk"&gt;docker-elk&lt;/a&gt;,
+it basically is an out-of-the-box setup (YML file) for Docker-compose to run
+all the applications in the ELK stack, each one a separate Docker container.
+Containers are instrumented so they can communicate and the one running Kibana
+will get mapped to a public port of the EC2 host.&lt;/p&gt;
+&lt;p&gt;We can clone the repo with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/deviantony/docker-elk&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In the repo you find subfolders for each ELK component, storing config files
+that you can modify according to your needs.&lt;/p&gt;
+&lt;p&gt;Bringing up all the ELK stack is as simple as:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;elk&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;compose&lt;/span&gt; &lt;span class="n"&gt;up&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;After a while, you can test that the containers have been started:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;ps&lt;/span&gt;
+&lt;span class="n"&gt;CONTAINER&lt;/span&gt; &lt;span class="n"&gt;ID&lt;/span&gt;        &lt;span class="n"&gt;IMAGE&lt;/span&gt;                  &lt;span class="n"&gt;COMMAND&lt;/span&gt;                  &lt;span class="n"&gt;CREATED&lt;/span&gt;             &lt;span class="n"&gt;STATUS&lt;/span&gt;              &lt;span class="n"&gt;PORTS&lt;/span&gt;                                             &lt;span class="n"&gt;NAMES&lt;/span&gt;
+&lt;span class="mf"&gt;8f&lt;/span&gt;&lt;span class="mi"&gt;34&lt;/span&gt;&lt;span class="n"&gt;a3f8d142&lt;/span&gt;        &lt;span class="n"&gt;dockerelk_kibana&lt;/span&gt;       &lt;span class="s"&gt;&amp;quot;/docker-entrypoint.s&amp;quot;&lt;/span&gt;   &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="n"&gt;seconds&lt;/span&gt; &lt;span class="n"&gt;ago&lt;/span&gt;       &lt;span class="n"&gt;Up&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="n"&gt;seconds&lt;/span&gt;        &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;5601&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;5601&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tcp&lt;/span&gt;                            &lt;span class="n"&gt;dockerelk_kibana_1&lt;/span&gt;
+&lt;span class="n"&gt;d2530f2e0194&lt;/span&gt;        &lt;span class="n"&gt;logstash&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;latest&lt;/span&gt;        &lt;span class="s"&gt;&amp;quot;/docker-entrypoint.s&amp;quot;&lt;/span&gt;   &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="n"&gt;seconds&lt;/span&gt; &lt;span class="n"&gt;ago&lt;/span&gt;       &lt;span class="n"&gt;Up&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="n"&gt;seconds&lt;/span&gt;        &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;5000&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;5000&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tcp&lt;/span&gt;                            &lt;span class="n"&gt;dockerelk_logstash_1&lt;/span&gt;
+&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="n"&gt;c6580429bde&lt;/span&gt;        &lt;span class="n"&gt;elasticsearch&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;latest&lt;/span&gt;   &lt;span class="s"&gt;&amp;quot;/docker-entrypoint.s&amp;quot;&lt;/span&gt;   &lt;span class="mi"&gt;11&lt;/span&gt; &lt;span class="n"&gt;seconds&lt;/span&gt; &lt;span class="n"&gt;ago&lt;/span&gt;      &lt;span class="n"&gt;Up&lt;/span&gt; &lt;span class="mi"&gt;9&lt;/span&gt; &lt;span class="n"&gt;seconds&lt;/span&gt;        &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;9200&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;9200&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tcp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;9300&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;9300&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tcp&lt;/span&gt;   &lt;span class="n"&gt;dockerelk_elasticsearch_1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can test if Kibana is running by pointint your browers to:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="nl"&gt;http:&lt;/span&gt;&lt;span class="c1"&gt;//logs.mydomain.com:5601&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As you see, using Docker-compose makes it really easy to spin up again the whole
+stack just in case of errors. If you want to bring down the ELK stack, just do:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;compose&lt;/span&gt; &lt;span class="n"&gt;stop&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;from inside the &lt;code&gt;/home/ubuntu/docker-elk&lt;/code&gt; folder.&lt;/p&gt;
+&lt;h2&gt;Instrument Django to use centralized logging&lt;/h2&gt;
+&lt;p&gt;This will be very simple: we can use the &lt;code&gt;python-logstash&lt;/code&gt; binding library developed
+by &lt;a href="https://github.com/vklochan/python-logstash"&gt;GitHub user vklochan&lt;/a&gt;. This
+library will tell Django to send logs also to Logstash via network, but it
+needs a bit of configuration before.&lt;/p&gt;
+&lt;p&gt;Switch to the host (eg: localhost) where your Django setup is, then install the
+library with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;pip&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;logstash&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Let us assume your Django app is named &lt;em&gt;myapp&lt;/em&gt;. Open the &lt;code&gt;settings.py&lt;/code&gt; file where
+all the Django config settings live. You should spot a section about logging
+(the &lt;code&gt;LOGGING&lt;/code&gt; dict):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;LOGGING&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+        &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;Put&lt;/span&gt; &lt;span class="n"&gt;here&lt;/span&gt; &lt;span class="n"&gt;formatters&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;
+
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;handlers&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;myhandler&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;Bla&lt;/span&gt; &lt;span class="n"&gt;bla&lt;/span&gt; &lt;span class="n"&gt;bla&lt;/span&gt;
+            &lt;span class="p"&gt;},&lt;/span&gt;
+            &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;logstash&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;class&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;logstash&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TCPLogstashHandler&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="mf"&gt;13.0.0.13&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;IP&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;our&lt;/span&gt; &lt;span class="n"&gt;Logstash&lt;/span&gt; &lt;span class="n"&gt;EC2&lt;/span&gt; &lt;span class="n"&gt;instance&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;5000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;message_type&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;logstash&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;fqdn&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;myapp&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+            &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="p"&gt;},&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;loggers&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;myapp&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;handlers&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;myhandler&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;logstash&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The configuration is pretty straightforward to understand (for more info please
+take a look at &lt;code&gt;python-logstash&lt;/code&gt;'s' GitHub project wiki)&lt;/p&gt;
+&lt;p&gt;Now all you need to do is restart Django and take a look at Kibana if logs get tracked.&lt;/p&gt;
+&lt;h1&gt;Further references&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://www.digitalocean.com/community/tutorials/how-to-install-elasticsearch-logstash-and-kibana-elk-stack-on-ubuntu-14-04"&gt;This&lt;/a&gt;
+guide can be useful to setup authentication on Kibana.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Sat, 01 Oct 2016 17:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2016-10-01:blog/2016/10/django-centralized-logging-on-ec2-with-logstash.html</guid><category>Django</category><category>Python</category><category>Logstash</category><category>Elasticsearch</category><category>Kibana</category><category>logging</category><category>EC2</category><category>AWS</category><category>Docker</category><category>Docker-compose</category></item><item><title>Check truthiness in Python</title><link>http://csparpa.github.io/blog/2015/02/python-truthiness.html</link><description>&lt;p&gt;Today I just want to share with you how to check truth values in Python. &lt;strong&gt;Truthiness&lt;/strong&gt; is the boolean meaning of a value, and sometimes checking it can save you a lot of hassle. &lt;/p&gt;
 &lt;h3&gt;In Python veritas&lt;/h3&gt;
 &lt;p&gt;Each Python built-in type has a truthiness value:&lt;/p&gt;
 &lt;table&gt;
@@ -566,7 +760,7 @@ First we install Memcached and the relative Python bindings:  &lt;/p&gt;
 
 &lt;p&gt;(if you don't get any error, then PyOWM was installed correctly).  &lt;/p&gt;
 &lt;p&gt;Finally, let's start Memcached:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; memcached &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; memcached &amp;amp;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -858,8 +1052,8 @@ A few minutes after that question raised in my mind I ran into the OpenWeatherMa
 &lt;li&gt;I made sure (e.g: using VMWare Player or Workstation) that the virtual appliance is powered off;&lt;/li&gt;
 &lt;li&gt;Opened a Command Prompt, moved to the VMWare Player/Workstation installation dir and executed the OVF conversion tool. Be aware that this conversion may take some time, depending on how big is your VMX appliance. I did it as follows (replace the paths as needed):&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$&amp;gt; cd &amp;quot;C:\Program Files\VMware\VMware Workstation\OVFTool&amp;quot;
-$&amp;gt; ovftool.exe &amp;quot;C:\Users\claudio\Documents\Virtual Machines\ubuntu1004\ubuntu1004.vmx&amp;quot; &amp;quot;C:\Users\claudio\Documents\Virtual Machines\converted-to-virtualbox\ubuntu1004.ovf&amp;quot;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Program Files\VMware\VMware Workstation\OVFTool&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ovftool&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Users\claudio\Documents\Virtual Machines\ubuntu1004\ubuntu1004.vmx&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Users\claudio\Documents\Virtual Machines\converted-to-virtualbox\ubuntu1004.ovf&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -958,13 +1152,13 @@ claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;ech
 &lt;p&gt;and here is the code (as you can see I'm using the &lt;code&gt;cat&lt;/code&gt; executable which lies in the &lt;code&gt;/bin&lt;/code&gt; path on my Linux system):  &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 
-&lt;span class="nv"&gt;inputfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;outputdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;inputfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$1&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;outputdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$2&amp;quot;&lt;/span&gt;
 
 &lt;span class="nv"&gt;bindir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/bin&amp;quot;&lt;/span&gt;
 
-&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$bindir&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-cat &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$inputfile&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$outputdir&lt;/span&gt;&lt;span class="s2"&gt;/result.out&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$bindir&amp;quot;&lt;/span&gt;
+cat &lt;span class="s2"&gt;&amp;quot;$inputfile&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class="s2"&gt;&amp;quot;$outputdir/result.out&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -973,9 +1167,9 @@ cat &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$inputf
 claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir output  &lt;span class="c"&gt;#we create the output folder&lt;/span&gt;
 claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;tree .
 .
-&lt;span class="p"&gt;|&lt;/span&gt;-- copier.bash
+|-- copier.bash
 &lt;span class="sb"&gt;`&lt;/span&gt;-- output
-&lt;span class="m"&gt;1&lt;/span&gt; directory, &lt;span class="m"&gt;1&lt;/span&gt; file
+1 directory, 1 file
 claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;italia has got talent&amp;quot;&lt;/span&gt; &amp;gt; input.txt &lt;span class="c"&gt;#we create the input file&lt;/span&gt;
 claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash copier.bash input.txt output        &lt;span class="c"&gt;#we run the script&lt;/span&gt;
 copier.bash: line 9: output/result.out: No such file or directory
@@ -1005,7 +1199,7 @@ italia has got talent
 &lt;h3&gt;Steps&lt;/h3&gt;
 &lt;h4&gt;1. Flask app&lt;/h4&gt;
 &lt;p&gt;We choose a folder in which we place the Python code. For instance,  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;D:\webapps\test
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nl"&gt;D:&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;webapps&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;test&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1301,8 +1495,8 @@ C:\&amp;gt; C:\mongodb-2.2.0\bin\mongod.exe --remove
 &lt;p&gt;Here is all you have to do:  &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
 &lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo touch /etc/apt/sources.list.d/10gen.list
-&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;line&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$line&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &amp;gt; /etc/apt/sources.list.d/10gen.list
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;line&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$(echo &amp;quot;&lt;/span&gt;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&lt;span class="s2"&gt;&amp;quot;)&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$line&amp;quot;&lt;/span&gt; &amp;gt; /etc/apt/sources.list.d/10gen.list
 &lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-get update
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -1358,47 +1552,47 @@ y
 &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
 
 start&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="nv"&gt;$&amp;quot;&lt;/span&gt;Starting &lt;span class="nv"&gt;$prog&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="s2"&gt;  #This is the fundamental call to start the MongoDB server instance&lt;/span&gt;
-&lt;span class="s2"&gt;  daemon &lt;/span&gt;&lt;span class="nv"&gt;$mongod&lt;/span&gt;&lt;span class="s2"&gt; &amp;quot;&lt;/span&gt;--fork --journal --dbpath /usr/data/mongodb &lt;span class="se"&gt;\&lt;/span&gt;
-  --logpath /var/log/mongodb.log &lt;span class="se"&gt;\&lt;/span&gt;
-  --logappend 2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;/var/log/mongodb.log&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="s2"&gt;  RETVAL=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
-&lt;span class="s2"&gt;  echo&lt;/span&gt;
-&lt;span class="s2"&gt;  [ &lt;/span&gt;&lt;span class="nv"&gt;$RETVAL&lt;/span&gt;&lt;span class="s2"&gt; -eq 0 ] &amp;amp;amp;&amp;amp;amp; touch /var/lock/subsys/&lt;/span&gt;&lt;span class="nv"&gt;$prog&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
-&lt;span class="s2"&gt;  return &lt;/span&gt;&lt;span class="nv"&gt;$RETVAL&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
-&lt;span class="s2"&gt;}&lt;/span&gt;
-
-&lt;span class="s2"&gt;stop() {&lt;/span&gt;
-&lt;span class="s2"&gt;  echo -n &lt;/span&gt;&lt;span class="nv"&gt;$&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Stopping &lt;/span&gt;&lt;span class="nv"&gt;$prog&lt;/span&gt;&lt;span class="s2"&gt;: &amp;quot;&lt;/span&gt;
-  killproc &lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;$&amp;quot;Starting $prog: &amp;quot;&lt;/span&gt;
+  &lt;span class="c"&gt;#This is the fundamental call to start the MongoDB server instance&lt;/span&gt;
+  daemon &lt;span class="nv"&gt;$mongod&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;--fork --journal --dbpath /usr/data/mongodb \&lt;/span&gt;
+&lt;span class="s2"&gt;  --logpath /var/log/mongodb.log \&lt;/span&gt;
+&lt;span class="s2"&gt;  --logappend 2&amp;amp;gt;&amp;amp;amp;1 &amp;amp;gt;&amp;amp;gt;/var/log/mongodb.log&amp;quot;&lt;/span&gt;
   &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
   &lt;span class="nb"&gt;echo&lt;/span&gt;
-  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; rm -f /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt; &amp;amp;amp;&amp;amp;amp; touch /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
-&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; in
+stop&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;$&amp;quot;Stopping $prog: &amp;quot;&lt;/span&gt;
+  killproc &lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt;
+  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt; &amp;amp;amp;&amp;amp;amp; rm -f /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$1&amp;quot;&lt;/span&gt; in
  start&lt;span class="o"&gt;)&lt;/span&gt;
   start
-  &lt;span class="p"&gt;;;&lt;/span&gt;
+  ;;
  stop&lt;span class="o"&gt;)&lt;/span&gt;
   stop
-  &lt;span class="p"&gt;;;&lt;/span&gt;
+  ;;
  restart&lt;span class="o"&gt;)&lt;/span&gt;
   stop
   start
-  &lt;span class="p"&gt;;;&lt;/span&gt;
+  ;;
  status&lt;span class="o"&gt;)&lt;/span&gt;
   status &lt;span class="nv"&gt;$mongod&lt;/span&gt;
   &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
-  &lt;span class="p"&gt;;;&lt;/span&gt;
+  ;;
  *&lt;span class="o"&gt;)&lt;/span&gt;
-  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$&amp;quot;&lt;/span&gt;Usage: &lt;span class="nv"&gt;$0&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;start&lt;span class="p"&gt;|&lt;/span&gt;stop&lt;span class="p"&gt;|&lt;/span&gt;restart&lt;span class="p"&gt;|&lt;/span&gt;status&lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="s2"&gt;  RETVAL=1&lt;/span&gt;
-&lt;span class="s2"&gt;esac&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;$&amp;quot;Usage: $0 {start|stop|restart|status}&amp;quot;&lt;/span&gt;
+  &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;span class="k"&gt;esac&lt;/span&gt;
 
-&lt;span class="s2"&gt;exit &lt;/span&gt;&lt;span class="nv"&gt;$RETVAL&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
+&lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1473,8 +1667,8 @@ In order to create dynamic login messages, I suggest to:&lt;/p&gt;
 &lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname goofy.txt          &lt;span class="c"&gt;# Gives: .&lt;/span&gt;
 &lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="nb"&gt;test&lt;/span&gt;/mickey.txt    &lt;span class="c"&gt;# Gives: test&lt;/span&gt;
 &lt;span class="c"&gt;#...and then absolutely&lt;/span&gt;
-&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;readlink -f goofy.txt&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;        &lt;span class="c"&gt;# Gives: /opt&lt;/span&gt;
-&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;readlink -f &lt;span class="nb"&gt;test&lt;/span&gt;/mickey.txt&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# Gives: /opt/test&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="s2"&gt;&amp;quot;$(readlink -f goofy.txt)&amp;quot;&lt;/span&gt;        &lt;span class="c"&gt;# Gives: /opt&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="s2"&gt;&amp;quot;$(readlink -f test/mickey.txt)&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# Gives: /opt/test&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
