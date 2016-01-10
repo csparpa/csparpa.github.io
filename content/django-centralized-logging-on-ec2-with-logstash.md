@@ -1,7 +1,7 @@
 Title: How to setup centralized logging on your Django apps using Logstash and Amazon EC2
 Date: 2016-10-01 17:00
 Category: howtos
-Tags: Django, Python, Logstash, Elasticsearch, Kibana, logging, EC2, AWS
+Tags: Django, Python, Logstash, Elasticsearch, Kibana, logging, EC2, AWS, Docker, Docker-compose
 Slug: django-centralized-logging-on-ec2-with-logstash
 Authors: csparpa
 Summary: Send your Django app logs to a centralized persistent collector offering graphical querying capabilities
@@ -12,9 +12,8 @@ solution for your Django apps.
 
 We will instrument an Amazon EC2 instance running Ubuntu 14.04 to collect logs
 from a locally-running Django app through the use of the "ELK" stack, which includes
-Logstash as a log aggregator, and Docker as a containerization provider.
+Logstash as a log aggregator, and Docker as a containerization platform.
 
-If you already know what centralized logging is, [go straight to the guide](#guide)!
 
 Centralized logging
 -------------------
@@ -88,7 +87,8 @@ Setup of EC2 instance
 ---------------------
 When you setup the instance, make sure it instantiates Ubuntu 14.04 AMI and
 mounts a good capacity volume (this depends on the logs frequency of course,
-but I would advice at least 32 GB).
+but I would advice at least 32 GB) and at least 2 GB of RAM (a t2.small could be
+fine)
 
 Install Docker 1.9 by running the following commands as root user:
 
@@ -163,7 +163,14 @@ You can test if Kibana is running by pointint your browers to:
 
      http://logs.mydomain.com:5601
 
+As you see, using Docker-compose makes it really easy to spin up again the whole
+stack just in case of errors. If you want to bring down the ELK stack, just do:
 
+    $ docker-compose stop
+
+from inside the `/home/ubuntu/docker-elk` folder.
+
+    
 Instrument Django to use centralized logging
 --------------------------------------------
 This will be very simple: we can use the `python-logstash` binding library developed
