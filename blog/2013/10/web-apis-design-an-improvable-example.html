@@ -20,6 +20,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../theme/css/main.css" />
     <link href="http://csparpa.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Vorsprung durch Informatik Atom Feed" />
+    <link href="http://csparpa.github.io/blog/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Vorsprung durch Informatik RSS Feed" />
 
     <script type="text/javascript">var switchTo5x=true;</script>
     <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
@@ -85,8 +86,6 @@
         <a href="../../tag/pyowm.html">PyOWM</a>
 
 
-        |
-        <a href="../../2013/10/web-apis-design-an-improvable-example.html#disqus_thread">comments</a>
 
     
 </footer><!-- /.post-info -->
@@ -272,18 +271,6 @@ Content-Type: application/json; charset=utf-8
 <p>Again, a 200 status code (that means: "Ok, everything went smoothly”) and – surprisingly – an empty data list. What I would have expected is a 404 HTTP status code, telling me: "Hey, this station is not listed in my meteostations database”! So in this case, an error condition is wrongly mapped onto a non-error condition. And what if I query for an existing meteostation and it has no data available? How can I discern the "not found” case from the "found but no data available” case?</p>
 
       </div><!-- /.entry-content -->
-      <div class="comments">
-        <h2>Comments</h2>
-        <div id="disqus_thread"></div>
-        <script type="text/javascript">
-          var disqus_identifier = "2013/10/web-apis-design-an-improvable-example.html";
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = '//csparpa.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-      </div>
 
     </article>
   </section>
@@ -317,15 +304,6 @@ Content-Type: application/json; charset=utf-8
       ga('send', 'pageview');
 
     </script>
-<script type="text/javascript">
-    var disqus_shortname = 'csparpa';
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
     <script src="//code.jquery.com/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
 </body>
