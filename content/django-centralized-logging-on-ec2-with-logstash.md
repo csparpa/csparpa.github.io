@@ -221,8 +221,15 @@ take a look at `python-logstash`'s' GitHub project wiki)
 
 Now all you need to do is restart Django and take a look at Kibana if logs get tracked.
 
+_Update_: at Jan 2016, `python-logstash` is still missing SSL support, but
+this is notified as an issue on the GitHub project repository.
+
 
 Further references
 ==================
 [This](https://www.digitalocean.com/community/tutorials/how-to-install-elasticsearch-logstash-and-kibana-elk-stack-on-ubuntu-14-04)
 guide can be useful to setup authentication on Kibana.
+
+If you need a comprehensive reference to the ELK stack (eg: how to write custom
+Logstash plugins or how build advanced queries and dashboards with Kibana) you
+can read ["Learking ELK stack" by Packt Publishing](https://www.packtpub.com/big-data-and-business-intelligence/learning-elk-stack)
