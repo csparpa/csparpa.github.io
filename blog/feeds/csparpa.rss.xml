@@ -191,9 +191,14 @@ all the Django config settings live. You should spot a section about logging
 &lt;p&gt;The configuration is pretty straightforward to understand (for more info please
 take a look at &lt;code&gt;python-logstash&lt;/code&gt;'s' GitHub project wiki)&lt;/p&gt;
 &lt;p&gt;Now all you need to do is restart Django and take a look at Kibana if logs get tracked.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Update&lt;/em&gt;: at Jan 2016, &lt;code&gt;python-logstash&lt;/code&gt; is still missing SSL support, but
+this is notified as an issue on the GitHub project repository.&lt;/p&gt;
 &lt;h1&gt;Further references&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://www.digitalocean.com/community/tutorials/how-to-install-elasticsearch-logstash-and-kibana-elk-stack-on-ubuntu-14-04"&gt;This&lt;/a&gt;
-guide can be useful to setup authentication on Kibana.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Sat, 01 Oct 2016 17:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2016-10-01:blog/2016/10/django-centralized-logging-on-ec2-with-logstash.html</guid><category>Django</category><category>Python</category><category>Logstash</category><category>Elasticsearch</category><category>Kibana</category><category>logging</category><category>EC2</category><category>AWS</category><category>Docker</category><category>Docker-compose</category></item><item><title>Check truthiness in Python</title><link>http://csparpa.github.io/blog/2015/02/python-truthiness.html</link><description>&lt;p&gt;Today I just want to share with you how to check truth values in Python. &lt;strong&gt;Truthiness&lt;/strong&gt; is the boolean meaning of a value, and sometimes checking it can save you a lot of hassle. &lt;/p&gt;
+guide can be useful to setup authentication on Kibana.&lt;/p&gt;
+&lt;p&gt;If you need a comprehensive reference to the ELK stack (eg: how to write custom
+Logstash plugins or how build advanced queries and dashboards with Kibana) you
+can read &lt;a href="https://www.packtpub.com/big-data-and-business-intelligence/learning-elk-stack"&gt;"Learking ELK stack" by Packt Publishing&lt;/a&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">csparpa</dc:creator><pubDate>Sat, 01 Oct 2016 17:00:00 +0200</pubDate><guid>tag:csparpa.github.io,2016-10-01:blog/2016/10/django-centralized-logging-on-ec2-with-logstash.html</guid><category>Django</category><category>Python</category><category>Logstash</category><category>Elasticsearch</category><category>Kibana</category><category>logging</category><category>EC2</category><category>AWS</category><category>Docker</category><category>Docker-compose</category></item><item><title>Check truthiness in Python</title><link>http://csparpa.github.io/blog/2015/02/python-truthiness.html</link><description>&lt;p&gt;Today I just want to share with you how to check truth values in Python. &lt;strong&gt;Truthiness&lt;/strong&gt; is the boolean meaning of a value, and sometimes checking it can save you a lot of hassle. &lt;/p&gt;
 &lt;h3&gt;In Python veritas&lt;/h3&gt;
 &lt;p&gt;Each Python built-in type has a truthiness value:&lt;/p&gt;
 &lt;table&gt;

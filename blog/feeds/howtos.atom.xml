@@ -191,9 +191,14 @@ all the Django config settings live. You should spot a section about logging
 &lt;p&gt;The configuration is pretty straightforward to understand (for more info please
 take a look at &lt;code&gt;python-logstash&lt;/code&gt;'s' GitHub project wiki)&lt;/p&gt;
 &lt;p&gt;Now all you need to do is restart Django and take a look at Kibana if logs get tracked.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Update&lt;/em&gt;: at Jan 2016, &lt;code&gt;python-logstash&lt;/code&gt; is still missing SSL support, but
+this is notified as an issue on the GitHub project repository.&lt;/p&gt;
 &lt;h1&gt;Further references&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://www.digitalocean.com/community/tutorials/how-to-install-elasticsearch-logstash-and-kibana-elk-stack-on-ubuntu-14-04"&gt;This&lt;/a&gt;
-guide can be useful to setup authentication on Kibana.&lt;/p&gt;</summary><category term="Django"></category><category term="Python"></category><category term="Logstash"></category><category term="Elasticsearch"></category><category term="Kibana"></category><category term="logging"></category><category term="EC2"></category><category term="AWS"></category><category term="Docker"></category><category term="Docker-compose"></category></entry><entry><title>Serve minified CSS and Javascript on a Pelican-powered blog</title><link href="http://csparpa.github.io/blog/2015/02/minify-resources-for-pelican-blog.html" rel="alternate"></link><updated>2015-02-10T10:41:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2015-02-10:blog/2015/02/minify-resources-for-pelican-blog.html</id><summary type="html">&lt;h3&gt;Summary&lt;/h3&gt;
+guide can be useful to setup authentication on Kibana.&lt;/p&gt;
+&lt;p&gt;If you need a comprehensive reference to the ELK stack (eg: how to write custom
+Logstash plugins or how build advanced queries and dashboards with Kibana) you
+can read &lt;a href="https://www.packtpub.com/big-data-and-business-intelligence/learning-elk-stack"&gt;"Learking ELK stack" by Packt Publishing&lt;/a&gt;&lt;/p&gt;</summary><category term="Django"></category><category term="Python"></category><category term="Logstash"></category><category term="Elasticsearch"></category><category term="Kibana"></category><category term="logging"></category><category term="EC2"></category><category term="AWS"></category><category term="Docker"></category><category term="Docker-compose"></category></entry><entry><title>Serve minified CSS and Javascript on a Pelican-powered blog</title><link href="http://csparpa.github.io/blog/2015/02/minify-resources-for-pelican-blog.html" rel="alternate"></link><updated>2015-02-10T10:41:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2015-02-10:blog/2015/02/minify-resources-for-pelican-blog.html</id><summary type="html">&lt;h3&gt;Summary&lt;/h3&gt;
 &lt;p&gt;In this short tutorial I'll show you how to wire minified CSS and Javascript into your Pelican-powered blog - I did it on my own one (the one you're currently reading!)&lt;/p&gt;
 &lt;h3&gt;How minification works&lt;/h3&gt;
 &lt;p&gt;"Minification" is the process of compressing the content of CSS and Javascript files by:&lt;/p&gt;
