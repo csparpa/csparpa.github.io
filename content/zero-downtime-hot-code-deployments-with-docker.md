@@ -177,20 +177,29 @@ As you can notice, *we did not stop the container*, nor we stopped Gunicorn runn
 ## Deploying code changes and/or environment changes
 What are the pros/cons of mounting your application source code as a Docker volume? As said, no need to restart your container when you want to ship code changes to production. However, your code lives outside your Docker containers and is therefore subject to accidental or intentional modifications (typical risk: fixing a bug on production environment by patching the mounted code and restart it on-the-fly!).
 
-> But what if I need to also ship environment (read: Dockerfile) changes to production?
-> And what if I need to ship _only infrastructure changes?
+But, wait!
 
+> What if I need to also ship environment (read: Dockerfile) changes to production?
+ 
+and
 
-In such cases, you are forced to ship a new Docker image to production and mounting code volumes becomes pointless if you need to also ship images provided that you embed your source code inside the new Docker image every time you build it.
+> What if I need to ship only infrastructure changes?
+
+In such cases, _you are forced to ship a new Docker image to production_ and mounting code volumes becomes pointless if you need to also ship images provided that you embed your source code inside the new Docker image every time you build it.
 The frequency of code vs infrastructure changes of course depends on your
 needs, but usually one delivers more software than software dependencies... so hot code reload still has the chances to be useful.
 
 I would suggest not to pack your source code into the Docker image on new deployments, because the release of code-only changes means the unneeded generation of a new Docker image - which has nothing different in terms of "environment" things!
 
-**If you have a Continuous Deployment pipeline, you can instrument it so that**:
-  - everytime a change in your Dockerfile is detected, a new Docker image is build and deployed, without deploying any code
-  - everytime a change in your source code is detected, no new Docker images are built and your deployment only consists in hot code reload across all your codebase running instances
+If you have a **Continuous Deployment pipeline**, you can instrument it so that:
 
+  - everytime a change in your Dockerfile is detected, a new Docker image is build, pushed to your image repository
+  - everytime a change in your source code is detected, run your test suites and custom tasks on the top of it, then compile any binaries if needed
+  - everytime _any_ change is detected in both infrastructure or code, execute the following steps:
+  
+    1. checkout code
+    2. checkout Docker image
+    3. if any new Docker image, instantiate again the containers from it and mount the code as volumes. If no new Docker images, then simply perform hot code reload
 
 ## References
 
