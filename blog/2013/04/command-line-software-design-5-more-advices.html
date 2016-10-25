@@ -92,7 +92,7 @@
 <p><strong>AKA: "What am I doing? I am existing..."</strong></p>
 <p>Your CLM should provide insight into what it is currently doing. The difficult part is to decide how much detail you want to provide to the user...and you might argue: "Ok, but you can always use log level filtering and then let the user decide the verbosity" – this is perfectly right, but I'm talking about on-screen messages. My advice is to print out a specific message which conveys what the CLM is currently doing, with a detail level which should be just enough for the user not to say "It is talking rubbish"! So, what is really vital is that you avoid using simple and generalistic messages like "Computing" or "Executing" and – on the other hand – that you avoid using hyper-detailed expressions such as "Inverting matrix – computing determinant of the 3rd 2×2 submatrix" <em>if they are not meaningful to the user</em>. Of course if the focus of your CLM is matricial inversion that shall be fine, but it shouldn't be if your CLM is – in example – focused on a higher-level problem which is solved using matricial inversion.  </p>
 <p>...And, please, never print out the raw counters in nested for loops. It happened to me just a couple of days ago to run an image-processing CLM provided by a project partner: this was the output of a successful run  </p>
-<div class="highlight"><pre>claudio@laptop:~<span class="nv">$ </span>python img_processing_clm.py input.tif output.tif
+<div class="highlight"><pre><span></span>claudio@laptop:~$ python img_processing_clm.py input.tif output.tif
 Conversion to 8bit took 23.567 seconds
 1
 2
@@ -100,7 +100,7 @@ Conversion to 8bit took 23.567 seconds
 4
 5
 6
-<span class="c">#2000 or so more lines</span>
+<span class="c1">#2000 or so more lines</span>
 The variance computation took 367.145 seconds
 ...
 </pre></div>
@@ -110,22 +110,22 @@ The variance computation took 367.145 seconds
 <h3>2. Gracefully fail</h3>
 <p><strong>AKA: "I don't want to see each blood drop spreading from your wound"</strong></p>
 <p>As a CLM user, would you prefer seeing this:  </p>
-<div class="highlight"><pre>claudio@laptop:~<span class="nv">$ </span>python myclm.py /var/clmdata/testoutdir  <span class="c">#we are missing the first parameter</span>
+<div class="highlight"><pre><span></span>claudio@laptop:~$ python myclm.py /var/clmdata/testoutdir  <span class="c1">#we are missing the first parameter</span>
   Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
   File <span class="s2">&quot;myclm.py&quot;</span>, line 3, in &lt;module&gt;
   <span class="nv">inputfile</span> <span class="o">=</span> sys.argv<span class="o">[</span>1<span class="o">]</span>
   IndexError: list index out of range
-claudio@laptop:~<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$?</span>
+claudio@laptop:~$ <span class="nb">echo</span> <span class="nv">$?</span>
 1
 </pre></div>
 
 
 <p>..or this?  </p>
-<div class="highlight"><pre>claudio@laptop:~<span class="nv">$ </span>python myclm.py /var/clmdata/testoutdir  <span class="c">#we are missing the first parameter</span>
+<div class="highlight"><pre><span></span>claudio@laptop:~$ python myclm.py /var/clmdata/testoutdir  <span class="c1">#we are missing the first parameter</span>
   ERROR: you must specify an input file
   Usage:
     myclm.py &lt;inputfile_path&gt; &lt;output_path&gt;
-claudio@laptop:~<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$?</span>
+claudio@laptop:~$ <span class="nb">echo</span> <span class="nv">$?</span>
 1
 </pre></div>
 
@@ -135,7 +135,7 @@ claudio@laptop:~<span class="nv">$ </span><span class="nb">echo</span> <span cla
 <h3>3. Organize your CLM folder</h3>
 <p><strong>AKA: "I am the Borg ... I bring order to chaos" (Borg Queen – Star Trek: First Contact)</strong></p>
 <p>Order in organizing your code is good. This translates directly into the fact that a well-structured CMS is easy to understand and modify, and can be efficiently used in a small amount of time. My advice is to adhere to widely adopted or standard program folder structuration patterns: I usually have my CLM's folder in this fashion</p>
-<div class="highlight"><pre>CLM-folder/
+<div class="highlight"><pre><span></span>CLM-folder/
   |--bin/     #Binaries: main CLM program and dependancies
   |--doc/     #Documentation about CLM usage/installation
   |--src/     #Source files
@@ -149,8 +149,8 @@ claudio@laptop:~<span class="nv">$ </span><span class="nb">echo</span> <span cla
 <p>As a general advice, don't rely on the safety of filesystem operations. If your CLM needs to store intermediate data try to do that in-memory, and if it's not possible and therefore you are compelled to use the filesystem, your target should be to put the least complexity between your CLM and your data. Reading data from filesystems seldom is a problem, but writing often is, and the amount of adversities you might face depends on a variety of factors such as the architecture (never tried to write in a folder for which you don't have <code>w</code> permissions?), the possible concurrency in data modification, the remoteness of the target filesystem and so on.  </p>
 <p>Another misused – but smooth and clever – technique is to leverage temporary folder support provided by the operating systems. In my experience with bash programming, I've always seen people doing local computations as follows: input files are copied into the same folder of the executing binaries, then intermediate files are written in that folder (usually, a lot  of files), and in case of successful CLM end intermediate files are deleted. This always made me angry, because often their programs were  buggy and therefore never got to their natural end, which forced me to press <code>CTRL+C</code>... leaving all of those intermediate files undeleted in the folder. And this meant: I myself would have to delete them!!! :-o To solve this issue, I simply suggested those people to leverage the "mktemp" Linux command, which creates a temporary folder with a pseudo-random name under /tmp and returns its name: one can then use this folder to do whatever she/he likes – i.e. writing the CLM execution's intermediate rubbish.  </p>
 <p>It's as easy as follows:</p>
-<div class="highlight"><pre>claudio@laptop:~<span class="nv">$ tempdir</span><span class="o">=</span><span class="k">$(</span>mktemp<span class="k">)</span>
-claudio@laptop:~<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$tempdir</span>
+<div class="highlight"><pre><span></span>claudio@laptop:~$ <span class="nv">tempdir</span><span class="o">=</span><span class="k">$(</span>mktemp<span class="k">)</span>
+claudio@laptop:~$ <span class="nb">echo</span> <span class="nv">$tempdir</span>
 /tmp/tmp.hyYKY21864
 </pre></div>
 
@@ -159,48 +159,48 @@ claudio@laptop:~<span class="nv">$ </span><span class="nb">echo</span> <span cla
 <p><strong>AKA: "Time – as well as folder location – is relative"</strong></p>
 <p>When you provide paths as arguments for CLMs it is a very good practice to give them in an absolute fashion. If you give absolute paths, there's a pretty good chance that your CLM  addresses files and folders in the right way. And my advice is: always handle absolute paths internally to your command-line softwares...in fact, this will prevent you from using terrible solutions like the <code>cd</code> (change directory) command, which will mess the whole thing up if you are using relative paths because the root folder they are resolved against changes!  </p>
 <p>A little coding exercise: let us write a small bash script (copier.bash) that takes reads a file and echoes its contents to a file named <code>results.out</code> which will be created in a directory of our choice. We want it to have this interface:  </p>
-<div class="highlight"><pre>copier.bash &lt;inputfile_path&gt; &lt;output_path&gt;
+<div class="highlight"><pre><span></span>copier.bash &lt;inputfile_path&gt; &lt;output_path&gt;
 </pre></div>
 
 
 <p>and here is the code (as you can see I'm using the <code>cat</code> executable which lies in the <code>/bin</code> path on my Linux system):  </p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 
-<span class="nv">inputfile</span><span class="o">=</span><span class="s2">&quot;$1&quot;</span>
-<span class="nv">outputdir</span><span class="o">=</span><span class="s2">&quot;$2&quot;</span>
+<span class="nv">inputfile</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+<span class="nv">outputdir</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span>
 
 <span class="nv">bindir</span><span class="o">=</span><span class="s2">&quot;/bin&quot;</span>
 
-<span class="nb">cd</span> <span class="s2">&quot;$bindir&quot;</span>
-cat <span class="s2">&quot;$inputfile&quot;</span> &gt; <span class="s2">&quot;$outputdir/result.out&quot;</span>
+<span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$bindir</span><span class="s2">&quot;</span>
+cat <span class="s2">&quot;</span><span class="nv">$inputfile</span><span class="s2">&quot;</span> &gt; <span class="s2">&quot;</span><span class="nv">$outputdir</span><span class="s2">/result.out&quot;</span>
 </pre></div>
 
 
 <p>Now if we setup the environment like this:</p>
-<div class="highlight"><pre>claudio@laptop:~<span class="nv">$ </span><span class="nb">cd</span> /opt/copier
-claudio@laptop:~<span class="nv">$ </span>mkdir output  <span class="c">#we create the output folder</span>
-claudio@laptop:~<span class="nv">$ </span>tree .
+<div class="highlight"><pre><span></span>claudio@laptop:~$ <span class="nb">cd</span> /opt/copier
+claudio@laptop:~$ mkdir output  <span class="c1">#we create the output folder</span>
+claudio@laptop:~$ tree .
 .
-|-- copier.bash
+<span class="p">|</span>-- copier.bash
 <span class="sb">`</span>-- output
-1 directory, 1 file
-claudio@laptop:~<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;italia has got talent&quot;</span> &gt; input.txt <span class="c">#we create the input file</span>
-claudio@laptop:~<span class="nv">$ </span>bash copier.bash input.txt output        <span class="c">#we run the script</span>
+<span class="m">1</span> directory, <span class="m">1</span> file
+claudio@laptop:~$ <span class="nb">echo</span> <span class="s2">&quot;italia has got talent&quot;</span> &gt; input.txt <span class="c1">#we create the input file</span>
+claudio@laptop:~$ bash copier.bash input.txt output        <span class="c1">#we run the script</span>
 copier.bash: line 9: output/result.out: No such file or directory
 </pre></div>
 
 
 <p>As we expected, the <code>cd</code> inside our script is messing up everything and the bash shell is complaining about the fact that after it, it is impossible to find the <code>output</code> subfolder (which, in absolute terms, is: <code>/bin/output</code> !!!)  </p>
 <p>Also the following command-line fail:  </p>
-<div class="highlight"><pre>claudio@laptop:~<span class="nv">$ </span>bash copier.bash input.txt /opt/copier/output
+<div class="highlight"><pre><span></span>claudio@laptop:~$ bash copier.bash input.txt /opt/copier/output
 cat: input.txt: No such file or directory
 </pre></div>
 
 
 <p>This time it's the <code>cat</code> executable complaining for the missing <code>input.txt</code> file, which it expects to be here: <code>/bin/input.txt</code>  </p>
 <p>The right way of running this script would be:  </p>
-<div class="highlight"><pre>claudio@laptop:~<span class="nv">$ </span>bash copier.bash /opt/copier/input.txt /opt/copier/output
-claudio@laptop:~<span class="nv">$ </span>cat output/result.out
+<div class="highlight"><pre><span></span>claudio@laptop:~$ bash copier.bash /opt/copier/input.txt /opt/copier/output
+claudio@laptop:~$ cat output/result.out
 italia has got talent
 </pre></div>
 

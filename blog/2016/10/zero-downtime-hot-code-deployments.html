@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="author" content="csparpa" />
+    <meta name="robots" content="index, follow"/>
+
+    <meta property="og:title" content="Zero downtime - Hot code deployments"/>
+    <meta property="og:url" content="../../2016/10/zero-downtime-hot-code-deployments.html"/>
+    <meta property="og:site_name" content="Vorsprung durch Informatik"/>
+    <meta property="og:type" content="article"/>
+
+    <link rel="canonical" href="../../2016/10/zero-downtime-hot-code-deployments.html" />
+
+    <title>Zero downtime - Hot code deployments | Vorsprung durch Informatik</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../theme/css/main.css" />
+    <link href="http://csparpa.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Vorsprung durch Informatik Atom Feed" />
+    <link href="http://csparpa.github.io/blog/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Vorsprung durch Informatik RSS Feed" />
+
+    <script type="text/javascript">var switchTo5x=true;</script>
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">
+        stLight.options({
+            publisher: "",
+            doNotHash: false,
+            doNotCopy: false,
+            hashAddressBar: false
+        });
+    </script>
+</head>
+
+<body id="index">
+    <div class="row-fluid">
+        <div class="span10 offset1">
+            <header id="banner" >
+                <h1>
+                    <a style="display: inline-block;" href="../../">Vorsprung durch Informatik </a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="display: inline-block;" href="http://csparpa.github.io"><img src="../../img/csparpa.png" /></a>
+                </h1>
+                <nav class="navbar">
+                    <div class="navbar-inner">
+                        <ul class="nav">
+                            <li><a href="../..">HOME</a></li>
+                            <li><a href="../../archives.html">Archives</a></li>
+                            <li><a href="../../categories.html">Categories</a></li>
+                            <li><a href="../../tags.html">Tags</a></li>
+                        </ul>
+
+                    </div>
+                </nav>
+            </header><!-- /#banner -->
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span10 offset1">
+            <div class="row-fluid">
+<div class="span10 offset1">
+  <section>
+    <article>
+      <header>
+        <h1 class="entry-title">
+          <a href="../../2016/10/zero-downtime-hot-code-deployments.html" rel="bookmark"
+             title="Permalink to Zero downtime - Hot code deployments">Zero downtime - Hot code deployments</a></h1>
+      </header>
+      <div class="entry-content">
+<footer class="post-info">
+    <address class="vcard author">
+        by <a class="url fn" href="../../author/csparpa.html">csparpa</a>
+    </address>
+
+    in <a href="../../category/devops.html">Devops</a>
+
+    on 2016-10-25
+
+        |
+        tags:         <a href="../../tag/python.html">Python</a>
+        <a href="../../tag/webapps.html">webapps</a>
+        <a href="../../tag/webserver.html">webserver</a>
+        <a href="../../tag/software.html">software</a>
+        <a href="../../tag/deployment.html">deployment</a>
+        <a href="../../tag/django.html">Django</a>
+        <a href="../../tag/docker.html">Docker</a>
+        <a href="../../tag/gunicorn.html">Gunicorn</a>
+
+
+
+    
+</footer><!-- /.post-info -->
+
+        <p>If you're reading this, probably you've asked yourself this question many times:</p>
+<blockquote>
+<p>How can I minimize (ideally, avoid) downtimes when I deploy my web application?</p>
+</blockquote>
+<p>There are multiple ways to accomplish this task, depending on what type of computing infrastructure you use and what your technology stack is.</p>
+<p>In this post, we're going to talk about <strong>hot code reload</strong>: this means that you have an already running codebase and you reload modifications to that codebase on the fly - that is, without downtime.</p>
+<p>In the past, I've worked on a high-traffic HTTP API backend that had to be released with almost no downtime, and I instrumented the deployment process to leverage hot code reload, so I want to share with you my experience with this technique.</p>
+<h2>Requirements for hot code reload</h2>
+<p>We need our web runtime environment to support a <em>hot</em> reloading, which means that we don't want to stop the environment and launch it again, this is because we don't obviously want to have downtimes in our website/API/whatever.</p>
+<p>Also, we need it to support a <em>graceful</em> code reloading, meaning that any requests currently being serviced when the reload happens must be completed and during the reload operation no further requests must be accepted.</p>
+<p>Some modern runtimes natively support hot reloading, but this is technology-dependent. The goal can be accomplished by simply relying on what we already have on our <em>nix boxes: <em>POSIX process signals</em>, specifically, the </em><code>SIGHUP</code>* one.</p>
+<p><a href="http://unix.stackexchange.com/a/15606">This Stackoverflow answer</a> clarifies very well the situation: the <code>HUP</code> signal was originally meant to be used to notify detached background processes to exit whenever users lost their
+terminal/frontend counterparts - but this is not the case for daemon-only processes like our web runtime environments. So these processes are free to implement the handling of the <code>HUP</code> signal as they want, and the generally accepted idea is to have it trigger a <em>reload configuration files and/or code</em>.</p>
+<p>Say that our runtime has master process ID of <code>$PID</code>, then:</p>
+<div class="highlight"><pre><span></span>$ <span class="nb">kill</span> -HUP <span class="nv">$PID</span>
+</pre></div>
+
+
+<p>is a "portable" way to reload configuration/code changes in a graceful way (in a pre-fork model, this means that the process handles worker processes' lifecycle) and without compromising uptime too much.</p>
+<p>For instance, <a href="http://docs.gunicorn.org/en/stable/signals.html#master-process">this is what happens with Gunicorn</a> when SIGHUP is received.</p>
+<p>More application runtimes supporting hot code reload are: Unicorn (Ruby), Nodemon (Javascript), Gin (Go), etc.. Also popular webservers such as Nginx and Apache Httpd support hot configuration reload.</p>
+<h2>A sample webapp</h2>
+<p>Let's get our hands dirty with code, now!</p>
+<p>For the sake of concreteness, we will use a sample Python webapp powered by the following techs:</p>
+<ul>
+<li>Python 3.5</li>
+<li>Gunicorn 19.6 as a web runtime environment (WSGI), running Gevent 1.1.2 workers</li>
+<li>Django 1.10 as a web framework</li>
+<li>Docker 1.12 as a containerization platform</li>
+</ul>
+<p>You can find <a href="https://github.com/csparpa/blog-zero-downtime.git">the code on Github</a></p>
+<h2>Operate the sample app</h2>
+<p>Start with Git-cloning the app, say, into folder <code>$SAMPLE_APP</code>. Now, you can run the app in a Docker container or natively on your host.</p>
+<p>Both scenarios rely on the <code>run.bash</code> script that is basically a shell wrapper launching Gunicorn in daemon mode and saving its PID into a file. This is
+important as we will use it later to send a <code>HUP</code> signal to the Gunicorn process.</p>
+<p>Code reload will be performed by the <code>reload.sh</code> script, that basically calls
+<code>kill -HUP</code> on the running Gunicorn process.</p>
+<h3>Run natively</h3>
+<p>If you <em>do not want to use Docker</em>, then I suggest you to install the app's dependencies under a <a href="https://virtualenv.pypa.io">virtualenv</a> so that you don't pollute your local host's <code>PYTHONPATH</code>. Once inside the virtualenv, install the dependencies and run the app with:</p>
+<div class="highlight"><pre><span></span>$ pip install -r requirements.txt
+$ bash run.sh
+</pre></div>
+
+
+<p>Keep this terminal open for the moment. Open a new terminal and check that the app is running like this:</p>
+<div class="highlight"><pre><span></span>$ curl http://localhost:1234/ping
+<span class="o">{</span><span class="s2">&quot;message&quot;</span>: <span class="s2">&quot;test&quot;</span><span class="o">}</span>
+</pre></div>
+
+
+<p>In the same terminal, run the polling client with:</p>
+<div class="highlight"><pre><span></span>$ python3.5 poll.py
+UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;test&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 13:57:35.414<span class="o">]</span>
+UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;test&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 13:57:35.578<span class="o">]</span>
+UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;test&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 13:57:35.914<span class="o">]</span>
+</pre></div>
+
+
+<p>Keep it running.</p>
+<p>The client polls the <code>/ping</code> endpoint for data and prints responses on screen.</p>
+<p>The timestamp refers to the moment when the HTTP request has been issued to the server: a default timeout of 0.1 seconds is considered for responses.
+So, if any request takes more than 0.1 seconds to be fulfilled, we consider our app to be down.</p>
+<p>If you see green then the server is up, if you see red then the server is down and if you see yellow then the server is up and a change in the response body has been detected: this will happen once we hot reload the code.</p>
+<p>Open the file <code>$PYTHONPATH/hot_code_reload/views.py</code> and modify the <code>message</code> value in the dictionary that is returned by the endpoint, i.e. put <code>abcd</code>:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PingView</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="n">EXPECTED_MESSAGE_VALUE</span><span class="p">,</span>  <span class="c1"># &lt;----</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;application/json&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Save, go back to the first terminal and perform the actual hot code reload magic with:</p>
+<div class="highlight"><pre><span></span>$ bash reload.sh
+</pre></div>
+
+
+<p>Now take a look at the second terminal, you should see something like this:</p>
+<div class="highlight"><pre><span></span>UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;test&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 08:16:17.860<span class="o">]</span>
+UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;test&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 08:16:17.872<span class="o">]</span>
+DOWN <span class="o">[</span>2016-10-25 08:16:17.882<span class="o">]</span>
+DOWN <span class="o">[</span>2016-10-25 08:16:17.990<span class="o">]</span>
+DOWN <span class="o">[</span>2016-10-25 08:16:18.095<span class="o">]</span>
+UP AND CHANGED: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;abcd&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 08:16:18.204<span class="o">]</span>
+UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;abcd&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 08:16:18.254<span class="o">]</span>
+UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;abcd&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 08:16:18.266<span class="o">]</span>
+</pre></div>
+
+
+<p>As you can see from the printed timestamps, it looks like the reload took less than 1 second - that's a very short downtime!</p>
+<h3>Run using Docker</h3>
+<p>We can perform hot code reload on dockerized applications by mounting its source code as a <em>container volume</em> and - after code changes - by issuing a <code>SIGHUP</code> with the <code>docker exec</code> subcommand.</p>
+<p>That's how to do it:</p>
+<div class="highlight"><pre><span></span>$ docker run -d <span class="se">\</span>
+    --name test_hcr <span class="se">\</span>
+    -v <span class="nv">$SAMPLE_APP</span>:/hcr <span class="se">\</span>
+    -p 0.0.0.0:1234:8000 <span class="se">\</span>
+    python:3.5 <span class="se">\</span>
+    tailf /dev/null
+</pre></div>
+
+
+<p>This command
+  - creates a non-interactive container named <code>test_hcr</code> from Python3.5 official image (it will be downloaded from DockerHub if you don't already have it on your host)
+  - mounts host folder <code>$SAMPLE_APP</code> to container folder <code>/hcr</code>
+  - maps container port 8000 to host port 1234</p>
+<p>Good, now let's install the Python dependencies on the container and start our app (I'm not doing this in a Dockerfile on purpose...):</p>
+<div class="highlight"><pre><span></span>$ docker <span class="nb">exec</span> -it test_hcr pip3 install -r /hcr/requirements.txt
+$ docker <span class="nb">exec</span> -it hcr bash -c <span class="s1">&#39;cd /hcr &amp;&amp; bash run.sh&#39;</span>
+</pre></div>
+
+
+<p>and test it's online with:</p>
+<div class="highlight"><pre><span></span>$ curl http://localhost:1234/ping
+<span class="o">{</span><span class="s2">&quot;message&quot;</span>: <span class="s2">&quot;test&quot;</span><span class="o">}</span>
+</pre></div>
+
+
+<p>Cool! The next steps are exactly the same as in the case of non-containerized apps: open a new terminal an run the polling client.</p>
+<p>Now modify the source code in order to return a different message, and then cast the hot code reload magic with:</p>
+<div class="highlight"><pre><span></span>docker <span class="nb">exec</span> -it hcr bash -c <span class="s1">&#39;cd /hcr &amp;&amp; bash reload.sh&#39;</span>
+</pre></div>
+
+
+<p>Now look back in the other terminal, you should see the output as described in the section about non-containerised apps.</p>
+<p>As you can notice, <em>we did not stop the container</em>, nor we stopped Gunicorn running inside of it!</p>
+<h2>Deploying code changes and/or environment changes</h2>
+<p>What are the pros/cons of mounting your application source code as a Docker volume? As said, no need to restart your container when you want to ship code changes to production. However, your code lives outside your Docker containers and is therefore subject to accidental or intentional modifications (typical risk: fixing a bug on production environment by patching the mounted code and restart it on-the-fly!).</p>
+<p>But, wait!</p>
+<blockquote>
+<p>What if I need to also ship environment (read: Dockerfile) changes to production?</p>
+</blockquote>
+<p>and</p>
+<blockquote>
+<p>What if I need to ship only infrastructure changes?</p>
+</blockquote>
+<p>In such cases, <em>you are forced to ship a new Docker image to production</em> and mounting code volumes becomes pointless if you need to also ship images provided that you embed your source code inside the new Docker image every time you build it.
+The frequency of code vs infrastructure changes of course depends on your
+needs, but usually one delivers more software than software dependencies... so hot code reload still has the chances to be useful.</p>
+<p>I would suggest not to pack your source code into the Docker image on new deployments, because the release of code-only changes means the unneeded generation of a new Docker image - which has nothing different in terms of "environment" things!</p>
+<p>If you have a <strong>Continuous Deployment pipeline</strong>, you can instrument it so that:</p>
+<ul>
+<li>everytime a change in your Dockerfile is detected, a new Docker image is build, pushed to your image repository</li>
+<li>everytime a change in your source code is detected, run your test suites and custom tasks on the top of it, then compile any binaries if needed</li>
+<li>
+<p>everytime <em>any</em> change is detected in both infrastructure or code, execute the following steps:</p>
+<ol>
+<li>checkout code</li>
+<li>checkout Docker image</li>
+<li>if any new Docker image, instantiate again the containers from it and mount the code as volumes. If no new Docker images, then simply perform hot code reload</li>
+</ol>
+</li>
+</ul>
+<h2>References</h2>
+<ul>
+<li>I was greatly inspired by <a href="[http://blog.ionic.io/docker-hot-code-deploys/">this brilliant blog post by the Ionic team</a>: it helped me a lot! Thanks guys!</li>
+<li>For Gunicorn pros, take a look at the documentation about <a href="http://docs.gunicorn.org/en/stable/signals.html">signal handling with Gunicorn</a></li>
+</ul>
+
+      </div><!-- /.entry-content -->
+
+    </article>
+  </section>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="site-footer">
+        <div class="row-fluid">
+            <div class="span10 offset1">
+                <address style="font-size: 10px;">
+                    <p>
+                        Claudio Sparpaglione - all rights reserved
+                    </p>
+                    <p>
+                        Powered by <a href="http://getpelican.com/">Pelican</a> and themed with <a href="http://github.com/jsliang/pelican-fresh/">Fresh</a>, by <a href="http://jsliang.com/">jsliang</a> and <a href="https://github.com/jsliang/pelican-fresh/graphs/contributors">contributors</a>.
+                    </p>
+                </address>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-56547669-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+</body>
+</html>

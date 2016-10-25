@@ -154,57 +154,57 @@
 </table>
 <h3>Checking truthiness</h3>
 <p>You can explicitly check the truth value of a value using the <code>bool</code> built-in function:</p>
-<div class="highlight"><pre><span class="nb">bool</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>           <span class="c"># True</span>
-<span class="nb">bool</span><span class="p">(</span><span class="s">&#39;Hello&#39;</span><span class="p">)</span>     <span class="c"># True</span>
-<span class="n">boole</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>  <span class="c"># True</span>
+<div class="highlight"><pre><span></span><span class="nb">bool</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>           <span class="c1"># True</span>
+<span class="nb">bool</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">)</span>     <span class="c1"># True</span>
+<span class="n">boole</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>  <span class="c1"># True</span>
 </pre></div>
 
 
 <p>So this - funny fact - means that <code>bool('False') is</code>True`: in Python there are no such things as Java's</p>
-<div class="highlight"><pre><span class="n">Boolean</span> <span class="n">b1</span> <span class="o">=</span> <span class="n">Boolean</span><span class="o">.</span><span class="n">valueOf</span><span class="p">(</span><span class="s">&quot;false&quot;</span><span class="p">);</span>       <span class="c"># b1 is false</span>
-<span class="n">boolean</span> <span class="n">b2</span> <span class="o">=</span> <span class="n">Boolean</span><span class="o">.</span><span class="n">parseBoolean</span><span class="p">(</span><span class="s">&quot;false&quot;</span><span class="p">);</span>  <span class="c"># b2 is false</span>
+<div class="highlight"><pre><span></span><span class="n">Boolean</span> <span class="n">b1</span> <span class="o">=</span> <span class="n">Boolean</span><span class="o">.</span><span class="n">valueOf</span><span class="p">(</span><span class="s2">&quot;false&quot;</span><span class="p">);</span>       <span class="c1"># b1 is false</span>
+<span class="n">boolean</span> <span class="n">b2</span> <span class="o">=</span> <span class="n">Boolean</span><span class="o">.</span><span class="n">parseBoolean</span><span class="p">(</span><span class="s2">&quot;false&quot;</span><span class="p">);</span>  <span class="c1"># b2 is false</span>
 </pre></div>
 
 
 <h3>Truthiness vs nonethiness</h3>
 <p>In example, if you have a list and you want to check if it's empty or not, you can do:</p>
-<div class="highlight"><pre><span class="n">my_list</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-  <span class="k">print</span> <span class="s">&#39;Empty&#39;</span>
+  <span class="k">print</span> <span class="s1">&#39;Empty&#39;</span>
 </pre></div>
 
 
 <p>but also - more concisely and more Pythonically:</p>
-<div class="highlight"><pre><span class="n">my_list</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">my_list</span><span class="p">:</span>
-  <span class="k">print</span> <span class="s">&#39;Empty&#39;</span>
+  <span class="k">print</span> <span class="s1">&#39;Empty&#39;</span>
 </pre></div>
 
 
 <p>this is because the truth value of an empty list is <code>False</code>. But, be aware that if you do:</p>
-<div class="highlight"><pre><span class="n">my_list</span> <span class="o">=</span> <span class="bp">None</span>
+<div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="bp">None</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">my_list</span><span class="p">:</span>
-  <span class="k">print</span> <span class="s">&#39;Empty&#39;</span>
+  <span class="k">print</span> <span class="s1">&#39;Empty&#39;</span>
 </pre></div>
 
 
 <p>you will get the same result ("Empty" being printed)! This is because the truth value of <code>None</code> is <code>False</code> as well. So this raises a flag: <em>checks for truthiness and nonethiness overlap, and therefore must be differentiated on a syntactical base</em>. I usually do this by <em>explicitly</em> checking for nonethiness:</p>
-<div class="highlight"><pre><span class="n">my_list</span> <span class="o">=</span> <span class="bp">None</span>
-<span class="k">if</span> <span class="n">my_list</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>  <span class="c"># explicit check for nonethiness</span>
-  <span class="k">print</span> <span class="s">&#39;None&#39;</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">my_list</span><span class="p">:</span>      <span class="c"># check for emptiness</span>
-  <span class="k">print</span> <span class="s">&#39;Empty&#39;</span>
+<div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="k">if</span> <span class="n">my_list</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>  <span class="c1"># explicit check for nonethiness</span>
+  <span class="k">print</span> <span class="s1">&#39;None&#39;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">my_list</span><span class="p">:</span>      <span class="c1"># check for emptiness</span>
+  <span class="k">print</span> <span class="s1">&#39;Empty&#39;</span>
 </pre></div>
 
 
 <h3>Defining truthiness for your class</h3>
 <p>You can define the behaviour of your own objects when processed by the <code>bool</code> built-in. This is done by redefining the <code>__bool__</code> hook</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">MyClass</span><span class="p">():</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">():</span>
     <span class="n">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">False</span>
 
 <span class="n">o</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
-<span class="nb">bool</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>    <span class="c"># False, always</span>
+<span class="nb">bool</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>    <span class="c1"># False, always</span>
 </pre></div>
 
 

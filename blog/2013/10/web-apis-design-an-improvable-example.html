@@ -113,7 +113,7 @@
 <p>The API lets you basically retrieve different weather datasets (observations, forecasts, historic data) about places in the world.
 The most simple and natural feature for the API is to let you query for the currently observed weather in a location: this can be specified in a twofold manner, either by passing the API a toponym or a lat/lon couple.  </p>
 <p>The related endpoints are:  </p>
-<div class="highlight"><pre>#Feature: retrieve current weather - location is specified via toponym
+<div class="highlight"><pre><span></span>#Feature: retrieve current weather - location is specified via toponym
 http://api.openweathermap.org/data/2.5/weather?q=London,uk
 
 #Feature: retrieve current weather - location is specified via lat/lon
@@ -124,7 +124,7 @@ http://api.openweathermap.org/data/2.5/weather?lat=57&amp;lon=-2.15
 <p>Here the naming seems to quite proper with regards to the implemented feature: great!  </p>
 <p>Things worsen when you consider these API features: find the current weather conditions in all the locations having certain characteristics, such as having toponyms that are similar/equal to a given string or being in the neighborhood of a given lat/lon couple.<br />
 Here are the related endpoints:  </p>
-<div class="highlight"><pre>#Feature: retrieve current weathers in all the locations whose names exactly equal to the string &quot;London&quot;
+<div class="highlight"><pre><span></span>#Feature: retrieve current weathers in all the locations whose names exactly equal to the string &quot;London&quot;
 http://api.openweathermap.org/data/2.5/find?q=London&amp;type=accurate
 
 #Feature: retrieve current weathers in all the locations whose names contains the string &quot;London&quot;
@@ -143,7 +143,7 @@ http://api.openweathermap.org/data/2.5/find?lat=57&amp;lon=-2.15
 </ol>
 <p>Another feature: retrieve weather forecasts for a location. You can get forecasts for every 3-hours of the next 5 days or for every of the next 14 days.  </p>
 <p>Here are the endpoints:</p>
-<div class="highlight"><pre>#Feature: retrieve 3h weather forecast for a location
+<div class="highlight"><pre><span></span>#Feature: retrieve 3h weather forecast for a location
 http://api.openweathermap.org/data/2.5/forecast?q=London
 
 #Feature: retrieve daily weather forecast for a location
@@ -160,7 +160,7 @@ http://api.openweathermap.org/data/2.5/forecast/daily?q=London
 </ol>
 <h3>Same conceptual entities, different JSON representations</h3>
 <p>Clients of data API expect returned data to be structured using some kind of language or convention and  they also expect that structured data is organized in chunks or logical groups  that clearly convey cohesion and hierarchy. In our specific case, the description language used by the API can either be JSON or XML (but we will only rely on JSON from now on): this is a consolidated practice among the web APIs  and this sounds good. At this point, we want to inspect the JSON returned by a query for current weather data on London,UK:  </p>
-<div class="highlight"><pre>#Payload of response to request:
+<div class="highlight"><pre><span></span>#Payload of response to request:
 #GET http://api.openweathermap.org/data/2.5/weather?q=London,uk
 {
   &quot;coord&quot;: {
@@ -196,7 +196,7 @@ http://api.openweathermap.org/data/2.5/forecast/daily?q=London
 
 
 <p>The "coord”, "country”, "id” and "name” JSON root elements refer to a single logical entity: the location for which the current weather is given (London, UK). Can you see it? Wouldn't have it been better to group all the location info into a single JSON element? For example, like this:  </p>
-<div class="highlight"><pre>{
+<div class="highlight"><pre><span></span>{
 ...
 &quot;location&quot;:
 {
@@ -213,7 +213,7 @@ http://api.openweathermap.org/data/2.5/forecast/daily?q=London
 
 
 <p>Another legitimate question is: why location information spread out from the data regarding current weather? Here the API is clearly returning more data than it has been asked for. But what is really obscure is that location info are structured in different ways if returned by different endpoints. In example, if we ask for the daily weather forecast on London,UK we get:  </p>
-<div class="highlight"><pre>#Payload of response to request:
+<div class="highlight"><pre><span></span>#Payload of response to request:
 #GET http://api.openweathermap.org/data/2.5/forecast/daily?q=London
 {
 &quot;city&quot; : {
@@ -233,7 +233,7 @@ http://api.openweathermap.org/data/2.5/forecast/daily?q=London
 <h3>HTTP status codes are neglected</h3>
 <p>This is one of the main shortcomings of this API: it does not convey error conditions through a proper use of HTTP status codes. The API users want to receive a 200 (OK) status code in the HTTP response's header – along with data – whenever a GET request is a hit: this means that the endpoint exists and is correctly invoked by the clients; the same way, users want to receive a 4xx or 5xx status code whenever something goes wrong with their request: this can happen for several reasons, either due to clients or the server itself. But, to be short: a user expects a non-200 status code to be returned whenever something goes wrong with its request.  s</p>
 <p>The OWM API <strong>always returns a 200 HTTP status code</strong>, no matter what happens. But, if something goes wrong with a client's request, it returns the right HTTP status code and an explanation message into the HTTP response's payload! An example: we want to query for current weather on a non-existent location (the folkloristic: "sev082hfrv2qvf2vunr”)  </p>
-<div class="highlight"><pre>#HTTP request
+<div class="highlight"><pre><span></span>#HTTP request
 GET /data/2.5/weather?q=sev082hfrv2qvf2vunr HTTP/1.1
 #HTTP response headers
 HTTP/1.1 200 OK
@@ -248,7 +248,7 @@ Content-Type: application/json; charset=utf-8
 <p>The JSON payload is clear: the location has not been found and a 404 (Not Found) error code has been returned. However the code is returned <strong>into the payload</strong>, so the clients have to first presume that the request was a success, then parse the payload and find out that it wasn't! The API is mis-using the HTTP protocol, which is a very nasty behaviour for clients and <em>blows the API away from RESTfulness</em>, as well.  </p>
 <h3>"Not found” is different from "Found but no data available”</h3>
 <p>The improper usage of HTTP status codes is particularly problematic in the case of queries to historic weather data registred by meteostations. A meteostation is identified by a unique integer number and when historic data is queried, the API returns a JSON list of data measurements for the desired meteostation. So, an empty list means: no data for the desired meteostation. Now, if I want to get historic data for a station that is not present in the API's meteostations collection (like, say, station number -2147483648), I get:  </p>
-<div class="highlight"><pre>#HTTP request
+<div class="highlight"><pre><span></span>#HTTP request
 GET /data/2.5/history/station?id=-2147483648&amp;type=tick HTTP/1.1
 #HTTP response headers
 HTTP/1.1 200 OK

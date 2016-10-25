@@ -97,81 +97,81 @@ We'll call our blog: "blog"  </p>
 <p>You will need Python 2.7+ and the <code>pip</code> package manager</p>
 <h3>Install Pelican</h3>
 <p>Install Pelican and Markdown syntax modules:</p>
-<div class="highlight"><pre><span class="nv">$&gt;</span> pip install pelican Markdown
+<div class="highlight"><pre><span></span>$&gt; pip install pelican Markdown
 </pre></div>
 
 
 <h3>Create a skeleton Pelican project</h3>
-<div class="highlight"><pre><span class="nv">$&gt;</span> <span class="nb">cd</span> 
-<span class="nv">$&gt;</span> mkdir blog
-<span class="nv">$&gt;</span> <span class="nb">cd </span>blog
-<span class="nv">$&gt;</span> pelican-quickstart
-<span class="nv">$&gt;</span> tree
+<div class="highlight"><pre><span></span>$&gt; <span class="nb">cd</span> 
+$&gt; mkdir blog
+$&gt; <span class="nb">cd</span> blog
+$&gt; pelican-quickstart
+$&gt; tree
     ./
-    +-- content              <span class="c"># Place here source .md files</span>
-    +-- output               <span class="c"># Will contain the output .html files after generation</span>
+    +-- content              <span class="c1"># Place here source .md files</span>
+    +-- output               <span class="c1"># Will contain the output .html files after generation</span>
     +-- develop_server.sh
     +-- fabfile.py
     +-- Makefile
-    +-- pelicanconf.py       <span class="c"># Main settings file</span>
-    +-- publishconf.py       <span class="c"># Settings to use when ready to publish</span>
+    +-- pelicanconf.py       <span class="c1"># Main settings file</span>
+    +-- publishconf.py       <span class="c1"># Settings to use when ready to publish</span>
 </pre></div>
 
 
 <h3>Install themes</h3>
 <p>You can modify Pelican's default theme by installing (cloning) one or more
 of the <a href="https://github.com/getpelican/pelican-themes">themes you find on Github</a>:</p>
-<div class="highlight"><pre><span class="nv">$&gt;</span> <span class="nb">cd </span>pelican-test
-<span class="nv">$&gt;</span> mkdir -p themes/fresh  <span class="c"># I&#39;ve chosen to install the &#39;fresh&#39; theme</span>
-<span class="nv">$&gt;</span> git clone git://github.com/jsliang/pelican-fresh themes/fresh
+<div class="highlight"><pre><span></span>$&gt; <span class="nb">cd</span> pelican-test
+$&gt; mkdir -p themes/fresh  <span class="c1"># I&#39;ve chosen to install the &#39;fresh&#39; theme</span>
+$&gt; git clone git://github.com/jsliang/pelican-fresh themes/fresh
 </pre></div>
 
 
 <h3>Write Pelican configuration file</h3>
 <p>The configuration file is <code>pelicanconf.py</code>, it will be used by Pelican
 when generating HTML content from the Markdown sources:</p>
-<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding: utf-8 -*- #</span>
+<div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*- #</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
 
-<span class="n">AUTHOR</span> <span class="o">=</span> <span class="s">u&#39;me&#39;</span>
-<span class="n">SITENAME</span> <span class="o">=</span> <span class="s">u&#39;blog&#39;</span>
-<span class="n">SITEURL</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="n">AUTHOR</span> <span class="o">=</span> <span class="s1">u&#39;me&#39;</span>
+<span class="n">SITENAME</span> <span class="o">=</span> <span class="s1">u&#39;blog&#39;</span>
+<span class="n">SITEURL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
-<span class="c"># Pelican will take contents in this folder as sources</span>
-<span class="n">PATH</span> <span class="o">=</span> <span class="s">&#39;content&#39;</span>
+<span class="c1"># Pelican will take contents in this folder as sources</span>
+<span class="n">PATH</span> <span class="o">=</span> <span class="s1">&#39;content&#39;</span>
 
-<span class="n">TIMEZONE</span> <span class="o">=</span> <span class="s">&#39;Europe/London&#39;</span>
+<span class="n">TIMEZONE</span> <span class="o">=</span> <span class="s1">&#39;Europe/London&#39;</span>
 
-<span class="n">DEFAULT_LANG</span> <span class="o">=</span> <span class="s">u&#39;en&#39;</span>
+<span class="n">DEFAULT_LANG</span> <span class="o">=</span> <span class="s1">u&#39;en&#39;</span>
 
-<span class="c"># Feed generation</span>
+<span class="c1"># Feed generation</span>
 <span class="n">FEED_ALL_ATOM</span> <span class="o">=</span> <span class="bp">None</span>
 <span class="n">CATEGORY_FEED_ATOM</span> <span class="o">=</span> <span class="bp">None</span>
 <span class="n">TRANSLATION_FEED_ATOM</span> <span class="o">=</span> <span class="bp">None</span>
 
-<span class="c"># Blogroll links</span>
-<span class="n">LINKS</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;My link 1&#39;</span><span class="p">,</span> <span class="s">&#39;http://mylink1.com&#39;</span><span class="p">),</span>
-         <span class="p">(</span><span class="s">&#39;My link 2&#39;</span><span class="p">,</span> <span class="s">&#39;http://mylink2.com&#39;</span><span class="p">),)</span>
+<span class="c1"># Blogroll links</span>
+<span class="n">LINKS</span> <span class="o">=</span> <span class="p">((</span><span class="s1">&#39;My link 1&#39;</span><span class="p">,</span> <span class="s1">&#39;http://mylink1.com&#39;</span><span class="p">),</span>
+         <span class="p">(</span><span class="s1">&#39;My link 2&#39;</span><span class="p">,</span> <span class="s1">&#39;http://mylink2.com&#39;</span><span class="p">),)</span>
 
-<span class="c"># Social widget links</span>
-<span class="n">SOCIAL</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;My social link 1&#39;</span><span class="p">,</span> <span class="s">&#39;https://mysociallink1.com&#39;</span><span class="p">),</span>
-          <span class="p">(</span><span class="s">&#39;My social link 2&#39;</span><span class="p">,</span> <span class="s">&#39;https://mysociallink2.com&#39;</span><span class="p">),)</span>
+<span class="c1"># Social widget links</span>
+<span class="n">SOCIAL</span> <span class="o">=</span> <span class="p">((</span><span class="s1">&#39;My social link 1&#39;</span><span class="p">,</span> <span class="s1">&#39;https://mysociallink1.com&#39;</span><span class="p">),</span>
+          <span class="p">(</span><span class="s1">&#39;My social link 2&#39;</span><span class="p">,</span> <span class="s1">&#39;https://mysociallink2.com&#39;</span><span class="p">),)</span>
 
-<span class="c"># Max Number of article previews per page</span>
+<span class="c1"># Max Number of article previews per page</span>
 <span class="n">DEFAULT_PAGINATION</span> <span class="o">=</span> <span class="mi">5</span>
 
-<span class="c"># Document-relative URLs ?</span>
+<span class="c1"># Document-relative URLs ?</span>
 <span class="n">RELATIVE_URLS</span> <span class="o">=</span> <span class="bp">True</span>
 
-<span class="c"># Path to the theme you want to apply</span>
-<span class="n">THEME</span> <span class="o">=</span> <span class="s">&#39;themes/fresh&#39;</span>
+<span class="c1"># Path to the theme you want to apply</span>
+<span class="n">THEME</span> <span class="o">=</span> <span class="s1">&#39;themes/fresh&#39;</span>
 </pre></div>
 
 
 <h3>Write a blog post</h3>
 <p>Now write a Markdown blog post like this one:</p>
-<div class="highlight"><pre>Title: My test blog post
+<div class="highlight"><pre><span></span>Title: My test blog post
 Date: 2014-11-01 13:49
 Category: attempts
 Tags: blogging, pelican, markdown
@@ -188,8 +188,8 @@ What is the meaning of life the universe and everything?
 <p>and save it into the <code>content</code> folder as <code>test.md</code></p>
 <h3>Generate HTML from Markdown</h3>
 <p>You're now ready to generate the corresponding HTML content:</p>
-<div class="highlight"><pre><span class="nv">$&gt;</span> pelican content -o output
-<span class="nv">$&gt;</span> tree output
+<div class="highlight"><pre><span></span>$&gt; pelican content -o output
+$&gt; tree output
     output/
     +-- author/
     +-- category/
@@ -208,7 +208,7 @@ What is the meaning of life the universe and everything?
 
 <h3>Take a look!</h3>
 <p>You can now preview your blog by launching a web server:</p>
-<div class="highlight"><pre><span class="nv">$&gt;</span> python -m SimpleHTTPServer 8888
+<div class="highlight"><pre><span></span>$&gt; python -m SimpleHTTPServer 8888
 </pre></div>
 
 
@@ -218,7 +218,7 @@ Cool, isn't it?</p>
 <p>Pelican is an extensible platform, which means you can add one or more <a href="https://github.com/getpelican/pelican-plugins">plugins</a>
 into it and add functionalities.<br />
 You can install community-provided plugins by cloning the plugins repository:</p>
-<div class="highlight"><pre><span class="nv">$&gt;</span> git clone https://github.com/getpelican/pelican-plugins plugins
+<div class="highlight"><pre><span></span>$&gt; git clone https://github.com/getpelican/pelican-plugins plugins
 </pre></div>
 
 
@@ -228,24 +228,24 @@ data into your Pelican configuration file.</p>
 <p>You want your blog to be fully crawled by Google, dont' you? So you need to generate a sitemap for it.<br />
 Generating a sitemap is easy if you use the <code>sitemap</code> plugin.<br />
 What you need to do is, once you've installed all the plugins, add the following lines to the <code>pelicanconf.py</code>:</p>
-<div class="highlight"><pre><span class="c"># Path to the folder containing the plugins</span>
-<span class="n">PLUGIN_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;plugins&#39;</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><span class="c1"># Path to the folder containing the plugins</span>
+<span class="n">PLUGIN_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">u&#39;plugins&#39;</span><span class="p">]</span>
 
-<span class="c"># The plugins you want to be enabled</span>
-<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;sitemap&#39;</span><span class="p">]</span>
+<span class="c1"># The plugins you want to be enabled</span>
+<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">u&#39;sitemap&#39;</span><span class="p">]</span>
 
-<span class="c"># Configuration for the &quot;sitemap&quot; plugin</span>
+<span class="c1"># Configuration for the &quot;sitemap&quot; plugin</span>
 <span class="n">SITEMAP</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&#39;format&#39;</span><span class="p">:</span> <span class="s">&#39;xml&#39;</span><span class="p">,</span>
-    <span class="s">&#39;priorities&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">&#39;articles&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s">&#39;indexes&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-        <span class="s">&#39;pages&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;priorities&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;articles&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">&#39;indexes&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s1">&#39;pages&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
     <span class="p">},</span>
-    <span class="s">&#39;changefreqs&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">&#39;articles&#39;</span><span class="p">:</span> <span class="s">&#39;always&#39;</span><span class="p">,</span>
-        <span class="s">&#39;indexes&#39;</span><span class="p">:</span> <span class="s">&#39;hourly&#39;</span><span class="p">,</span>
-        <span class="s">&#39;pages&#39;</span><span class="p">:</span> <span class="s">&#39;monthly&#39;</span>
+    <span class="s1">&#39;changefreqs&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;articles&#39;</span><span class="p">:</span> <span class="s1">&#39;always&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;indexes&#39;</span><span class="p">:</span> <span class="s1">&#39;hourly&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pages&#39;</span><span class="p">:</span> <span class="s1">&#39;monthly&#39;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>

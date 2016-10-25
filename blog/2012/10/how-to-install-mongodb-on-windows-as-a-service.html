@@ -104,7 +104,7 @@
 <p>Create the data path folders (in my example, <code>C:\mongodb-2.2.0\data\db</code>):</p>
 </li>
 </ol>
-<div class="highlight"><pre>C:\&gt; md C:\mongodb-2.2.0\data
+<div class="highlight"><pre><span></span>C:\&gt; md C:\mongodb-2.2.0\data
 C:\&gt; md C:\mongodb-2.2.0\data\db
 C:\&gt; set datapath = C:\mongodb-2.2.0\data\db
 </pre></div>
@@ -113,14 +113,14 @@ C:\&gt; set datapath = C:\mongodb-2.2.0\data\db
 <ol>
 <li>Setup mongod configuration file path (my file is <code>C:\mongodb-2.2.0\mongod.cfg</code>):</li>
 </ol>
-<div class="highlight"><pre>C:\&gt; set configpath = C:\mongodb-2.2.0\mongod.cfg
+<div class="highlight"><pre><span></span>C:\&gt; set configpath = C:\mongodb-2.2.0\mongod.cfg
 </pre></div>
 
 
 <ol>
 <li>Create the folder that will host the service's log file (my folder is <code>C:\mongodb-2.2.0\log</code>) and write its path into the config file:</li>
 </ol>
-<div class="highlight"><pre>C:\&gt; md C:\mongodb-2.2.0\log
+<div class="highlight"><pre><span></span>C:\&gt; md C:\mongodb-2.2.0\log
 C:\&gt; echo logpath = C:\mongodb-2.2.0\log\mongod.log &gt; C:\mongodb-2.2.0\mongod.cfg
 </pre></div>
 
@@ -128,12 +128,12 @@ C:\&gt; echo logpath = C:\mongodb-2.2.0\log\mongod.log &gt; C:\mongodb-2.2.0\mon
 <ol>
 <li>Install <code>mongod</code> as a service:</li>
 </ol>
-<div class="highlight"><pre>C:\&gt; C:\mongodb-2.2.0\bin\mongod.exe --config %configpath% --dbpath %dbpath% --install
+<div class="highlight"><pre><span></span>C:\&gt; C:\mongodb-2.2.0\bin\mongod.exe --config %configpath% --dbpath %dbpath% --install
 </pre></div>
 
 
 <p>Now you can start/stop/remove the MongoDB service via the services administration graphical interface, or via the command line using the following commands:</p>
-<div class="highlight"><pre>:: Start service
+<div class="highlight"><pre><span></span>:: Start service
 C:\&gt; net start MongoDB
 
 :: Stop service
@@ -145,7 +145,7 @@ C:\&gt; C:\mongodb-2.2.0\bin\mongod.exe --remove
 
 
 <p>Wanna test out your installation? Just call the MongoDB Javascript shell:</p>
-<div class="highlight"><pre>C:\&gt; C:\mongodb-2.2.0\bin\mongo.exe
+<div class="highlight"><pre><span></span>C:\&gt; C:\mongodb-2.2.0\bin\mongo.exe
 </pre></div>
 
 
