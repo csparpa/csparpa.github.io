@@ -11,7 +11,7 @@ If you're reading this, probably you've asked yourself this question many times:
 
 > How can I minimize (ideally, avoid) downtimes when I deploy my web application?
 
-There are many ways to accomplish this task, depending on what type of computing infrastructure you use and what your technology stack is.
+There are multiple ways to accomplish this task, depending on what type of computing infrastructure you use and what your technology stack is.
 
 In this post, we're going to talk about **hot code reload**: this means that you have an already running codebase and you reload modifications to that codebase on the fly - that is, without downtime.
 
@@ -56,7 +56,7 @@ You can find [the code on Github](https://github.com/csparpa/blog-zero-downtime.
 Start with Git-cloning the app, say, into folder `$SAMPLE_APP`. Now, you can run the app in a Docker container or natively on your host.
 
 Both scenarios rely on the `run.bash` script that is basically a shell wrapper launching Gunicorn in daemon mode and saving its PID into a file. This is
-important as we will use it later to notify a `HUP` signal to the Gunicorn process.
+important as we will use it later to send a `HUP` signal to the Gunicorn process.
 
 Code reload will be performed by the `reload.sh` script, that basically calls
 `kill -HUP` on the running Gunicorn process.
@@ -174,11 +174,23 @@ Now look back in the other terminal, you should see the output as described in t
 As you can notice, *we did not stop the container*, nor we stopped Gunicorn running inside of it!
 
 
-## Considerations: deploying infrastructure changes vs deploying code changes
-TBD
+## Deploying code changes and/or environment changes
+What are the pros/cons of mounting your application source code as a Docker volume? As said, no need to restart your container when you want to ship code changes to production. However, your code lives outside your Docker containers and is therefore subject to accidental or intentional modifications (typical risk: fixing a bug on production environment by patching the mounted code and restart it on-the-fly!).
 
-## Automate deployments
-TBD
+> But what if I need to also ship environment (read: Dockerfile) changes to production?
+> And what if I need to ship _only infrastructure changes?
+
+
+In such cases, you are forced to ship a new Docker image to production and mounting code volumes becomes pointless if you need to also ship images provided that you embed your source code inside the new Docker image every time you build it.
+The frequency of code vs infrastructure changes of course depends on your
+needs, but usually one delivers more software than software dependencies... so hot code reload still has the chances to be useful.
+
+I would suggest not to pack your source code into the Docker image on new deployments, because the release of code-only changes means the unneeded generation of a new Docker image - which has nothing different in terms of "environment" things!
+
+**If you have a Continuous Deployment pipeline, you can instrument it so that**:
+  - everytime a change in your Dockerfile is detected, a new Docker image is build and deployed, without deploying any code
+  - everytime a change in your source code is detected, no new Docker images are built and your deployment only consists in hot code reload across all your codebase running instances
+
 
 ## References
 
