@@ -232,4 +232,4 @@ guide can be useful to setup authentication on Kibana.
 
 If you need a comprehensive reference to the ELK stack (eg: how to write custom
 Logstash plugins or how build advanced queries and dashboards with Kibana) you
-can read ["Learking ELK stack" by Packt Publishing](https://www.packtpub.com/big-data-and-business-intelligence/learning-elk-stack)
+can read ["Learning ELK Stack" by Packt Publishing](https://www.packtpub.com/big-data-and-business-intelligence/learning-elk-stack)
