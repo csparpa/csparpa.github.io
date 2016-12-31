@@ -162,19 +162,19 @@ mounts a good capacity volume (this depends on the logs frequency of course,
 but I would advice at least 32 GB) and at least 2 GB of RAM (a t2.small could be
 fine)</p>
 <p>Install Docker 1.9 by running the following commands as root user:</p>
-<div class="highlight"><pre><span></span>$ apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-$ <span class="nb">echo</span> <span class="s2">&quot;deb https://apt.dockerproject.org/repo ubuntu-trusty main&quot;</span> <span class="p">|</span> sudo tee -a /etc/apt/sources.list.d/docker.list
-$ apt-get update
-$ apt-get install -y docker-engine python-pip
-$ usermod -aG docker ubuntu
+<div class="highlight"><pre><span class="err">$</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">adv</span> <span class="o">--</span><span class="n">keyserver</span> <span class="n">hkp</span><span class="o">:</span><span class="c1">//p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D</span>
+<span class="err">$</span> <span class="n">echo</span> <span class="s">&quot;deb https://apt.dockerproject.org/repo ubuntu-trusty main&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">-</span><span class="n">a</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="p">.</span><span class="n">list</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">docker</span><span class="p">.</span><span class="n">list</span>
+<span class="err">$</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="err">$</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">docker</span><span class="o">-</span><span class="n">engine</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
+<span class="err">$</span> <span class="n">usermod</span> <span class="o">-</span><span class="n">aG</span> <span class="n">docker</span> <span class="n">ubuntu</span>
 </pre></div>
 
 
 <p>Then logout and login again as user ubuntu.</p>
 <p>Now install Docker-compose with the following commands:</p>
-<div class="highlight"><pre><span></span>$ <span class="nb">cd</span>
-$ curl -L https://github.com/docker/compose/releases/download/1.5.2/docker-compose-<span class="sb">`</span>uname -s<span class="sb">`</span>-<span class="sb">`</span>uname -m<span class="sb">`</span> &gt; $ /usr/local/bin/docker-compose
-$ chmod +x /usr/local/bin/docker-compose
+<div class="highlight"><pre><span class="err">$</span> <span class="n">cd</span>
+<span class="err">$</span> <span class="n">curl</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/docker/compose/releases/download/1.5.2/docker-compose-`uname -s`-`uname -m` &gt; $ /usr/local/bin/docker-compose</span>
+<span class="err">$</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span>
 </pre></div>
 
 
@@ -206,36 +206,36 @@ all the applications in the ELK stack, each one a separate Docker container.
 Containers are instrumented so they can communicate and the one running Kibana
 will get mapped to a public port of the EC2 host.</p>
 <p>We can clone the repo with:</p>
-<div class="highlight"><pre><span></span>$ <span class="nb">cd</span>
-$ git clone https://github.com/deviantony/docker-elk
+<div class="highlight"><pre><span class="err">$</span> <span class="n">cd</span>
+<span class="err">$</span> <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/deviantony/docker-elk</span>
 </pre></div>
 
 
 <p>In the repo you find subfolders for each ELK component, storing config files
 that you can modify according to your needs.</p>
 <p>Bringing up all the ELK stack is as simple as:</p>
-<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> docker-elk
-$ docker-compose up -d
+<div class="highlight"><pre><span class="err">$</span> <span class="n">cd</span> <span class="n">docker</span><span class="o">-</span><span class="n">elk</span>
+<span class="err">$</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span>
 </pre></div>
 
 
 <p>After a while, you can test that the containers have been started:</p>
-<div class="highlight"><pre><span></span>$ docker ps
-CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                                             NAMES
-8f34a3f8d142        dockerelk_kibana       <span class="s2">&quot;/docker-entrypoint.s&quot;</span>   <span class="m">5</span> seconds ago       Up <span class="m">2</span> seconds        0.0.0.0:5601-&gt;5601/tcp                            dockerelk_kibana_1
-d2530f2e0194        logstash:latest        <span class="s2">&quot;/docker-entrypoint.s&quot;</span>   <span class="m">8</span> seconds ago       Up <span class="m">6</span> seconds        0.0.0.0:5000-&gt;5000/tcp                            dockerelk_logstash_1
-9c6580429bde        elasticsearch:latest   <span class="s2">&quot;/docker-entrypoint.s&quot;</span>   <span class="m">11</span> seconds ago      Up <span class="m">9</span> seconds        0.0.0.0:9200-&gt;9200/tcp,  0.0.0.0:9300-&gt;9300/tcp   dockerelk_elasticsearch_1
+<div class="highlight"><pre><span class="err">$</span> <span class="n">docker</span> <span class="n">ps</span>
+<span class="n">CONTAINER</span> <span class="n">ID</span>        <span class="n">IMAGE</span>                  <span class="n">COMMAND</span>                  <span class="n">CREATED</span>             <span class="n">STATUS</span>              <span class="n">PORTS</span>                                             <span class="n">NAMES</span>
+<span class="mf">8f</span><span class="mi">34</span><span class="n">a3f8d142</span>        <span class="n">dockerelk_kibana</span>       <span class="s">&quot;/docker-entrypoint.s&quot;</span>   <span class="mi">5</span> <span class="n">seconds</span> <span class="n">ago</span>       <span class="n">Up</span> <span class="mi">2</span> <span class="n">seconds</span>        <span class="mf">0.0.0.0</span><span class="o">:</span><span class="mi">5601</span><span class="o">-&gt;</span><span class="mi">5601</span><span class="o">/</span><span class="n">tcp</span>                            <span class="n">dockerelk_kibana_1</span>
+<span class="n">d2530f2e0194</span>        <span class="n">logstash</span><span class="o">:</span><span class="n">latest</span>        <span class="s">&quot;/docker-entrypoint.s&quot;</span>   <span class="mi">8</span> <span class="n">seconds</span> <span class="n">ago</span>       <span class="n">Up</span> <span class="mi">6</span> <span class="n">seconds</span>        <span class="mf">0.0.0.0</span><span class="o">:</span><span class="mi">5000</span><span class="o">-&gt;</span><span class="mi">5000</span><span class="o">/</span><span class="n">tcp</span>                            <span class="n">dockerelk_logstash_1</span>
+<span class="mi">9</span><span class="n">c6580429bde</span>        <span class="n">elasticsearch</span><span class="o">:</span><span class="n">latest</span>   <span class="s">&quot;/docker-entrypoint.s&quot;</span>   <span class="mi">11</span> <span class="n">seconds</span> <span class="n">ago</span>      <span class="n">Up</span> <span class="mi">9</span> <span class="n">seconds</span>        <span class="mf">0.0.0.0</span><span class="o">:</span><span class="mi">9200</span><span class="o">-&gt;</span><span class="mi">9200</span><span class="o">/</span><span class="n">tcp</span><span class="p">,</span>  <span class="mf">0.0.0.0</span><span class="o">:</span><span class="mi">9300</span><span class="o">-&gt;</span><span class="mi">9300</span><span class="o">/</span><span class="n">tcp</span>   <span class="n">dockerelk_elasticsearch_1</span>
 </pre></div>
 
 
 <p>You can test if Kibana is running by pointint your browers to:</p>
-<div class="highlight"><pre><span></span> http://logs.mydomain.com:5601
+<div class="highlight"><pre> <span class="nl">http:</span><span class="c1">//logs.mydomain.com:5601</span>
 </pre></div>
 
 
 <p>As you see, using Docker-compose makes it really easy to spin up again the whole
 stack just in case of errors. If you want to bring down the ELK stack, just do:</p>
-<div class="highlight"><pre><span></span>$ docker-compose stop
+<div class="highlight"><pre><span class="err">$</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">stop</span>
 </pre></div>
 
 
@@ -247,39 +247,39 @@ library will tell Django to send logs also to Logstash via network, but it
 needs a bit of configuration before.</p>
 <p>Switch to the host (eg: localhost) where your Django setup is, then install the
 library with:</p>
-<div class="highlight"><pre><span></span>$ pip install python-logstash
+<div class="highlight"><pre><span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">logstash</span>
 </pre></div>
 
 
 <p>Let us assume your Django app is named <em>myapp</em>. Open the <code>settings.py</code> file where
 all the Django config settings live. You should spot a section about logging
 (the <code>LOGGING</code> dict):</p>
-<div class="highlight"><pre><span></span>    LOGGING = {
+<div class="highlight"><pre>    <span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
 
-        # Put here formatters, etc...
+        <span class="err">#</span> <span class="n">Put</span> <span class="n">here</span> <span class="n">formatters</span><span class="p">,</span> <span class="n">etc</span><span class="p">...</span>
 
-        &#39;handlers&#39;: {
-            &#39;myhandler&#39;: {
-                # Bla bla bla
-            },
-            &#39;logstash&#39;: {
-                &#39;level&#39;: &#39;INFO&#39;,
-                &#39;class&#39;: &#39;logstash.TCPLogstashHandler&#39;,
-                &#39;host&#39;: &#39;13.0.0.13&#39;,   # IP/name of our Logstash EC2 instance
-                &#39;port&#39;: 5000,
-                &#39;version&#39;: 1,
-                &#39;message_type&#39;: &#39;logstash&#39;,
-                &#39;fqdn&#39;: True,
-                &#39;tags&#39;: [&#39;myapp&#39;],
-            }
-        },
-        &#39;loggers&#39;: {
-            &#39;myapp&#39;: {
-                &#39;handlers&#39;: [&#39;myhandler&#39;, &#39;logstash&#39;],
-                &#39;level&#39;: &#39;INFO&#39;,
-            }
-        }
-    }
+        <span class="err">&#39;</span><span class="n">handlers</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="err">&#39;</span><span class="n">myhandler</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">{</span>
+                <span class="err">#</span> <span class="n">Bla</span> <span class="n">bla</span> <span class="n">bla</span>
+            <span class="p">},</span>
+            <span class="err">&#39;</span><span class="n">logstash</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">{</span>
+                <span class="err">&#39;</span><span class="n">level</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">INFO</span><span class="err">&#39;</span><span class="p">,</span>
+                <span class="err">&#39;</span><span class="n">class</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">logstash</span><span class="p">.</span><span class="n">TCPLogstashHandler</span><span class="err">&#39;</span><span class="p">,</span>
+                <span class="err">&#39;</span><span class="n">host</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="mf">13.0.0.13</span><span class="err">&#39;</span><span class="p">,</span>   <span class="err">#</span> <span class="n">IP</span><span class="o">/</span><span class="n">name</span> <span class="n">of</span> <span class="n">our</span> <span class="n">Logstash</span> <span class="n">EC2</span> <span class="n">instance</span>
+                <span class="err">&#39;</span><span class="n">port</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">5000</span><span class="p">,</span>
+                <span class="err">&#39;</span><span class="n">version</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="err">&#39;</span><span class="n">message_type</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">logstash</span><span class="err">&#39;</span><span class="p">,</span>
+                <span class="err">&#39;</span><span class="n">fqdn</span><span class="err">&#39;</span><span class="o">:</span> <span class="n">True</span><span class="p">,</span>
+                <span class="err">&#39;</span><span class="n">tags</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">[</span><span class="err">&#39;</span><span class="n">myapp</span><span class="err">&#39;</span><span class="p">],</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="err">&#39;</span><span class="n">loggers</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="err">&#39;</span><span class="n">myapp</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">{</span>
+                <span class="err">&#39;</span><span class="n">handlers</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">[</span><span class="err">&#39;</span><span class="n">myhandler</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">logstash</span><span class="err">&#39;</span><span class="p">],</span>
+                <span class="err">&#39;</span><span class="n">level</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">INFO</span><span class="err">&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 </pre></div>
 
 

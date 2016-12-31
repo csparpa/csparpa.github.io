@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds/howtos.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2016-10-01T17:00:00+02:00</updated><entry><title>How to setup centralized logging on your Django apps using Logstash and Amazon EC2</title><link href="http://csparpa.github.io/blog/2016/10/django-centralized-logging-on-ec2-with-logstash.html" rel="alternate"></link><published>2016-10-01T17:00:00+02:00</published><updated>2016-10-01T17:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2016-10-01:blog/2016/10/django-centralized-logging-on-ec2-with-logstash.html</id><summary type="html">&lt;p&gt;This post is a step-by-step guide on how to realize a centralized logging
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds%5Chowtos.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2016-10-01T17:00:00+02:00</updated><entry><title>How to setup centralized logging on your Django apps using Logstash and Amazon EC2</title><link href="http://csparpa.github.io/blog/2016/10/django-centralized-logging-on-ec2-with-logstash.html" rel="alternate"></link><updated>2016-10-01T17:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2016-10-01:blog/2016/10/django-centralized-logging-on-ec2-with-logstash.html</id><summary type="html">&lt;p&gt;This post is a step-by-step guide on how to realize a centralized logging
 solution for your Django apps.&lt;/p&gt;
 &lt;p&gt;We will instrument an Amazon EC2 instance running Ubuntu 14.04 to collect logs
 from a locally-running Django app through the use of the "ELK" stack, which includes
@@ -67,19 +67,19 @@ mounts a good capacity volume (this depends on the logs frequency of course,
 but I would advice at least 32 GB) and at least 2 GB of RAM (a t2.small could be
 fine)&lt;/p&gt;
 &lt;p&gt;Install Docker 1.9 by running the following commands as root user:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;deb https://apt.dockerproject.org/repo ubuntu-trusty main&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sudo tee -a /etc/apt/sources.list.d/docker.list
-$ apt-get update
-$ apt-get install -y docker-engine python-pip
-$ usermod -aG docker ubuntu
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="n"&gt;adv&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;keyserver&lt;/span&gt; &lt;span class="n"&gt;hkp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;deb https://apt.dockerproject.org/repo ubuntu-trusty main&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;tee&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sources&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;update&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;engine&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;usermod&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;aG&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;ubuntu&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Then logout and login again as user ubuntu.&lt;/p&gt;
 &lt;p&gt;Now install Docker-compose with the following commands:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt;
-$ curl -L https://github.com/docker/compose/releases/download/1.5.2/docker-compose-&lt;span class="sb"&gt;`&lt;/span&gt;uname -s&lt;span class="sb"&gt;`&lt;/span&gt;-&lt;span class="sb"&gt;`&lt;/span&gt;uname -m&lt;span class="sb"&gt;`&lt;/span&gt; &amp;gt; $ /usr/local/bin/docker-compose
-$ chmod +x /usr/local/bin/docker-compose
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;curl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/docker/compose/releases/download/1.5.2/docker-compose-`uname -s`-`uname -m` &amp;gt; $ /usr/local/bin/docker-compose&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;compose&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -111,36 +111,36 @@ all the applications in the ELK stack, each one a separate Docker container.
 Containers are instrumented so they can communicate and the one running Kibana
 will get mapped to a public port of the EC2 host.&lt;/p&gt;
 &lt;p&gt;We can clone the repo with:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt;
-$ git clone https://github.com/deviantony/docker-elk
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/deviantony/docker-elk&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;In the repo you find subfolders for each ELK component, storing config files
 that you can modify according to your needs.&lt;/p&gt;
 &lt;p&gt;Bringing up all the ELK stack is as simple as:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; docker-elk
-$ docker-compose up -d
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;elk&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;compose&lt;/span&gt; &lt;span class="n"&gt;up&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;After a while, you can test that the containers have been started:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker ps
-CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                                             NAMES
-8f34a3f8d142        dockerelk_kibana       &lt;span class="s2"&gt;&amp;quot;/docker-entrypoint.s&amp;quot;&lt;/span&gt;   &lt;span class="m"&gt;5&lt;/span&gt; seconds ago       Up &lt;span class="m"&gt;2&lt;/span&gt; seconds        0.0.0.0:5601-&amp;gt;5601/tcp                            dockerelk_kibana_1
-d2530f2e0194        logstash:latest        &lt;span class="s2"&gt;&amp;quot;/docker-entrypoint.s&amp;quot;&lt;/span&gt;   &lt;span class="m"&gt;8&lt;/span&gt; seconds ago       Up &lt;span class="m"&gt;6&lt;/span&gt; seconds        0.0.0.0:5000-&amp;gt;5000/tcp                            dockerelk_logstash_1
-9c6580429bde        elasticsearch:latest   &lt;span class="s2"&gt;&amp;quot;/docker-entrypoint.s&amp;quot;&lt;/span&gt;   &lt;span class="m"&gt;11&lt;/span&gt; seconds ago      Up &lt;span class="m"&gt;9&lt;/span&gt; seconds        0.0.0.0:9200-&amp;gt;9200/tcp,  0.0.0.0:9300-&amp;gt;9300/tcp   dockerelk_elasticsearch_1
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt; &lt;span class="n"&gt;ps&lt;/span&gt;
+&lt;span class="n"&gt;CONTAINER&lt;/span&gt; &lt;span class="n"&gt;ID&lt;/span&gt;        &lt;span class="n"&gt;IMAGE&lt;/span&gt;                  &lt;span class="n"&gt;COMMAND&lt;/span&gt;                  &lt;span class="n"&gt;CREATED&lt;/span&gt;             &lt;span class="n"&gt;STATUS&lt;/span&gt;              &lt;span class="n"&gt;PORTS&lt;/span&gt;                                             &lt;span class="n"&gt;NAMES&lt;/span&gt;
+&lt;span class="mf"&gt;8f&lt;/span&gt;&lt;span class="mi"&gt;34&lt;/span&gt;&lt;span class="n"&gt;a3f8d142&lt;/span&gt;        &lt;span class="n"&gt;dockerelk_kibana&lt;/span&gt;       &lt;span class="s"&gt;&amp;quot;/docker-entrypoint.s&amp;quot;&lt;/span&gt;   &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="n"&gt;seconds&lt;/span&gt; &lt;span class="n"&gt;ago&lt;/span&gt;       &lt;span class="n"&gt;Up&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="n"&gt;seconds&lt;/span&gt;        &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;5601&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;5601&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tcp&lt;/span&gt;                            &lt;span class="n"&gt;dockerelk_kibana_1&lt;/span&gt;
+&lt;span class="n"&gt;d2530f2e0194&lt;/span&gt;        &lt;span class="n"&gt;logstash&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;latest&lt;/span&gt;        &lt;span class="s"&gt;&amp;quot;/docker-entrypoint.s&amp;quot;&lt;/span&gt;   &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="n"&gt;seconds&lt;/span&gt; &lt;span class="n"&gt;ago&lt;/span&gt;       &lt;span class="n"&gt;Up&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="n"&gt;seconds&lt;/span&gt;        &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;5000&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;5000&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tcp&lt;/span&gt;                            &lt;span class="n"&gt;dockerelk_logstash_1&lt;/span&gt;
+&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="n"&gt;c6580429bde&lt;/span&gt;        &lt;span class="n"&gt;elasticsearch&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;latest&lt;/span&gt;   &lt;span class="s"&gt;&amp;quot;/docker-entrypoint.s&amp;quot;&lt;/span&gt;   &lt;span class="mi"&gt;11&lt;/span&gt; &lt;span class="n"&gt;seconds&lt;/span&gt; &lt;span class="n"&gt;ago&lt;/span&gt;      &lt;span class="n"&gt;Up&lt;/span&gt; &lt;span class="mi"&gt;9&lt;/span&gt; &lt;span class="n"&gt;seconds&lt;/span&gt;        &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;9200&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;9200&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tcp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;9300&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;9300&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tcp&lt;/span&gt;   &lt;span class="n"&gt;dockerelk_elasticsearch_1&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;You can test if Kibana is running by pointint your browers to:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt; http://logs.mydomain.com:5601
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="nl"&gt;http:&lt;/span&gt;&lt;span class="c1"&gt;//logs.mydomain.com:5601&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;As you see, using Docker-compose makes it really easy to spin up again the whole
 stack just in case of errors. If you want to bring down the ELK stack, just do:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker-compose stop
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;docker&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;compose&lt;/span&gt; &lt;span class="n"&gt;stop&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -152,39 +152,39 @@ library will tell Django to send logs also to Logstash via network, but it
 needs a bit of configuration before.&lt;/p&gt;
 &lt;p&gt;Switch to the host (eg: localhost) where your Django setup is, then install the
 library with:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pip install python-logstash
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;pip&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;logstash&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Let us assume your Django app is named &lt;em&gt;myapp&lt;/em&gt;. Open the &lt;code&gt;settings.py&lt;/code&gt; file where
 all the Django config settings live. You should spot a section about logging
 (the &lt;code&gt;LOGGING&lt;/code&gt; dict):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    LOGGING = {
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;LOGGING&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 
-        # Put here formatters, etc...
+        &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;Put&lt;/span&gt; &lt;span class="n"&gt;here&lt;/span&gt; &lt;span class="n"&gt;formatters&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;
 
-        &amp;#39;handlers&amp;#39;: {
-            &amp;#39;myhandler&amp;#39;: {
-                # Bla bla bla
-            },
-            &amp;#39;logstash&amp;#39;: {
-                &amp;#39;level&amp;#39;: &amp;#39;INFO&amp;#39;,
-                &amp;#39;class&amp;#39;: &amp;#39;logstash.TCPLogstashHandler&amp;#39;,
-                &amp;#39;host&amp;#39;: &amp;#39;13.0.0.13&amp;#39;,   # IP/name of our Logstash EC2 instance
-                &amp;#39;port&amp;#39;: 5000,
-                &amp;#39;version&amp;#39;: 1,
-                &amp;#39;message_type&amp;#39;: &amp;#39;logstash&amp;#39;,
-                &amp;#39;fqdn&amp;#39;: True,
-                &amp;#39;tags&amp;#39;: [&amp;#39;myapp&amp;#39;],
-            }
-        },
-        &amp;#39;loggers&amp;#39;: {
-            &amp;#39;myapp&amp;#39;: {
-                &amp;#39;handlers&amp;#39;: [&amp;#39;myhandler&amp;#39;, &amp;#39;logstash&amp;#39;],
-                &amp;#39;level&amp;#39;: &amp;#39;INFO&amp;#39;,
-            }
-        }
-    }
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;handlers&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;myhandler&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;Bla&lt;/span&gt; &lt;span class="n"&gt;bla&lt;/span&gt; &lt;span class="n"&gt;bla&lt;/span&gt;
+            &lt;span class="p"&gt;},&lt;/span&gt;
+            &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;logstash&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;class&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;logstash&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TCPLogstashHandler&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="mf"&gt;13.0.0.13&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;IP&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;our&lt;/span&gt; &lt;span class="n"&gt;Logstash&lt;/span&gt; &lt;span class="n"&gt;EC2&lt;/span&gt; &lt;span class="n"&gt;instance&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;5000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;message_type&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;logstash&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;fqdn&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;myapp&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+            &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="p"&gt;},&lt;/span&gt;
+        &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;loggers&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;myapp&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;handlers&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;myhandler&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;logstash&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -198,7 +198,7 @@ this is notified as an issue on the GitHub project repository.&lt;/p&gt;
 guide can be useful to setup authentication on Kibana.&lt;/p&gt;
 &lt;p&gt;If you need a comprehensive reference to the ELK stack (eg: how to write custom
 Logstash plugins or how build advanced queries and dashboards with Kibana) you
-can read &lt;a href="https://www.packtpub.com/big-data-and-business-intelligence/learning-elk-stack"&gt;"Learking ELK stack" by Packt Publishing&lt;/a&gt;&lt;/p&gt;</summary><category term="Django"></category><category term="Python"></category><category term="Logstash"></category><category term="Elasticsearch"></category><category term="Kibana"></category><category term="logging"></category><category term="EC2"></category><category term="AWS"></category><category term="Docker"></category><category term="Docker-compose"></category></entry><entry><title>Serve minified CSS and Javascript on a Pelican-powered blog</title><link href="http://csparpa.github.io/blog/2015/02/minify-resources-for-pelican-blog.html" rel="alternate"></link><published>2015-02-10T10:41:00+01:00</published><updated>2015-02-10T10:41:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2015-02-10:blog/2015/02/minify-resources-for-pelican-blog.html</id><summary type="html">&lt;h3&gt;Summary&lt;/h3&gt;
+can read &lt;a href="https://www.packtpub.com/big-data-and-business-intelligence/learning-elk-stack"&gt;"Learning ELK Stack" by Packt Publishing&lt;/a&gt;&lt;/p&gt;</summary><category term="Django"></category><category term="Python"></category><category term="Logstash"></category><category term="Elasticsearch"></category><category term="Kibana"></category><category term="logging"></category><category term="EC2"></category><category term="AWS"></category><category term="Docker"></category><category term="Docker-compose"></category></entry><entry><title>Serve minified CSS and Javascript on a Pelican-powered blog</title><link href="http://csparpa.github.io/blog/2015/02/minify-resources-for-pelican-blog.html" rel="alternate"></link><updated>2015-02-10T10:41:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2015-02-10:blog/2015/02/minify-resources-for-pelican-blog.html</id><summary type="html">&lt;h3&gt;Summary&lt;/h3&gt;
 &lt;p&gt;In this short tutorial I'll show you how to wire minified CSS and Javascript into your Pelican-powered blog - I did it on my own one (the one you're currently reading!)&lt;/p&gt;
 &lt;h3&gt;How minification works&lt;/h3&gt;
 &lt;p&gt;"Minification" is the process of compressing the content of CSS and Javascript files by:&lt;/p&gt;
@@ -215,23 +215,23 @@ can read &lt;a href="https://www.packtpub.com/big-data-and-business-intelligence
 &lt;p&gt;There are lots of CSS and Javascript minifiers out there.&lt;/p&gt;
 &lt;p&gt;I've looked specifically for Python minifiers and found &lt;code&gt;jsmin&lt;/code&gt; for Javascript minification and &lt;code&gt;csscompressor&lt;/code&gt; for CSS minification.&lt;/p&gt;
 &lt;p&gt;You can install them with:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; pip install jsmin
-$&amp;gt; pip install csscompressor
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; pip install jsmin
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; pip install csscompressor
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;Use minifiers&lt;/h3&gt;
 &lt;p&gt;Their usage is very simple:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Minify a Javascript file&lt;/span&gt;
-$&amp;gt; python -m jsmin my.js &amp;gt; my-minified.js
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Minify a Javascript file&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; python -m jsmin my.js &amp;gt; my-minified.js
 
-&lt;span class="c1"&gt;# Minify a CSS file&lt;/span&gt;
-$&amp;gt; python -m csscompressor -o my-minified.css my.css
+&lt;span class="c"&gt;# Minify a CSS file&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; python -m csscompressor -o my-minified.css my.css
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;The minifiers output shall be put into your blog's css and js folders, getting served by your webserver.&lt;/p&gt;
-&lt;p&gt;You can (and you should) add the resource minification commands to your automatic blog-build script - and if you don't have one, go make it! ;)&lt;/p&gt;</summary><category term="Python"></category><category term="blogging"></category><category term="Pelican"></category><category term="Javascript"></category><category term="CSS"></category><category term="minify"></category></entry><entry><title>Setup a static Python-powered blog/website with Pelican</title><link href="http://csparpa.github.io/blog/2014/11/setup-static-blog-with-pelican.html" rel="alternate"></link><published>2014-11-01T13:49:00+01:00</published><updated>2014-11-01T13:49:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2014-11-01:blog/2014/11/setup-static-blog-with-pelican.html</id><summary type="html">&lt;h3&gt;Summary&lt;/h3&gt;
+&lt;p&gt;You can (and you should) add the resource minification commands to your automatic blog-build script - and if you don't have one, go make it! ;)&lt;/p&gt;</summary><category term="Python"></category><category term="blogging"></category><category term="Pelican"></category><category term="Javascript"></category><category term="CSS"></category><category term="minify"></category></entry><entry><title>Setup a static Python-powered blog/website with Pelican</title><link href="http://csparpa.github.io/blog/2014/11/setup-static-blog-with-pelican.html" rel="alternate"></link><updated>2014-11-01T13:49:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2014-11-01:blog/2014/11/setup-static-blog-with-pelican.html</id><summary type="html">&lt;h3&gt;Summary&lt;/h3&gt;
 &lt;p&gt;Pelican is a Python library that allows static content generation from plain text files written using ReSructured Text or Markdown syntaxes.&lt;br /&gt;
 It is an efficient, easy to setup tool that can - in example - be used to create blogs in minutes.&lt;br /&gt;
 More info on the &lt;a href="http://blog.getpelican.com/"&gt;official Pelican blog&lt;/a&gt;, and of course links to source code and docs.  &lt;/p&gt;
@@ -241,81 +241,81 @@ We'll call our blog: "blog"  &lt;/p&gt;
 &lt;p&gt;You will need Python 2.7+ and the &lt;code&gt;pip&lt;/code&gt; package manager&lt;/p&gt;
 &lt;h3&gt;Install Pelican&lt;/h3&gt;
 &lt;p&gt;Install Pelican and Markdown syntax modules:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; pip install pelican Markdown
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; pip install pelican Markdown
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;Create a skeleton Pelican project&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; &lt;span class="nb"&gt;cd&lt;/span&gt; 
-$&amp;gt; mkdir blog
-$&amp;gt; &lt;span class="nb"&gt;cd&lt;/span&gt; blog
-$&amp;gt; pelican-quickstart
-$&amp;gt; tree
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; 
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; mkdir blog
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd &lt;/span&gt;blog
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; pelican-quickstart
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; tree
     ./
-    +-- content              &lt;span class="c1"&gt;# Place here source .md files&lt;/span&gt;
-    +-- output               &lt;span class="c1"&gt;# Will contain the output .html files after generation&lt;/span&gt;
+    +-- content              &lt;span class="c"&gt;# Place here source .md files&lt;/span&gt;
+    +-- output               &lt;span class="c"&gt;# Will contain the output .html files after generation&lt;/span&gt;
     +-- develop_server.sh
     +-- fabfile.py
     +-- Makefile
-    +-- pelicanconf.py       &lt;span class="c1"&gt;# Main settings file&lt;/span&gt;
-    +-- publishconf.py       &lt;span class="c1"&gt;# Settings to use when ready to publish&lt;/span&gt;
+    +-- pelicanconf.py       &lt;span class="c"&gt;# Main settings file&lt;/span&gt;
+    +-- publishconf.py       &lt;span class="c"&gt;# Settings to use when ready to publish&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;Install themes&lt;/h3&gt;
 &lt;p&gt;You can modify Pelican's default theme by installing (cloning) one or more
 of the &lt;a href="https://github.com/getpelican/pelican-themes"&gt;themes you find on Github&lt;/a&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; &lt;span class="nb"&gt;cd&lt;/span&gt; pelican-test
-$&amp;gt; mkdir -p themes/fresh  &lt;span class="c1"&gt;# I&amp;#39;ve chosen to install the &amp;#39;fresh&amp;#39; theme&lt;/span&gt;
-$&amp;gt; git clone git://github.com/jsliang/pelican-fresh themes/fresh
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd &lt;/span&gt;pelican-test
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; mkdir -p themes/fresh  &lt;span class="c"&gt;# I&amp;#39;ve chosen to install the &amp;#39;fresh&amp;#39; theme&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; git clone git://github.com/jsliang/pelican-fresh themes/fresh
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;Write Pelican configuration file&lt;/h3&gt;
 &lt;p&gt;The configuration file is &lt;code&gt;pelicanconf.py&lt;/code&gt;, it will be used by Pelican
 when generating HTML content from the Markdown sources:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/usr/bin/env python&lt;/span&gt;
-&lt;span class="c1"&gt;# -*- coding: utf-8 -*- #&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c"&gt;# -*- coding: utf-8 -*- #&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;__future__&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;unicode_literals&lt;/span&gt;
 
-&lt;span class="n"&gt;AUTHOR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;u&amp;#39;me&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;SITENAME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;u&amp;#39;blog&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;SITEURL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;AUTHOR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;me&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;SITENAME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;blog&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;SITEURL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Pelican will take contents in this folder as sources&lt;/span&gt;
-&lt;span class="n"&gt;PATH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;content&amp;#39;&lt;/span&gt;
+&lt;span class="c"&gt;# Pelican will take contents in this folder as sources&lt;/span&gt;
+&lt;span class="n"&gt;PATH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;content&amp;#39;&lt;/span&gt;
 
-&lt;span class="n"&gt;TIMEZONE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Europe/London&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;TIMEZONE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Europe/London&amp;#39;&lt;/span&gt;
 
-&lt;span class="n"&gt;DEFAULT_LANG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;u&amp;#39;en&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;DEFAULT_LANG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;en&amp;#39;&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Feed generation&lt;/span&gt;
+&lt;span class="c"&gt;# Feed generation&lt;/span&gt;
 &lt;span class="n"&gt;FEED_ALL_ATOM&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
 &lt;span class="n"&gt;CATEGORY_FEED_ATOM&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
 &lt;span class="n"&gt;TRANSLATION_FEED_ATOM&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Blogroll links&lt;/span&gt;
-&lt;span class="n"&gt;LINKS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;My link 1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;http://mylink1.com&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;My link 2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;http://mylink2.com&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),)&lt;/span&gt;
+&lt;span class="c"&gt;# Blogroll links&lt;/span&gt;
+&lt;span class="n"&gt;LINKS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;My link 1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;http://mylink1.com&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+         &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;My link 2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;http://mylink2.com&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),)&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Social widget links&lt;/span&gt;
-&lt;span class="n"&gt;SOCIAL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;My social link 1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;https://mysociallink1.com&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;My social link 2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;https://mysociallink2.com&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),)&lt;/span&gt;
+&lt;span class="c"&gt;# Social widget links&lt;/span&gt;
+&lt;span class="n"&gt;SOCIAL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;My social link 1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;https://mysociallink1.com&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;My social link 2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;https://mysociallink2.com&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),)&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Max Number of article previews per page&lt;/span&gt;
+&lt;span class="c"&gt;# Max Number of article previews per page&lt;/span&gt;
 &lt;span class="n"&gt;DEFAULT_PAGINATION&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Document-relative URLs ?&lt;/span&gt;
+&lt;span class="c"&gt;# Document-relative URLs ?&lt;/span&gt;
 &lt;span class="n"&gt;RELATIVE_URLS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Path to the theme you want to apply&lt;/span&gt;
-&lt;span class="n"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;themes/fresh&amp;#39;&lt;/span&gt;
+&lt;span class="c"&gt;# Path to the theme you want to apply&lt;/span&gt;
+&lt;span class="n"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;themes/fresh&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;Write a blog post&lt;/h3&gt;
 &lt;p&gt;Now write a Markdown blog post like this one:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Title: My test blog post
+&lt;div class="highlight"&gt;&lt;pre&gt;Title: My test blog post
 Date: 2014-11-01 13:49
 Category: attempts
 Tags: blogging, pelican, markdown
@@ -332,8 +332,8 @@ What is the meaning of life the universe and everything?
 &lt;p&gt;and save it into the &lt;code&gt;content&lt;/code&gt; folder as &lt;code&gt;test.md&lt;/code&gt;&lt;/p&gt;
 &lt;h3&gt;Generate HTML from Markdown&lt;/h3&gt;
 &lt;p&gt;You're now ready to generate the corresponding HTML content:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; pelican content -o output
-$&amp;gt; tree output
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; pelican content -o output
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; tree output
     output/
     +-- author/
     +-- category/
@@ -352,7 +352,7 @@ $&amp;gt; tree output
 
 &lt;h3&gt;Take a look!&lt;/h3&gt;
 &lt;p&gt;You can now preview your blog by launching a web server:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; python -m SimpleHTTPServer 8888
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; python -m SimpleHTTPServer 8888
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -362,7 +362,7 @@ Cool, isn't it?&lt;/p&gt;
 &lt;p&gt;Pelican is an extensible platform, which means you can add one or more &lt;a href="https://github.com/getpelican/pelican-plugins"&gt;plugins&lt;/a&gt;
 into it and add functionalities.&lt;br /&gt;
 You can install community-provided plugins by cloning the plugins repository:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; git clone https://github.com/getpelican/pelican-plugins plugins
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; git clone https://github.com/getpelican/pelican-plugins plugins
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -372,24 +372,24 @@ data into your Pelican configuration file.&lt;/p&gt;
 &lt;p&gt;You want your blog to be fully crawled by Google, dont' you? So you need to generate a sitemap for it.&lt;br /&gt;
 Generating a sitemap is easy if you use the &lt;code&gt;sitemap&lt;/code&gt; plugin.&lt;br /&gt;
 What you need to do is, once you've installed all the plugins, add the following lines to the &lt;code&gt;pelicanconf.py&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Path to the folder containing the plugins&lt;/span&gt;
-&lt;span class="n"&gt;PLUGIN_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;u&amp;#39;plugins&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Path to the folder containing the plugins&lt;/span&gt;
+&lt;span class="n"&gt;PLUGIN_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;u&amp;#39;plugins&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 
-&lt;span class="c1"&gt;# The plugins you want to be enabled&lt;/span&gt;
-&lt;span class="n"&gt;PLUGINS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;u&amp;#39;sitemap&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="c"&gt;# The plugins you want to be enabled&lt;/span&gt;
+&lt;span class="n"&gt;PLUGINS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;u&amp;#39;sitemap&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Configuration for the &amp;quot;sitemap&amp;quot; plugin&lt;/span&gt;
+&lt;span class="c"&gt;# Configuration for the &amp;quot;sitemap&amp;quot; plugin&lt;/span&gt;
 &lt;span class="n"&gt;SITEMAP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="s1"&gt;&amp;#39;format&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;xml&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s1"&gt;&amp;#39;priorities&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="s1"&gt;&amp;#39;articles&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="s1"&gt;&amp;#39;indexes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="s1"&gt;&amp;#39;pages&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;#39;format&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;xml&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;#39;priorities&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;articles&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;indexes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;pages&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
     &lt;span class="p"&gt;},&lt;/span&gt;
-    &lt;span class="s1"&gt;&amp;#39;changefreqs&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="s1"&gt;&amp;#39;articles&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;always&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="s1"&gt;&amp;#39;indexes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;hourly&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="s1"&gt;&amp;#39;pages&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;monthly&amp;#39;&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;#39;changefreqs&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;articles&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;always&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;indexes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;hourly&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;pages&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;monthly&amp;#39;&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -399,30 +399,30 @@ What you need to do is, once you've installed all the plugins, add the following
 &lt;h3&gt;Where to go from here&lt;/h3&gt;
 &lt;p&gt;Now you can upload the contents of the &lt;code&gt;output&lt;/code&gt; folder 'as are' to your web hosting provider.&lt;br /&gt;
 Don't forget to setup your Google Analytics account to crawl to the domain you publish the pages under.&lt;br /&gt;
-Visit the  &lt;a href="http://docs.getpelican.com/en/3.4.0/tips.html"&gt;Pelican tips page&lt;/a&gt; which also explains how to integrate Pelican into GitHub pages.&lt;/p&gt;</summary><category term="Python"></category><category term="blogging"></category><category term="Pelican"></category></entry><entry><title>How to use Memcached with PyOWM</title><link href="http://csparpa.github.io/blog/2013/12/how-to-use-memcached-with-pyowm.html" rel="alternate"></link><published>2013-12-13T01:00:00+01:00</published><updated>2013-12-13T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-12-13:blog/2013/12/how-to-use-memcached-with-pyowm.html</id><summary type="html">&lt;p&gt;This is just a little demonstration on how you can quickly change the basic cache provider provided by the &lt;a href="https://github.com/csparpa/pyowm"&gt;PyOWM library&lt;/a&gt;.&lt;br /&gt;
+Visit the  &lt;a href="http://docs.getpelican.com/en/3.4.0/tips.html"&gt;Pelican tips page&lt;/a&gt; which also explains how to integrate Pelican into GitHub pages.&lt;/p&gt;</summary><category term="Python"></category><category term="blogging"></category><category term="Pelican"></category></entry><entry><title>How to use Memcached with PyOWM</title><link href="http://csparpa.github.io/blog/2013/12/how-to-use-memcached-with-pyowm.html" rel="alternate"></link><updated>2013-12-13T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-12-13:blog/2013/12/how-to-use-memcached-with-pyowm.html</id><summary type="html">&lt;p&gt;This is just a little demonstration on how you can quickly change the basic cache provider provided by the &lt;a href="https://github.com/csparpa/pyowm"&gt;PyOWM library&lt;/a&gt;.&lt;br /&gt;
 For this purpose we'll use Memcached, which – simply put – is a key/value in-memory data store: this turns it into a perfect caching mechanism.&lt;/p&gt;
 &lt;h3&gt;Requirements&lt;/h3&gt;
 &lt;p&gt;This demo requires that you work on a Linux env, as Memcached originally is shipped for Unix-like systems via packet distribution systems (but can nevertheless be compiled from source).&lt;br /&gt;
 I'll use Ubuntu, with Memcached 1.4.6 and PyOWM 0.4.0.&lt;br /&gt;
 Let's dive into it.&lt;br /&gt;
 First we install Memcached and the relative Python bindings:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; sudo apt-get install memcached python-memcache
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-get install memcached python-memcache
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Then we install PyOWM library and check the installation:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo pip install pyowm
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo pip install pyowm
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;And we check then that library has correctly been installed by running from the Python console:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pyowm&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pyowm&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;(if you don't get any error, then PyOWM was installed correctly).  &lt;/p&gt;
 &lt;p&gt;Finally, let's start Memcached:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; memcached &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; memcached &amp;amp;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -435,13 +435,13 @@ Let's name it &lt;code&gt;memcachedadapter.py&lt;/code&gt;: you can put it anywh
 listed into the &lt;code&gt;PYTHONPATH&lt;/code&gt; variable or you can place it directly into the PyOWM install folder.&lt;br /&gt;
 In my distro, Python packages are installed by &lt;code&gt;pip&lt;/code&gt; into folder &lt;code&gt;/usr/local/lib/python2.6/dist-packages&lt;/code&gt;, I'll put the file over there.  &lt;/p&gt;
 &lt;p&gt;Let's write the adapter:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/lib/python2.6/dist-packages/pyowm
-$&amp;gt; sudo vim memcachedadapter.py
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/lib/python2.6/dist-packages/pyowm
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo vim memcachedadapter.py
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;The module will contain the &lt;code&gt;MemcachedAdapter&lt;/code&gt; class:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
 
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MemcachedAdapter&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
   &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
@@ -449,12 +449,12 @@ $&amp;gt; sudo vim memcachedadapter.py
 &lt;span class="sd"&gt;  adapting a memcache.Client object&lt;/span&gt;
 &lt;span class="sd"&gt;  &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
 
-  &lt;span class="n"&gt;__ITEM_LIFETIME_MILLISECONDS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;60&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="c1"&gt;# Ten minutes&lt;/span&gt;
+  &lt;span class="n"&gt;__ITEM_LIFETIME_MILLISECONDS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;60&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="c"&gt;# Ten minutes&lt;/span&gt;
 
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;11211&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;item_lifetime&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;__ITEM_LIFETIME_MILLISECONDS&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;11211&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;item_lifetime&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;__ITEM_LIFETIME_MILLISECONDS&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;memcache&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;
-    &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_memcached&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;:&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_memcached&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Client&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;:&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
     &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_item_lifetime&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;item_lifetime&lt;/span&gt;
 
   &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request_url&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -474,22 +474,22 @@ concrete instance which is created into a configuration file and injected into t
 &lt;p&gt;The first solution requires us to write a new configuration module. Say our module will be &lt;code&gt;pyowm.webapi25.mycustomconfig.py&lt;/code&gt;: then you need
 to copy/paste all of the config data from the default &lt;code&gt;pyowm.webapi25.configuration25.py&lt;/code&gt; configuration module, and then patch the
 line where the default cache object is provided:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Cache provider to be used&lt;/span&gt;
-&lt;span class="c1"&gt;# cache = NullCache()  # default cache provided by PyOWM: comment out&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;memcachedadapter&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MemcachedAdapter&lt;/span&gt;  &lt;span class="c1"&gt;# instantiate our adapter&lt;/span&gt;
-&lt;span class="n"&gt;cache&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MemcachedAdapter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;11211&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Cache provider to be used&lt;/span&gt;
+&lt;span class="c"&gt;# cache = NullCache()  # default cache provided by PyOWM: comment out&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;memcachedadapter&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MemcachedAdapter&lt;/span&gt;  &lt;span class="c"&gt;# instantiate our adapter&lt;/span&gt;
+&lt;span class="n"&gt;cache&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MemcachedAdapter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;11211&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Then you need to instantiate the PyOWM object by explicitly setting the path to our custom configuration module:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyowm&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;
-&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;config_module&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;pyowm.webapi25.mycustomconfig&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyowm&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;config_module&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;pyowm.webapi25.mycustomconfig&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;The second solution is more of a hack and requires us to open module &lt;code&gt;pyowm.webapi25.configuration25.py&lt;/code&gt; and do the same make up as above.
 Once done, you can finally create the main PyOWM object without specifying any custom configuration module:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyowm&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyowm&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OWM&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -497,15 +497,15 @@ Once done, you can finally create the main PyOWM object without specifying any c
 &lt;h3&gt;See it in action&lt;/h3&gt;
 &lt;p&gt;In the above examples, we are adapting a local Memcached instance listening on the default 11211 port, but you can change this configuration as needed.&lt;br /&gt;
 Now let's try it out:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;not_cached&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;daily_forecast&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;London,uk&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# This first call to the API is not cached, obviously&lt;/span&gt;
-&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;cached&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;daily_forecast&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;London,uk&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;      &lt;span class="c1"&gt;# This second call is cached&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;not_cached&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;daily_forecast&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;London,uk&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c"&gt;# This first call to the API is not cached, obviously&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;cached&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;owm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;daily_forecast&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;London,uk&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;      &lt;span class="c"&gt;# This second call is cached&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Time saving should be at a glance!&lt;/p&gt;
 &lt;h3&gt;More cache adapters for PyOWM&lt;/h3&gt;
 &lt;p&gt;In a similar way it is possible to write adapters for plugging other cache/storage providers (Redis, MongoDB, etc..) into the PyOWM library.  &lt;/p&gt;
-&lt;p&gt;This post stimulated me to write more adapters, you can find them &lt;a href="https://github.com/csparpa/pyowm-cache-adapters"&gt;on my GitHub repo&lt;/a&gt;.&lt;/p&gt;</summary><category term="Python"></category><category term="GitHub"></category><category term="software"></category><category term="adapter"></category><category term="cache"></category><category term="Linux"></category><category term="Memcached"></category><category term="PyOWM"></category></entry><entry><title>How to convert VMWare virtual machines to Virtual Box</title><link href="http://csparpa.github.io/blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html" rel="alternate"></link><published>2013-05-08T01:00:00+02:00</published><updated>2013-05-08T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-05-08:blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html</id><summary type="html">&lt;h3&gt;Where I started from&lt;/h3&gt;
+&lt;p&gt;This post stimulated me to write more adapters, you can find them &lt;a href="https://github.com/csparpa/pyowm-cache-adapters"&gt;on my GitHub repo&lt;/a&gt;.&lt;/p&gt;</summary><category term="Python"></category><category term="GitHub"></category><category term="software"></category><category term="adapter"></category><category term="cache"></category><category term="Linux"></category><category term="Memcached"></category><category term="PyOWM"></category></entry><entry><title>How to convert VMWare virtual machines to Virtual Box</title><link href="http://csparpa.github.io/blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html" rel="alternate"></link><updated>2013-05-08T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-05-08:blog/2013/05/how-to-convert-vmware-virtual-machines-to-virtual-box.html</id><summary type="html">&lt;h3&gt;Where I started from&lt;/h3&gt;
 &lt;p&gt;This is my situation: I'm on a Windows7 x86 host, and I have an old Ubuntu 10.04 virtual machine with VMWare Tools installed on it.  &lt;/p&gt;
 &lt;p&gt;My need is to turn it into an OVF appliance, so that I can run it on Virtual Box, no matter where what architecture it will be run on.&lt;/p&gt;
 &lt;h3&gt;Steps&lt;/h3&gt;
@@ -514,8 +514,8 @@ Now let's try it out:&lt;/p&gt;
 &lt;li&gt;I made sure (e.g: using VMWare Player or Workstation) that the virtual appliance is powered off;&lt;/li&gt;
 &lt;li&gt;Opened a Command Prompt, moved to the VMWare Player/Workstation installation dir and executed the OVF conversion tool. Be aware that this conversion may take some time, depending on how big is your VMX appliance. I did it as follows (replace the paths as needed):&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; cd &amp;quot;C:\Program Files\VMware\VMware Workstation\OVFTool&amp;quot;
-$&amp;gt; ovftool.exe &amp;quot;C:\Users\claudio\Documents\Virtual Machines\ubuntu1004\ubuntu1004.vmx&amp;quot; &amp;quot;C:\Users\claudio\Documents\Virtual Machines\converted-to-virtualbox\ubuntu1004.ovf&amp;quot;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Program Files\VMware\VMware Workstation\OVFTool&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ovftool&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Users\claudio\Documents\Virtual Machines\ubuntu1004\ubuntu1004.vmx&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C:\Users\claudio\Documents\Virtual Machines\converted-to-virtualbox\ubuntu1004.ovf&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -523,19 +523,19 @@ $&amp;gt; ovftool.exe &amp;quot;C:\Users\claudio\Documents\Virtual Machines\ubun
 &lt;li&gt;When the conversion process was over, I imported the &lt;code&gt;ubuntu1004.ovf&lt;/code&gt; appliance into Virtual Box by using the &lt;code&gt;File &amp;gt; Import virtual appliance..&lt;/code&gt; menu element and leaving all the defaults;&lt;/li&gt;
 &lt;li&gt;Then I booted up the &lt;code&gt;ubuntu1004.ovf&lt;/code&gt; appliance and performed VMWare Tools uninstallation by opening up an SSH shell and executing:&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; sudo /usr/bin/vmware-uninstall-tools.pl
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo /usr/bin/vmware-uninstall-tools.pl
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;Then I finished the procedure by executing the &lt;code&gt;Device &amp;gt; Install Guest Additions&lt;/code&gt; menu item: a virtual CD is then mounted and I launched the installation process from a shell:&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /media/VBOXADDITIONS_4.2.12_84980
-$&amp;gt; sudo bash VBoxLinuxAdditions.run
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /media/VBOXADDITIONS_4.2.12_84980
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo bash VBoxLinuxAdditions.run
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Not as difficult as it may seem…. Hope this helps!&lt;/p&gt;</summary><category term="VMWare"></category><category term="Virtualbox"></category><category term="conversion"></category></entry><entry><title>How to deploy Flask applications to Apache webserver</title><link href="http://csparpa.github.io/blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html" rel="alternate"></link><published>2013-03-06T01:00:00+01:00</published><updated>2013-03-06T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-03-06:blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html</id><summary type="html">&lt;h3&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;Not as difficult as it may seem…. Hope this helps!&lt;/p&gt;</summary><category term="VMWare"></category><category term="Virtualbox"></category><category term="conversion"></category></entry><entry><title>How to deploy Flask applications to Apache webserver</title><link href="http://csparpa.github.io/blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html" rel="alternate"></link><updated>2013-03-06T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-03-06:blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html</id><summary type="html">&lt;h3&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;This is a simple guide explaining how I managed to configure Apache 2.2 httpd server on a Windows 2012 server platform so that it can serve a Python webapplication I wrote using the &lt;a href="http://flask.pocoo.org/"&gt;Flask micro-framework&lt;/a&gt;.  &lt;/p&gt;
 &lt;p&gt;The guide is valid, with a very little modification, also on Linux environments (you geeks know how to do)&lt;/p&gt;
 &lt;h3&gt;Why I needed to to this&lt;/h3&gt;
@@ -543,37 +543,37 @@ $&amp;gt; sudo bash VBoxLinuxAdditions.run
 &lt;h3&gt;Steps&lt;/h3&gt;
 &lt;h4&gt;1. Flask app&lt;/h4&gt;
 &lt;p&gt;We choose a folder in which we place the Python code. For instance,  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;D:\webapps\test
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nl"&gt;D:&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;webapps&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;test&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;In this folder we create the real Flask webapplication that we want to deploy (file &lt;code&gt;test.py&lt;/code&gt;):  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# test.py&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# test.py&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;
 &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/hello&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/hello&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;hello_world&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-    &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello &amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;!&amp;#39;&lt;/span&gt;
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Hello &amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;!&amp;#39;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;The Apache server won't be aware of &lt;code&gt;test.py&lt;/code&gt; at all. What you need to do now is to write in the same folder a Python file named &lt;code&gt;test.wsgi&lt;/code&gt; that we will link into the webserver's configuration: the code in this file will import the main Flask application object (built in our case as a singleton) and will be actually executed by the WSGI module of Apache. In the code, it is vital that you DON'T change the name of the "application" variable, as it is exactly what the server expects to find. Also please note that we are extending the Python classes path to include our own webapplication's folder.  &lt;/p&gt;
 &lt;p&gt;This is &lt;code&gt;test.wsgi&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# test.wsgi&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# test.wsgi&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
 
-&lt;span class="c1"&gt;#Expand Python classes path with your app&amp;#39;s path&lt;/span&gt;
-&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;d:/webapps/test&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c"&gt;#Expand Python classes path with your app&amp;#39;s path&lt;/span&gt;
+&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;d:/webapps/test&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;test&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;
 
-&lt;span class="c1"&gt;#Put logging code (and imports) here ...&lt;/span&gt;
+&lt;span class="c"&gt;#Put logging code (and imports) here ...&lt;/span&gt;
 
-&lt;span class="c1"&gt;#Initialize WSGI app object&lt;/span&gt;
+&lt;span class="c"&gt;#Initialize WSGI app object&lt;/span&gt;
 &lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -583,19 +583,19 @@ $&amp;gt; sudo bash VBoxLinuxAdditions.run
 &lt;h4&gt;2. Apache setup&lt;/h4&gt;
 &lt;p&gt;Ok, what's next? Now it's all about installing and properly configuring Apache.&lt;/p&gt;
 &lt;p&gt;First: install Apache webserver. I &lt;a href="http://apache.panu.it//httpd/binaries/win32/httpd-2.2.22-win32-x86-openssl-0.9.8t.msi"&gt;downloaded&lt;/a&gt; and executed the .msi installer. Apache was installed at:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;quot;C:\Program Files (x86)\Apache Software Foundation\Apache2.2&amp;quot;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;quot;C:\Program Files (x86)\Apache Software Foundation\Apache2.2&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Second: install the WSGI Apache module. Pay attention to download the module compiled for your specific combination of platform and Python and Apache versions: I downloaded &lt;a href="https://code.google.com/p/modwsgi/downloads/detail?name=mod_wsgi-win32-ap22py27-3.3.so"&gt;this module&lt;/a&gt;. Once downloaded, rename the &lt;code&gt;.so&lt;/code&gt; file into &lt;code&gt;mod_wsgi.so&lt;/code&gt; and put it under the &lt;code&gt;modules&lt;/code&gt; subfolder of your Apache installation folder. Then you have to tell Apache to use it: open in a text editor the &lt;code&gt;httpd.config&lt;/code&gt; file which is under the &lt;code&gt;conf&lt;/code&gt; subfolder and add the following line at the bottom:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;LoadModule wsgi_module modules/mod_wsgi.so
+&lt;div class="highlight"&gt;&lt;pre&gt;LoadModule wsgi_module modules/mod_wsgi.so
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Third: restart Apache.&lt;/p&gt;
 &lt;p&gt;Now Apache is ready to serve WSGI webapplications.  &lt;/p&gt;
 &lt;p&gt;What is left to do is to tell about where our application is and match it to a URL alias. It's child's play: open in a text editor the &lt;code&gt;httpd.config&lt;/code&gt; file we used before and add these lines to the bottom:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;lt;Directory d:/webapps/test&amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;lt;Directory d:/webapps/test&amp;gt;
     Order allow,deny
     Allow from all
 &amp;lt;/Directory&amp;gt;
@@ -605,7 +605,7 @@ WSGIScriptAlias /flasktest d:/webapps/test/test.wsgi
 
 &lt;p&gt;(nevertheless, I prefer to place the per-virtual-host or per-alias configurations' stuff into separate files and then use an Include directive into the main &lt;code&gt;httpd.conf&lt;/code&gt;).  &lt;/p&gt;
 &lt;p&gt;Now restart Apache again and if you open a browser and point it to:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;http://localhost/flasktest/hello?name=claudio
+&lt;div class="highlight"&gt;&lt;pre&gt;http://localhost/flasktest/hello?name=claudio
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -614,7 +614,7 @@ WSGIScriptAlias /flasktest d:/webapps/test/test.wsgi
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://code.google.com/p/modwsgi/wiki/QuickConfigurationGuide"&gt;This guide&lt;/a&gt; helped me a lot in understanding how to setup Apache WSGI.&lt;/li&gt;
 &lt;li&gt;I also found &lt;a href="https://beagle.whoi.edu/redmine/projects/ibt/wiki/Deploying_Flask_Apps_with_Apache_and_Mod_WSGI?version=3"&gt;this tutorial&lt;/a&gt; which is far more comprehensive than mine and covers Flask deployment on Apache on Debian/Ubuntu environments&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="software"></category><category term="webserver"></category><category term="webapps"></category><category term="Python"></category><category term="Flask"></category></entry><entry><title>How to install MongoDB on Windows as a service</title><link href="http://csparpa.github.io/blog/2012/10/how-to-install-mongodb-on-windows-as-a-service.html" rel="alternate"></link><published>2012-10-29T01:00:00+01:00</published><updated>2012-10-29T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-10-29:blog/2012/10/how-to-install-mongodb-on-windows-as-a-service.html</id><summary type="html">&lt;h3&gt;Introduction&lt;/h3&gt;
+&lt;/ul&gt;</summary><category term="software"></category><category term="webserver"></category><category term="webapps"></category><category term="Python"></category><category term="Flask"></category></entry><entry><title>How to install MongoDB on Windows as a service</title><link href="http://csparpa.github.io/blog/2012/10/how-to-install-mongodb-on-windows-as-a-service.html" rel="alternate"></link><updated>2012-10-29T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-10-29:blog/2012/10/how-to-install-mongodb-on-windows-as-a-service.html</id><summary type="html">&lt;h3&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;I’m showing you a quick procedure to install MongoDB as a service on Windows platforms (I simply gathered the hints explained in the &lt;a href="http://www.mongodb.org/display/DOCS/Windows"&gt;official documentation page&lt;/a&gt; and adapted the whole stuff to my specific case).  &lt;/p&gt;
 &lt;h3&gt;Requirements&lt;/h3&gt;
 &lt;p&gt;In my example, I’m installing MongoDB version 2.2.0 on a Windows Server 2003 R2 machine and my goal is to have it available as a service.  &lt;/p&gt;
@@ -629,7 +629,7 @@ WSGIScriptAlias /flasktest d:/webapps/test/test.wsgi
 &lt;p&gt;Create the data path folders (in my example, &lt;code&gt;C:\mongodb-2.2.0\data\db&lt;/code&gt;):&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;C:\&amp;gt; md C:\mongodb-2.2.0\data
+&lt;div class="highlight"&gt;&lt;pre&gt;C:\&amp;gt; md C:\mongodb-2.2.0\data
 C:\&amp;gt; md C:\mongodb-2.2.0\data\db
 C:\&amp;gt; set datapath = C:\mongodb-2.2.0\data\db
 &lt;/pre&gt;&lt;/div&gt;
@@ -638,14 +638,14 @@ C:\&amp;gt; set datapath = C:\mongodb-2.2.0\data\db
 &lt;ol&gt;
 &lt;li&gt;Setup mongod configuration file path (my file is &lt;code&gt;C:\mongodb-2.2.0\mongod.cfg&lt;/code&gt;):&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;C:\&amp;gt; set configpath = C:\mongodb-2.2.0\mongod.cfg
+&lt;div class="highlight"&gt;&lt;pre&gt;C:\&amp;gt; set configpath = C:\mongodb-2.2.0\mongod.cfg
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;ol&gt;
 &lt;li&gt;Create the folder that will host the service's log file (my folder is &lt;code&gt;C:\mongodb-2.2.0\log&lt;/code&gt;) and write its path into the config file:&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;C:\&amp;gt; md C:\mongodb-2.2.0\log
+&lt;div class="highlight"&gt;&lt;pre&gt;C:\&amp;gt; md C:\mongodb-2.2.0\log
 C:\&amp;gt; echo logpath = C:\mongodb-2.2.0\log\mongod.log &amp;gt; C:\mongodb-2.2.0\mongod.cfg
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -653,12 +653,12 @@ C:\&amp;gt; echo logpath = C:\mongodb-2.2.0\log\mongod.log &amp;gt; C:\mongodb-2
 &lt;ol&gt;
 &lt;li&gt;Install &lt;code&gt;mongod&lt;/code&gt; as a service:&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;C:\&amp;gt; C:\mongodb-2.2.0\bin\mongod.exe --config %configpath% --dbpath %dbpath% --install
+&lt;div class="highlight"&gt;&lt;pre&gt;C:\&amp;gt; C:\mongodb-2.2.0\bin\mongod.exe --config %configpath% --dbpath %dbpath% --install
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now you can start/stop/remove the MongoDB service via the services administration graphical interface, or via the command line using the following commands:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;:: Start service
+&lt;div class="highlight"&gt;&lt;pre&gt;:: Start service
 C:\&amp;gt; net start MongoDB
 
 :: Stop service
@@ -670,11 +670,11 @@ C:\&amp;gt; C:\mongodb-2.2.0\bin\mongod.exe --remove
 
 
 &lt;p&gt;Wanna test out your installation? Just call the MongoDB Javascript shell:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;C:\&amp;gt; C:\mongodb-2.2.0\bin\mongo.exe
+&lt;div class="highlight"&gt;&lt;pre&gt;C:\&amp;gt; C:\mongodb-2.2.0\bin\mongo.exe
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;and if no error message appears – have fun!&lt;/p&gt;</summary><category term="software"></category><category term="NoSQL"></category><category term="database"></category><category term="Windows"></category><category term="MongoDB"></category></entry><entry><title>Installing Android 4.1 Jelly Bean on LG Optimus One (LG P500)</title><link href="http://csparpa.github.io/blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html" rel="alternate"></link><published>2012-09-19T01:00:00+02:00</published><updated>2012-09-19T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-09-19:blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html</id><summary type="html">&lt;h3&gt;A Happy LG Optimus One owner’s story&lt;/h3&gt;
+&lt;p&gt;and if no error message appears – have fun!&lt;/p&gt;</summary><category term="software"></category><category term="NoSQL"></category><category term="database"></category><category term="Windows"></category><category term="MongoDB"></category></entry><entry><title>Installing Android 4.1 Jelly Bean on LG Optimus One (LG P500)</title><link href="http://csparpa.github.io/blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html" rel="alternate"></link><updated>2012-09-19T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-09-19:blog/2012/09/installing-android-4-1-jelly-bean-lg-optimus-one.html</id><summary type="html">&lt;h3&gt;A Happy LG Optimus One owner’s story&lt;/h3&gt;
 &lt;p&gt;I’m a happy owner of an LG Optimus One: not only because it proved many times to be a performing device, but also because – a few days after I bought it – I managed to replace the custom Android it had on board (themed by TIM: ugly!!!) with a simple and plain Android 2.2.1 Froyo stock ROM. This I did, despite many warnings I read about phone brick and license invalidation. About six-months after, I had the same fever and replaced Froyo with Gingebread: no problems this time, as well.  &lt;/p&gt;
 &lt;p&gt;Last monday, after reading that someone (&lt;a href="http://aokp.co/"&gt;Android Open Kang Project&lt;/a&gt; team) built an unoffical Android 4.1 Jelly Bean port for LG Optimus One, I took a fancy to it…”Danger is my business” – I thought. So, let’s go replace my current Android with the one on the crest of waves!!!  &lt;/p&gt;
 &lt;p&gt;I am reporting the steps I followed: they took about 3 hours, considering also the conclusive phone re-configuration and apps re-install.  &lt;/p&gt;
@@ -717,81 +717,81 @@ C:\&amp;gt; C:\mongodb-2.2.0\bin\mongod.exe --remove
 &lt;li&gt;Flashed the gapps from the .zip archive on the SD card&lt;/li&gt;
 &lt;li&gt;Rebooted phone&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;Hope this helps for all of you who whish to try out Jelly Bean on LG Optimus One!&lt;/p&gt;</summary><category term="software"></category><category term="Android"></category><category term="modding"></category><category term="mobile"></category></entry><entry><title>How to install MongoDB on Ubuntu</title><link href="http://csparpa.github.io/blog/2012/07/how-to-install-mongodb-on-ubuntu.html" rel="alternate"></link><published>2012-07-09T01:00:00+02:00</published><updated>2012-07-09T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-07-09:blog/2012/07/how-to-install-mongodb-on-ubuntu.html</id><summary type="html">&lt;p&gt;This is a quick-guide to install MongoDB on Ubuntu 12.04 (if you want to know how to install it also on Fedora Core 11, please check out one of my old posts.  &lt;/p&gt;
+&lt;p&gt;Hope this helps for all of you who whish to try out Jelly Bean on LG Optimus One!&lt;/p&gt;</summary><category term="software"></category><category term="Android"></category><category term="modding"></category><category term="mobile"></category></entry><entry><title>How to install MongoDB on Ubuntu</title><link href="http://csparpa.github.io/blog/2012/07/how-to-install-mongodb-on-ubuntu.html" rel="alternate"></link><updated>2012-07-09T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-07-09:blog/2012/07/how-to-install-mongodb-on-ubuntu.html</id><summary type="html">&lt;p&gt;This is a quick-guide to install MongoDB on Ubuntu 12.04 (if you want to know how to install it also on Fedora Core 11, please check out one of my old posts.  &lt;/p&gt;
 &lt;h3&gt;Steps&lt;/h3&gt;
 &lt;p&gt;Here is all you have to do:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
-$&amp;gt; sudo touch /etc/apt/sources.list.d/10gen.list
-$&amp;gt; &lt;span class="nv"&gt;line&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-$&amp;gt; sudo &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$line&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &amp;gt; /etc/apt/sources.list.d/10gen.list
-$&amp;gt; sudo apt-get update
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo touch /etc/apt/sources.list.d/10gen.list
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nv"&gt;line&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$(echo &amp;quot;&lt;/span&gt;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&lt;span class="s2"&gt;&amp;quot;)&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$line&amp;quot;&lt;/span&gt; &amp;gt; /etc/apt/sources.list.d/10gen.list
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-get update
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;And then you can install MongoDB with:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; sudo apt-get install mongodb-10gen
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; sudo apt-get install mongodb-10gen
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Enjoy!&lt;/p&gt;</summary><category term="Linux"></category><category term="NoSQL"></category><category term="MongoDB"></category><category term="database"></category><category term="Ubuntu"></category></entry><entry><title>How to install MongoDB on Fedora</title><link href="http://csparpa.github.io/blog/2012/03/how-to-install-mongodb-on-fedora.html" rel="alternate"></link><published>2012-03-18T01:00:00+01:00</published><updated>2012-03-18T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-03-18:blog/2012/03/how-to-install-mongodb-on-fedora.html</id><summary type="html">&lt;p&gt;During the last days, I've been delving into NoSQL datastores study and now I've got the chance to use MongoDB for a real-life need (of course, something relating to work issues). In order to reach my target, I needed a fresh installation of one of the most promising NoSQL technologies: the document-oriented datastore MongoDB.  &lt;/p&gt;
+&lt;p&gt;Enjoy!&lt;/p&gt;</summary><category term="Linux"></category><category term="NoSQL"></category><category term="MongoDB"></category><category term="database"></category><category term="Ubuntu"></category></entry><entry><title>How to install MongoDB on Fedora</title><link href="http://csparpa.github.io/blog/2012/03/how-to-install-mongodb-on-fedora.html" rel="alternate"></link><updated>2012-03-18T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-03-18:blog/2012/03/how-to-install-mongodb-on-fedora.html</id><summary type="html">&lt;p&gt;During the last days, I've been delving into NoSQL datastores study and now I've got the chance to use MongoDB for a real-life need (of course, something relating to work issues). In order to reach my target, I needed a fresh installation of one of the most promising NoSQL technologies: the document-oriented datastore MongoDB.  &lt;/p&gt;
 &lt;h3&gt;Requirements&lt;/h3&gt;
 &lt;p&gt;Here is how I managed to install MongoDB 2.0.3 on a Fedora Core 11 host. You can easily adapt the steps I went through to your operational environment.  &lt;/p&gt;
 &lt;p&gt;We're about to issue every command as &lt;code&gt;root&lt;/code&gt; user.  &lt;/p&gt;
 &lt;h3&gt;Steps&lt;/h3&gt;
 &lt;p&gt;First, I downloaded, extracted and placed the Mongo stuff (I didn't use the 10gen repo, but just a &lt;code&gt;tar.gz&lt;/code&gt; from MongoDB website):  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /opt
-$&amp;gt; wget http://fastdl.mongodb.org/linux/mongodb-linux-i686-2.0.3.tgz
-$&amp;gt; tar xvf mongodb-linux-i686-2.0.3.tgz
-$&amp;gt; mv mongodb-linux-i686-2.0.3.tg mongodb-2.0.3
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /opt
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; wget http://fastdl.mongodb.org/linux/mongodb-linux-i686-2.0.3.tgz
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; tar xvf mongodb-linux-i686-2.0.3.tgz
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; mv mongodb-linux-i686-2.0.3.tg mongodb-2.0.3
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;I decided that my databases would go under &lt;code&gt;/usr/data/mongodb&lt;/code&gt; and that MongoDB log file would be &lt;code&gt;/var/log/mongodb.log&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;As I wanted my MongoDB server instance to be started/stopped as a demon, I prepared the following &lt;code&gt;init.d&lt;/code&gt; script named &lt;code&gt;mongodb&lt;/code&gt; and placed it under &lt;code&gt;/etc/init.d/&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="nb"&gt;source&lt;/span&gt; /etc/rc.d/init.d/functions
 &lt;span class="nv"&gt;prog&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;mongod&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;mongod&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/opt/mongodb-2.0.3/bin/mongod&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
 
 start&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="nb"&gt;echo&lt;/span&gt; -n $&lt;span class="s2"&gt;&amp;quot;Starting &lt;/span&gt;&lt;span class="nv"&gt;$prog&lt;/span&gt;&lt;span class="s2"&gt;: &amp;quot;&lt;/span&gt;
-  &lt;span class="c1"&gt;#This is the fundamental call to start the MongoDB server instance&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;$&amp;quot;Starting $prog: &amp;quot;&lt;/span&gt;
+  &lt;span class="c"&gt;#This is the fundamental call to start the MongoDB server instance&lt;/span&gt;
   daemon &lt;span class="nv"&gt;$mongod&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;--fork --journal --dbpath /usr/data/mongodb \&lt;/span&gt;
 &lt;span class="s2"&gt;  --logpath /var/log/mongodb.log \&lt;/span&gt;
 &lt;span class="s2"&gt;  --logappend 2&amp;amp;gt;&amp;amp;amp;1 &amp;amp;gt;&amp;amp;gt;/var/log/mongodb.log&amp;quot;&lt;/span&gt;
   &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
   &lt;span class="nb"&gt;echo&lt;/span&gt;
-  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; touch /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt; &amp;amp;amp;&amp;amp;amp; touch /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 stop&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="nb"&gt;echo&lt;/span&gt; -n $&lt;span class="s2"&gt;&amp;quot;Stopping &lt;/span&gt;&lt;span class="nv"&gt;$prog&lt;/span&gt;&lt;span class="s2"&gt;: &amp;quot;&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;$&amp;quot;Stopping $prog: &amp;quot;&lt;/span&gt;
   killproc &lt;span class="nv"&gt;$prog&lt;/span&gt;
   &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
   &lt;span class="nb"&gt;echo&lt;/span&gt;
-  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; rm -f /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
+  &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt; &amp;amp;amp;&amp;amp;amp; rm -f /var/lock/subsys/&lt;span class="nv"&gt;$prog&lt;/span&gt;
   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nv"&gt;$RETVAL&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
-&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; in
+&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$1&amp;quot;&lt;/span&gt; in
  start&lt;span class="o"&gt;)&lt;/span&gt;
   start
-  &lt;span class="p"&gt;;;&lt;/span&gt;
+  ;;
  stop&lt;span class="o"&gt;)&lt;/span&gt;
   stop
-  &lt;span class="p"&gt;;;&lt;/span&gt;
+  ;;
  restart&lt;span class="o"&gt;)&lt;/span&gt;
   stop
   start
-  &lt;span class="p"&gt;;;&lt;/span&gt;
+  ;;
  status&lt;span class="o"&gt;)&lt;/span&gt;
   status &lt;span class="nv"&gt;$mongod&lt;/span&gt;
   &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;
-  &lt;span class="p"&gt;;;&lt;/span&gt;
+  ;;
  *&lt;span class="o"&gt;)&lt;/span&gt;
-  &lt;span class="nb"&gt;echo&lt;/span&gt; $&lt;span class="s2"&gt;&amp;quot;Usage: &lt;/span&gt;&lt;span class="nv"&gt;$0&lt;/span&gt;&lt;span class="s2"&gt; {start|stop|restart|status}&amp;quot;&lt;/span&gt;
+  &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;$&amp;quot;Usage: $0 {start|stop|restart|status}&amp;quot;&lt;/span&gt;
   &lt;span class="nv"&gt;RETVAL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1
 &lt;span class="k"&gt;esac&lt;/span&gt;
 
@@ -800,23 +800,23 @@ stop&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
 
 
 &lt;p&gt;Then, I opened my Iptables firewall's &lt;code&gt;INPUT&lt;/code&gt; chain so that port 27017 (the port MongoDB server is listening to) is not blocked: I opened the file &lt;code&gt;/etc/sysconfig/iptables&lt;/code&gt; and added the following rule before of the &lt;code&gt;COMMIT&lt;/code&gt; statement:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-A INPUT -p tcp -m tcp -m multiport --ports 27017 -j ACCEPT
+&lt;div class="highlight"&gt;&lt;pre&gt;-A INPUT -p tcp -m tcp -m multiport --ports 27017 -j ACCEPT
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;and restarted iptables with:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; service iptables restart
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; service iptables restart
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;That's it. Finally, I started the server instance with:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; service mongodb start
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; service mongodb start
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;and tested the whole thing opening the Mongo Javascript shell like this:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /opt/mongodb-2.0.3/bin
-$&amp;gt; ./mongo
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /opt/mongodb-2.0.3/bin
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; ./mongo
 &lt;/pre&gt;&lt;/div&gt;
 
 

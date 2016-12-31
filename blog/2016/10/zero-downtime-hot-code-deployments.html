@@ -106,7 +106,7 @@
 <p><a href="http://unix.stackexchange.com/a/15606">This Stackoverflow answer</a> clarifies very well the situation: the <code>HUP</code> signal was originally meant to be used to notify detached background processes to exit whenever users lost their
 terminal/frontend counterparts - but this is not the case for daemon-only processes like our web runtime environments. So these processes are free to implement the handling of the <code>HUP</code> signal as they want, and the generally accepted idea is to have it trigger a <em>reload configuration files and/or code</em>.</p>
 <p>Say that our runtime has master process ID of <code>$PID</code>, then:</p>
-<div class="highlight"><pre><span></span>$ <span class="nb">kill</span> -HUP <span class="nv">$PID</span>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">kill</span> <span class="o">-</span><span class="n">HUP</span> <span class="err">$</span><span class="n">PID</span>
 </pre></div>
 
 
@@ -131,22 +131,22 @@ important as we will use it later to send a <code>HUP</code> signal to the Gunic
 <code>kill -HUP</code> on the running Gunicorn process.</p>
 <h3>Run natively</h3>
 <p>If you <em>do not want to use Docker</em>, then I suggest you to install the app's dependencies under a <a href="https://virtualenv.pypa.io">virtualenv</a> so that you don't pollute your local host's <code>PYTHONPATH</code>. Once inside the virtualenv, install the dependencies and run the app with:</p>
-<div class="highlight"><pre><span></span>$ pip install -r requirements.txt
-$ bash run.sh
+<div class="highlight"><pre><span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+<span class="err">$</span> <span class="n">bash</span> <span class="n">run</span><span class="p">.</span><span class="n">sh</span>
 </pre></div>
 
 
 <p>Keep this terminal open for the moment. Open a new terminal and check that the app is running like this:</p>
-<div class="highlight"><pre><span></span>$ curl http://localhost:1234/ping
-<span class="o">{</span><span class="s2">&quot;message&quot;</span>: <span class="s2">&quot;test&quot;</span><span class="o">}</span>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">curl</span> <span class="n">http</span><span class="o">:</span><span class="c1">//localhost:1234/ping</span>
+<span class="p">{</span><span class="s">&quot;message&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">}</span>
 </pre></div>
 
 
 <p>In the same terminal, run the polling client with:</p>
-<div class="highlight"><pre><span></span>$ python3.5 poll.py
-UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;test&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 13:57:35.414<span class="o">]</span>
-UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;test&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 13:57:35.578<span class="o">]</span>
-UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;test&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 13:57:35.914<span class="o">]</span>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">python3</span><span class="mf">.5</span> <span class="n">poll</span><span class="p">.</span><span class="n">py</span>
+<span class="nl">UP:</span> <span class="n">response</span> <span class="n">was</span> <span class="p">{</span><span class="err">&#39;</span><span class="n">message</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">test</span><span class="err">&#39;</span><span class="p">}</span> <span class="p">[</span><span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="o">:</span><span class="mi">57</span><span class="o">:</span><span class="mf">35.414</span><span class="p">]</span>
+<span class="nl">UP:</span> <span class="n">response</span> <span class="n">was</span> <span class="p">{</span><span class="err">&#39;</span><span class="n">message</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">test</span><span class="err">&#39;</span><span class="p">}</span> <span class="p">[</span><span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="o">:</span><span class="mi">57</span><span class="o">:</span><span class="mf">35.578</span><span class="p">]</span>
+<span class="nl">UP:</span> <span class="n">response</span> <span class="n">was</span> <span class="p">{</span><span class="err">&#39;</span><span class="n">message</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">test</span><span class="err">&#39;</span><span class="p">}</span> <span class="p">[</span><span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">25</span> <span class="mi">13</span><span class="o">:</span><span class="mi">57</span><span class="o">:</span><span class="mf">35.914</span><span class="p">]</span>
 </pre></div>
 
 
@@ -156,30 +156,30 @@ UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</spa
 So, if any request takes more than 0.1 seconds to be fulfilled, we consider our app to be down.</p>
 <p>If you see green then the server is up, if you see red then the server is down and if you see yellow then the server is up and a change in the response body has been detected: this will happen once we hot reload the code.</p>
 <p>Open the file <code>$PYTHONPATH/hot_code_reload/views.py</code> and modify the <code>message</code> value in the dictionary that is returned by the endpoint, i.e. put <code>abcd</code>:</p>
-<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PingView</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">PingView</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="n">EXPECTED_MESSAGE_VALUE</span><span class="p">,</span>  <span class="c1"># &lt;----</span>
+            <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="n">EXPECTED_MESSAGE_VALUE</span><span class="p">,</span>  <span class="c"># &lt;----</span>
         <span class="p">}</span>
-        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;application/json&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>Save, go back to the first terminal and perform the actual hot code reload magic with:</p>
-<div class="highlight"><pre><span></span>$ bash reload.sh
+<div class="highlight"><pre><span class="err">$</span> <span class="n">bash</span> <span class="n">reload</span><span class="p">.</span><span class="n">sh</span>
 </pre></div>
 
 
 <p>Now take a look at the second terminal, you should see something like this:</p>
-<div class="highlight"><pre><span></span>UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;test&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 08:16:17.860<span class="o">]</span>
-UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;test&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 08:16:17.872<span class="o">]</span>
-DOWN <span class="o">[</span>2016-10-25 08:16:17.882<span class="o">]</span>
-DOWN <span class="o">[</span>2016-10-25 08:16:17.990<span class="o">]</span>
-DOWN <span class="o">[</span>2016-10-25 08:16:18.095<span class="o">]</span>
-UP AND CHANGED: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;abcd&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 08:16:18.204<span class="o">]</span>
-UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;abcd&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 08:16:18.254<span class="o">]</span>
-UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</span>: <span class="s1">&#39;abcd&#39;</span><span class="o">}</span> <span class="o">[</span>2016-10-25 08:16:18.266<span class="o">]</span>
+<div class="highlight"><pre><span class="n">UP</span><span class="o">:</span> <span class="n">response</span> <span class="n">was</span> <span class="o">{</span><span class="s1">&#39;message&#39;</span><span class="o">:</span> <span class="s1">&#39;test&#39;</span><span class="o">}</span> <span class="o">[</span><span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">25</span> <span class="mi">08</span><span class="o">:</span><span class="mi">16</span><span class="o">:</span><span class="mf">17.860</span><span class="o">]</span>
+<span class="n">UP</span><span class="o">:</span> <span class="n">response</span> <span class="n">was</span> <span class="o">{</span><span class="s1">&#39;message&#39;</span><span class="o">:</span> <span class="s1">&#39;test&#39;</span><span class="o">}</span> <span class="o">[</span><span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">25</span> <span class="mi">08</span><span class="o">:</span><span class="mi">16</span><span class="o">:</span><span class="mf">17.872</span><span class="o">]</span>
+<span class="n">DOWN</span> <span class="o">[</span><span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">25</span> <span class="mi">08</span><span class="o">:</span><span class="mi">16</span><span class="o">:</span><span class="mf">17.882</span><span class="o">]</span>
+<span class="n">DOWN</span> <span class="o">[</span><span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">25</span> <span class="mi">08</span><span class="o">:</span><span class="mi">16</span><span class="o">:</span><span class="mf">17.990</span><span class="o">]</span>
+<span class="n">DOWN</span> <span class="o">[</span><span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">25</span> <span class="mi">08</span><span class="o">:</span><span class="mi">16</span><span class="o">:</span><span class="mf">18.095</span><span class="o">]</span>
+<span class="n">UP</span> <span class="n">AND</span> <span class="n">CHANGED</span><span class="o">:</span> <span class="n">response</span> <span class="n">was</span> <span class="o">{</span><span class="s1">&#39;message&#39;</span><span class="o">:</span> <span class="s1">&#39;abcd&#39;</span><span class="o">}</span> <span class="o">[</span><span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">25</span> <span class="mi">08</span><span class="o">:</span><span class="mi">16</span><span class="o">:</span><span class="mf">18.204</span><span class="o">]</span>
+<span class="n">UP</span><span class="o">:</span> <span class="n">response</span> <span class="n">was</span> <span class="o">{</span><span class="s1">&#39;message&#39;</span><span class="o">:</span> <span class="s1">&#39;abcd&#39;</span><span class="o">}</span> <span class="o">[</span><span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">25</span> <span class="mi">08</span><span class="o">:</span><span class="mi">16</span><span class="o">:</span><span class="mf">18.254</span><span class="o">]</span>
+<span class="n">UP</span><span class="o">:</span> <span class="n">response</span> <span class="n">was</span> <span class="o">{</span><span class="s1">&#39;message&#39;</span><span class="o">:</span> <span class="s1">&#39;abcd&#39;</span><span class="o">}</span> <span class="o">[</span><span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">25</span> <span class="mi">08</span><span class="o">:</span><span class="mi">16</span><span class="o">:</span><span class="mf">18.266</span><span class="o">]</span>
 </pre></div>
 
 
@@ -187,12 +187,12 @@ UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</spa
 <h3>Run using Docker</h3>
 <p>We can perform hot code reload on dockerized applications by mounting its source code as a <em>container volume</em> and - after code changes - by issuing a <code>SIGHUP</code> with the <code>docker exec</code> subcommand.</p>
 <p>That's how to do it:</p>
-<div class="highlight"><pre><span></span>$ docker run -d <span class="se">\</span>
-    --name test_hcr <span class="se">\</span>
-    -v <span class="nv">$SAMPLE_APP</span>:/hcr <span class="se">\</span>
-    -p 0.0.0.0:1234:8000 <span class="se">\</span>
-    python:3.5 <span class="se">\</span>
-    tailf /dev/null
+<div class="highlight"><pre><span class="err">$</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span> \
+    <span class="o">--</span><span class="n">name</span> <span class="n">test_hcr</span> \
+    <span class="o">-</span><span class="n">v</span> <span class="err">$</span><span class="n">SAMPLE_APP</span><span class="o">:/</span><span class="n">hcr</span> \
+    <span class="o">-</span><span class="n">p</span> <span class="mf">0.0.0.0</span><span class="o">:</span><span class="mi">1234</span><span class="o">:</span><span class="mi">8000</span> \
+    <span class="nl">python:</span><span class="mf">3.5</span> \
+    <span class="n">tailf</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
 </pre></div>
 
 
@@ -201,20 +201,20 @@ UP: response was <span class="o">{</span><span class="s1">&#39;message&#39;</spa
   - mounts host folder <code>$SAMPLE_APP</code> to container folder <code>/hcr</code>
   - maps container port 8000 to host port 1234</p>
 <p>Good, now let's install the Python dependencies on the container and start our app (I'm not doing this in a Dockerfile on purpose...):</p>
-<div class="highlight"><pre><span></span>$ docker <span class="nb">exec</span> -it test_hcr pip3 install -r /hcr/requirements.txt
-$ docker <span class="nb">exec</span> -it hcr bash -c <span class="s1">&#39;cd /hcr &amp;&amp; bash run.sh&#39;</span>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="n">test_hcr</span> <span class="n">pip3</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="o">/</span><span class="n">hcr</span><span class="o">/</span><span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
+<span class="err">$</span> <span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="n">hcr</span> <span class="n">bash</span> <span class="o">-</span><span class="n">c</span> <span class="err">&#39;</span><span class="n">cd</span> <span class="o">/</span><span class="n">hcr</span> <span class="o">&amp;&amp;</span> <span class="n">bash</span> <span class="n">run</span><span class="p">.</span><span class="n">sh</span><span class="err">&#39;</span>
 </pre></div>
 
 
 <p>and test it's online with:</p>
-<div class="highlight"><pre><span></span>$ curl http://localhost:1234/ping
-<span class="o">{</span><span class="s2">&quot;message&quot;</span>: <span class="s2">&quot;test&quot;</span><span class="o">}</span>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">curl</span> <span class="n">http</span><span class="o">:</span><span class="c1">//localhost:1234/ping</span>
+<span class="p">{</span><span class="s">&quot;message&quot;</span><span class="o">:</span> <span class="s">&quot;test&quot;</span><span class="p">}</span>
 </pre></div>
 
 
 <p>Cool! The next steps are exactly the same as in the case of non-containerized apps: open a new terminal an run the polling client.</p>
 <p>Now modify the source code in order to return a different message, and then cast the hot code reload magic with:</p>
-<div class="highlight"><pre><span></span>docker <span class="nb">exec</span> -it hcr bash -c <span class="s1">&#39;cd /hcr &amp;&amp; bash reload.sh&#39;</span>
+<div class="highlight"><pre><span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="n">hcr</span> <span class="n">bash</span> <span class="o">-</span><span class="n">c</span> <span class="err">&#39;</span><span class="n">cd</span> <span class="o">/</span><span class="n">hcr</span> <span class="o">&amp;&amp;</span> <span class="n">bash</span> <span class="n">reload</span><span class="p">.</span><span class="n">sh</span><span class="err">&#39;</span>
 </pre></div>
 
 

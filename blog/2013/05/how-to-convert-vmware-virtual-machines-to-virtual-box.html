@@ -96,8 +96,8 @@
 <li>I made sure (e.g: using VMWare Player or Workstation) that the virtual appliance is powered off;</li>
 <li>Opened a Command Prompt, moved to the VMWare Player/Workstation installation dir and executed the OVF conversion tool. Be aware that this conversion may take some time, depending on how big is your VMX appliance. I did it as follows (replace the paths as needed):</li>
 </ul>
-<div class="highlight"><pre><span></span>$&gt; cd &quot;C:\Program Files\VMware\VMware Workstation\OVFTool&quot;
-$&gt; ovftool.exe &quot;C:\Users\claudio\Documents\Virtual Machines\ubuntu1004\ubuntu1004.vmx&quot; &quot;C:\Users\claudio\Documents\Virtual Machines\converted-to-virtualbox\ubuntu1004.ovf&quot;
+<div class="highlight"><pre><span class="err">$</span><span class="o">&gt;</span> <span class="n">cd</span> <span class="s">&quot;C:\Program Files\VMware\VMware Workstation\OVFTool&quot;</span>
+<span class="err">$</span><span class="o">&gt;</span> <span class="n">ovftool</span><span class="p">.</span><span class="n">exe</span> <span class="s">&quot;C:\Users\claudio\Documents\Virtual Machines\ubuntu1004\ubuntu1004.vmx&quot;</span> <span class="s">&quot;C:\Users\claudio\Documents\Virtual Machines\converted-to-virtualbox\ubuntu1004.ovf&quot;</span>
 </pre></div>
 
 
@@ -105,15 +105,15 @@ $&gt; ovftool.exe &quot;C:\Users\claudio\Documents\Virtual Machines\ubuntu1004\u
 <li>When the conversion process was over, I imported the <code>ubuntu1004.ovf</code> appliance into Virtual Box by using the <code>File &gt; Import virtual appliance..</code> menu element and leaving all the defaults;</li>
 <li>Then I booted up the <code>ubuntu1004.ovf</code> appliance and performed VMWare Tools uninstallation by opening up an SSH shell and executing:</li>
 </ul>
-<div class="highlight"><pre><span></span>$&gt; sudo /usr/bin/vmware-uninstall-tools.pl
+<div class="highlight"><pre><span class="nv">$&gt;</span> sudo /usr/bin/vmware-uninstall-tools.pl
 </pre></div>
 
 
 <ul>
 <li>Then I finished the procedure by executing the <code>Device &gt; Install Guest Additions</code> menu item: a virtual CD is then mounted and I launched the installation process from a shell:</li>
 </ul>
-<div class="highlight"><pre><span></span>$&gt; <span class="nb">cd</span> /media/VBOXADDITIONS_4.2.12_84980
-$&gt; sudo bash VBoxLinuxAdditions.run
+<div class="highlight"><pre><span class="nv">$&gt;</span> <span class="nb">cd</span> /media/VBOXADDITIONS_4.2.12_84980
+<span class="nv">$&gt;</span> sudo bash VBoxLinuxAdditions.run
 </pre></div>
 
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds/python.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2015-02-23T11:00:00+01:00</updated><entry><title>Check truthiness in Python</title><link href="http://csparpa.github.io/blog/2015/02/python-truthiness.html" rel="alternate"></link><published>2015-02-23T11:00:00+01:00</published><updated>2015-02-23T11:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2015-02-23:blog/2015/02/python-truthiness.html</id><summary type="html">&lt;p&gt;Today I just want to share with you how to check truth values in Python. &lt;strong&gt;Truthiness&lt;/strong&gt; is the boolean meaning of a value, and sometimes checking it can save you a lot of hassle. &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds%5Cpython.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2015-02-23T11:00:00+01:00</updated><entry><title>Check truthiness in Python</title><link href="http://csparpa.github.io/blog/2015/02/python-truthiness.html" rel="alternate"></link><updated>2015-02-23T11:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2015-02-23:blog/2015/02/python-truthiness.html</id><summary type="html">&lt;p&gt;Today I just want to share with you how to check truth values in Python. &lt;strong&gt;Truthiness&lt;/strong&gt; is the boolean meaning of a value, and sometimes checking it can save you a lot of hassle. &lt;/p&gt;
 &lt;h3&gt;In Python veritas&lt;/h3&gt;
 &lt;p&gt;Each Python built-in type has a truthiness value:&lt;/p&gt;
 &lt;table&gt;
@@ -65,57 +65,57 @@
 &lt;/table&gt;
 &lt;h3&gt;Checking truthiness&lt;/h3&gt;
 &lt;p&gt;You can explicitly check the truth value of a value using the &lt;code&gt;bool&lt;/code&gt; built-in function:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;           &lt;span class="c1"&gt;# True&lt;/span&gt;
-&lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Hello&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;     &lt;span class="c1"&gt;# True&lt;/span&gt;
-&lt;span class="n"&gt;boole&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;  &lt;span class="c1"&gt;# True&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;           &lt;span class="c"&gt;# True&lt;/span&gt;
+&lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Hello&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;     &lt;span class="c"&gt;# True&lt;/span&gt;
+&lt;span class="n"&gt;boole&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;  &lt;span class="c"&gt;# True&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;So this - funny fact - means that &lt;code&gt;bool('False') is&lt;/code&gt;True`: in Python there are no such things as Java's&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Boolean&lt;/span&gt; &lt;span class="n"&gt;b1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Boolean&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;valueOf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;false&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;       &lt;span class="c1"&gt;# b1 is false&lt;/span&gt;
-&lt;span class="n"&gt;boolean&lt;/span&gt; &lt;span class="n"&gt;b2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Boolean&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;parseBoolean&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;false&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;  &lt;span class="c1"&gt;# b2 is false&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Boolean&lt;/span&gt; &lt;span class="n"&gt;b1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Boolean&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;valueOf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;false&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;       &lt;span class="c"&gt;# b1 is false&lt;/span&gt;
+&lt;span class="n"&gt;boolean&lt;/span&gt; &lt;span class="n"&gt;b2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Boolean&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;parseBoolean&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;false&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;  &lt;span class="c"&gt;# b2 is false&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;Truthiness vs nonethiness&lt;/h3&gt;
 &lt;p&gt;In example, if you have a list and you want to check if it's empty or not, you can do:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;my_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;my_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;my_list&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-  &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Empty&amp;#39;&lt;/span&gt;
+  &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Empty&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;but also - more concisely and more Pythonically:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;my_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;my_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;my_list&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-  &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Empty&amp;#39;&lt;/span&gt;
+  &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Empty&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;this is because the truth value of an empty list is &lt;code&gt;False&lt;/code&gt;. But, be aware that if you do:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;my_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;my_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;my_list&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-  &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Empty&amp;#39;&lt;/span&gt;
+  &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Empty&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;you will get the same result ("Empty" being printed)! This is because the truth value of &lt;code&gt;None&lt;/code&gt; is &lt;code&gt;False&lt;/code&gt; as well. So this raises a flag: &lt;em&gt;checks for truthiness and nonethiness overlap, and therefore must be differentiated on a syntactical base&lt;/em&gt;. I usually do this by &lt;em&gt;explicitly&lt;/em&gt; checking for nonethiness:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;my_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;my_list&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;  &lt;span class="c1"&gt;# explicit check for nonethiness&lt;/span&gt;
-  &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;None&amp;#39;&lt;/span&gt;
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;my_list&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;      &lt;span class="c1"&gt;# check for emptiness&lt;/span&gt;
-  &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Empty&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;my_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;my_list&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;  &lt;span class="c"&gt;# explicit check for nonethiness&lt;/span&gt;
+  &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;None&amp;#39;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;my_list&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;      &lt;span class="c"&gt;# check for emptiness&lt;/span&gt;
+  &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Empty&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;Defining truthiness for your class&lt;/h3&gt;
 &lt;p&gt;You can define the behaviour of your own objects when processed by the &lt;code&gt;bool&lt;/code&gt; built-in. This is done by redefining the &lt;code&gt;__bool__&lt;/code&gt; hook&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyClass&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyClass&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
     &lt;span class="n"&gt;__bool__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
 
 &lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MyClass&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;    &lt;span class="c1"&gt;# False, always&lt;/span&gt;
+&lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;    &lt;span class="c"&gt;# False, always&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -127,12 +127,12 @@
 &lt;/blockquote&gt;
 &lt;/blockquote&gt;
 &lt;h3&gt;References&lt;/h3&gt;
-&lt;p&gt;For a complete reference on Python datamodel's truthiness check out &lt;a href="https://docs.python.org/3/reference/datamodel.html"&gt;the official documentation&lt;/a&gt;.&lt;/p&gt;</summary><category term="Python"></category><category term="truthiness"></category><category term="nonethiness"></category><category term="caveat"></category></entry><entry><title>Meditation on the Zen of Python</title><link href="http://csparpa.github.io/blog/2014/01/meditation-on-the-zen-of-python.html" rel="alternate"></link><published>2014-01-22T01:00:00+01:00</published><updated>2014-01-22T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2014-01-22:blog/2014/01/meditation-on-the-zen-of-python.html</id><summary type="html">&lt;h3&gt;Read it&lt;/h3&gt;
+&lt;p&gt;For a complete reference on Python datamodel's truthiness check out &lt;a href="https://docs.python.org/3/reference/datamodel.html"&gt;the official documentation&lt;/a&gt;.&lt;/p&gt;</summary><category term="Python"></category><category term="truthiness"></category><category term="nonethiness"></category><category term="caveat"></category></entry><entry><title>Meditation on the Zen of Python</title><link href="http://csparpa.github.io/blog/2014/01/meditation-on-the-zen-of-python.html" rel="alternate"></link><updated>2014-01-22T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2014-01-22:blog/2014/01/meditation-on-the-zen-of-python.html</id><summary type="html">&lt;h3&gt;Read it&lt;/h3&gt;
 &lt;p&gt;If you have ever programmed anything in Python, you probably used the &lt;code&gt;import&lt;/code&gt; statement: the modules of the Python standard library 
 can be imported into your code or into the interpreter. Take a look at the standard library folders and you'll find the &lt;code&gt;this.py&lt;/code&gt; module... what is that?
 Not much a self-explicative name for a Python module, huh? And you – Java lovers – forget about the Java &lt;code&gt;this&lt;/code&gt; keyword: you're far afield.  &lt;/p&gt;
 &lt;p&gt;This module is the mystic &lt;strong&gt;&lt;em&gt;"Zen of Python"&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;this&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;this&lt;/span&gt;
 
 &lt;span class="n"&gt;The&lt;/span&gt; &lt;span class="n"&gt;Zen&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt; &lt;span class="n"&gt;Tim&lt;/span&gt; &lt;span class="n"&gt;Peters&lt;/span&gt;
 
@@ -143,18 +143,18 @@ Not much a self-explicative name for a Python module, huh? And you – Java love
 &lt;span class="n"&gt;Flat&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;nested&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
 &lt;span class="n"&gt;Sparse&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;dense&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
 &lt;span class="n"&gt;Readability&lt;/span&gt; &lt;span class="n"&gt;counts&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;Special&lt;/span&gt; &lt;span class="n"&gt;cases&lt;/span&gt; &lt;span class="n"&gt;aren&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;t special enough to break the rules.&lt;/span&gt;
+&lt;span class="n"&gt;Special&lt;/span&gt; &lt;span class="n"&gt;cases&lt;/span&gt; &lt;span class="n"&gt;aren&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;t special enough to break the rules.&lt;/span&gt;
 &lt;span class="n"&gt;Although&lt;/span&gt; &lt;span class="n"&gt;practicality&lt;/span&gt; &lt;span class="n"&gt;beats&lt;/span&gt; &lt;span class="n"&gt;purity&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
 &lt;span class="n"&gt;Errors&lt;/span&gt; &lt;span class="n"&gt;should&lt;/span&gt; &lt;span class="n"&gt;never&lt;/span&gt; &lt;span class="k"&gt;pass&lt;/span&gt; &lt;span class="n"&gt;silently&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
 &lt;span class="n"&gt;Unless&lt;/span&gt; &lt;span class="n"&gt;explicitly&lt;/span&gt; &lt;span class="n"&gt;silenced&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
 &lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;face&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;ambiguity&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;refuse&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;temptation&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;guess&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
 &lt;span class="n"&gt;There&lt;/span&gt; &lt;span class="n"&gt;should&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;preferably&lt;/span&gt; &lt;span class="n"&gt;only&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;obvious&lt;/span&gt; &lt;span class="n"&gt;way&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;do&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;Although&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;way&lt;/span&gt; &lt;span class="n"&gt;may&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;obvious&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="n"&gt;first&lt;/span&gt; &lt;span class="n"&gt;unless&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;re Dutch.&lt;/span&gt;
+&lt;span class="n"&gt;Although&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;way&lt;/span&gt; &lt;span class="n"&gt;may&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;obvious&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="n"&gt;first&lt;/span&gt; &lt;span class="n"&gt;unless&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;re Dutch.&lt;/span&gt;
 &lt;span class="n"&gt;Now&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;never&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
 &lt;span class="n"&gt;Although&lt;/span&gt; &lt;span class="n"&gt;never&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;often&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;right&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;now&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;If&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;implementation&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;hard&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;explain&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;s a bad idea.&lt;/span&gt;
+&lt;span class="n"&gt;If&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;implementation&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;hard&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;explain&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;s a bad idea.&lt;/span&gt;
 &lt;span class="n"&gt;If&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;implementation&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;easy&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;explain&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;may&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;good&lt;/span&gt; &lt;span class="n"&gt;idea&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;Namespaces&lt;/span&gt; &lt;span class="n"&gt;are&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="n"&gt;honking&lt;/span&gt; &lt;span class="n"&gt;great&lt;/span&gt; &lt;span class="n"&gt;idea&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt; &lt;span class="n"&gt;let&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;s do more of those!&lt;/span&gt;
+&lt;span class="n"&gt;Namespaces&lt;/span&gt; &lt;span class="n"&gt;are&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="n"&gt;honking&lt;/span&gt; &lt;span class="n"&gt;great&lt;/span&gt; &lt;span class="n"&gt;idea&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt; &lt;span class="n"&gt;let&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;s do more of those!&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -166,34 +166,34 @@ along with Guido Van Rossum (BDFL).&lt;br /&gt;
 Ok, I'm curious about it: I open the &lt;code&gt;this.py&lt;/code&gt; file in my favourite text editor and I notice that...&lt;/p&gt;
 &lt;h3&gt;The Zen of Python does not obey the Zen of Python&lt;/h3&gt;
 &lt;p&gt;What??? Here is the source code:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&amp;quot;Gur Mra bs Clguba, ol Gvz Crgref&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&amp;quot;Gur Mra bs Clguba, ol Gvz Crgref&lt;/span&gt;
 
-&lt;span class="s2"&gt;Ornhgvshy vf orggre guna htyl.&lt;/span&gt;
-&lt;span class="s2"&gt;Rkcyvpvg vf orggre guna vzcyvpvg.&lt;/span&gt;
-&lt;span class="s2"&gt;Fvzcyr vf orggre guna pbzcyrk.&lt;/span&gt;
-&lt;span class="s2"&gt;Pbzcyrk vf orggre guna pbzcyvpngrq.&lt;/span&gt;
-&lt;span class="s2"&gt;Syng vf orggre guna arfgrq.&lt;/span&gt;
-&lt;span class="s2"&gt;Fcnefr vf orggre guna qrafr.&lt;/span&gt;
-&lt;span class="s2"&gt;Ernqnovyvgl pbhagf.&lt;/span&gt;
-&lt;span class="s2"&gt;Fcrpvny pnfrf nera&amp;#39;g fcrpvny rabhtu gb oernx gur ehyrf.&lt;/span&gt;
-&lt;span class="s2"&gt;Nygubhtu cenpgvpnyvgl orngf chevgl.&lt;/span&gt;
-&lt;span class="s2"&gt;Reebef fubhyq arire cnff fvyragyl.&lt;/span&gt;
-&lt;span class="s2"&gt;Hayrff rkcyvpvgyl fvyraprq.&lt;/span&gt;
-&lt;span class="s2"&gt;Va gur snpr bs nzovthvgl, ershfr gur grzcgngvba gb thrff.&lt;/span&gt;
-&lt;span class="s2"&gt;Gurer fubhyq or bar-- naq cersrenoyl bayl bar --boivbhf jnl gb qb vg.&lt;/span&gt;
-&lt;span class="s2"&gt;Nygubhtu gung jnl znl abg or boivbhf ng svefg hayrff lbh&amp;#39;er Qhgpu.&lt;/span&gt;
-&lt;span class="s2"&gt;Abj vf orggre guna arire.&lt;/span&gt;
-&lt;span class="s2"&gt;Nygubhtu arire vf bsgra orggre guna *evtug* abj.&lt;/span&gt;
-&lt;span class="s2"&gt;Vs gur vzcyrzragngvba vf uneq gb rkcynva, vg&amp;#39;f n onq vqrn.&lt;/span&gt;
-&lt;span class="s2"&gt;Vs gur vzcyrzragngvba vf rnfl gb rkcynva, vg znl or n tbbq vqrn.&lt;/span&gt;
-&lt;span class="s2"&gt;Anzrfcnprf ner bar ubaxvat terng vqrn -- yrg&amp;#39;f qb zber bs gubfr!&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;Ornhgvshy vf orggre guna htyl.&lt;/span&gt;
+&lt;span class="s"&gt;Rkcyvpvg vf orggre guna vzcyvpvg.&lt;/span&gt;
+&lt;span class="s"&gt;Fvzcyr vf orggre guna pbzcyrk.&lt;/span&gt;
+&lt;span class="s"&gt;Pbzcyrk vf orggre guna pbzcyvpngrq.&lt;/span&gt;
+&lt;span class="s"&gt;Syng vf orggre guna arfgrq.&lt;/span&gt;
+&lt;span class="s"&gt;Fcnefr vf orggre guna qrafr.&lt;/span&gt;
+&lt;span class="s"&gt;Ernqnovyvgl pbhagf.&lt;/span&gt;
+&lt;span class="s"&gt;Fcrpvny pnfrf nera&amp;#39;g fcrpvny rabhtu gb oernx gur ehyrf.&lt;/span&gt;
+&lt;span class="s"&gt;Nygubhtu cenpgvpnyvgl orngf chevgl.&lt;/span&gt;
+&lt;span class="s"&gt;Reebef fubhyq arire cnff fvyragyl.&lt;/span&gt;
+&lt;span class="s"&gt;Hayrff rkcyvpvgyl fvyraprq.&lt;/span&gt;
+&lt;span class="s"&gt;Va gur snpr bs nzovthvgl, ershfr gur grzcgngvba gb thrff.&lt;/span&gt;
+&lt;span class="s"&gt;Gurer fubhyq or bar-- naq cersrenoyl bayl bar --boivbhf jnl gb qb vg.&lt;/span&gt;
+&lt;span class="s"&gt;Nygubhtu gung jnl znl abg or boivbhf ng svefg hayrff lbh&amp;#39;er Qhgpu.&lt;/span&gt;
+&lt;span class="s"&gt;Abj vf orggre guna arire.&lt;/span&gt;
+&lt;span class="s"&gt;Nygubhtu arire vf bsgra orggre guna *evtug* abj.&lt;/span&gt;
+&lt;span class="s"&gt;Vs gur vzcyrzragngvba vf uneq gb rkcynva, vg&amp;#39;f n onq vqrn.&lt;/span&gt;
+&lt;span class="s"&gt;Vs gur vzcyrzragngvba vf rnfl gb rkcynva, vg znl or n tbbq vqrn.&lt;/span&gt;
+&lt;span class="s"&gt;Anzrfcnprf ner bar ubaxvat terng vqrn -- yrg&amp;#39;f qb zber bs gubfr!&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
 
 &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
 &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;65&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;97&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
 &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;26&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
 &lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="mi"&gt;26&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds/linux.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2012-06-22T01:00:00+02:00</updated><entry><title>The yes command</title><link href="http://csparpa.github.io/blog/2012/06/the-yes-command.html" rel="alternate"></link><published>2012-06-22T01:00:00+02:00</published><updated>2012-06-22T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-06-22:blog/2012/06/the-yes-command.html</id><summary type="html">&lt;p&gt;The dumbest "yes-man" Linux command: &lt;code&gt;yes&lt;/code&gt;!  &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds%5Clinux.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2012-06-22T01:00:00+02:00</updated><entry><title>The yes command</title><link href="http://csparpa.github.io/blog/2012/06/the-yes-command.html" rel="alternate"></link><updated>2012-06-22T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-06-22:blog/2012/06/the-yes-command.html</id><summary type="html">&lt;p&gt;The dumbest "yes-man" Linux command: &lt;code&gt;yes&lt;/code&gt;!  &lt;/p&gt;
 &lt;p&gt;It has only one aim: to continuously repeat what you tell it. Useful if pipelined with interactive cmd line installers (where you usually have to type &lt;code&gt;y&lt;/code&gt; a lot of times in order to accept the default values) and similar boring operations.  &lt;/p&gt;
 &lt;p&gt;So, for example if you go with:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; yes &lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; yes &lt;span class="nb"&gt;test&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;it keeps on printing the cmd line arguments followed by a new line character (&lt;code&gt;CTRL+C&lt;/code&gt; to stop execution):  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;test&lt;/span&gt;
 &lt;span class="nb"&gt;test&lt;/span&gt;
 &lt;span class="nb"&gt;test&lt;/span&gt;
 &lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;
@@ -15,7 +15,7 @@
 
 
 &lt;p&gt;... and if you do not specify any argument, it just says:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;y
+&lt;div class="highlight"&gt;&lt;pre&gt;y
 y
 y
 y
@@ -23,15 +23,15 @@ y
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Yes, man! :-)&lt;/p&gt;</summary><category term="Linux"></category><category term="shell"></category></entry><entry><title>How to change Linux shell login message</title><link href="http://csparpa.github.io/blog/2012/02/how-to-change-linux-shell-login-message.html" rel="alternate"></link><published>2012-02-03T01:00:00+01:00</published><updated>2012-02-03T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-02-03:blog/2012/02/how-to-change-linux-shell-login-message.html</id><summary type="html">&lt;p&gt;Your wish is to change that ugly message which is always appearing when you log into a shell (eg: bash) on your Linux system?  &lt;/p&gt;
+&lt;p&gt;Yes, man! :-)&lt;/p&gt;</summary><category term="Linux"></category><category term="shell"></category></entry><entry><title>How to change Linux shell login message</title><link href="http://csparpa.github.io/blog/2012/02/how-to-change-linux-shell-login-message.html" rel="alternate"></link><updated>2012-02-03T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-02-03:blog/2012/02/how-to-change-linux-shell-login-message.html</id><summary type="html">&lt;p&gt;Your wish is to change that ugly message which is always appearing when you log into a shell (eg: bash) on your Linux system?  &lt;/p&gt;
 &lt;p&gt;Then, edit this file:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;/etc/motd
+&lt;div class="highlight"&gt;&lt;pre&gt;/etc/motd
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;and everything you put into it will appear just after logging in.  &lt;/p&gt;
 &lt;p&gt;In order to disable login messages, simply make sure to add to file &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; the following line: &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;PrintMotd no
+&lt;div class="highlight"&gt;&lt;pre&gt;PrintMotd no
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -41,9 +41,9 @@ In order to create dynamic login messages, I suggest to:&lt;/p&gt;
 &lt;li&gt;prepare a shell script that echoes the desired content for the login message&lt;/li&gt;
 &lt;li&gt;disable &lt;code&gt;motd&lt;/code&gt; file printing at login&lt;/li&gt;
 &lt;li&gt;launch your script at any login by adding the its command-line to the &lt;code&gt;/etc/profile&lt;/code&gt; script, which is a system-wide startup script&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Linux"></category><category term="shell"></category></entry><entry><title>Linux paths manipulation</title><link href="http://csparpa.github.io/blog/2011/10/linux-paths-manipulation.html" rel="alternate"></link><published>2011-10-25T01:00:00+02:00</published><updated>2011-10-25T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2011-10-25:blog/2011/10/linux-paths-manipulation.html</id><summary type="html">&lt;p&gt;Sometimes – when geeking around in Linux – you need to play with things like filenames, paths and so on. Here's a quick reference that uses &lt;em&gt;readlink&lt;/em&gt;, &lt;em&gt;basename&lt;/em&gt; and &lt;em&gt;dirname&lt;/em&gt; commands.  &lt;/p&gt;
+&lt;/ol&gt;</summary><category term="Linux"></category><category term="shell"></category></entry><entry><title>Linux paths manipulation</title><link href="http://csparpa.github.io/blog/2011/10/linux-paths-manipulation.html" rel="alternate"></link><updated>2011-10-25T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2011-10-25:blog/2011/10/linux-paths-manipulation.html</id><summary type="html">&lt;p&gt;Sometimes – when geeking around in Linux – you need to play with things like filenames, paths and so on. Here's a quick reference that uses &lt;em&gt;readlink&lt;/em&gt;, &lt;em&gt;basename&lt;/em&gt; and &lt;em&gt;dirname&lt;/em&gt; commands.  &lt;/p&gt;
 &lt;p&gt;You have a folder structure like, say:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;/opt/
+&lt;div class="highlight"&gt;&lt;pre&gt;/opt/
    |_ goofy.txt
    |_ test/
        |_ mickey.txt
@@ -51,28 +51,28 @@ In order to create dynamic login messages, I suggest to:&lt;/p&gt;
 
 
 &lt;p&gt;Now, let's get inside:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&amp;gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /opt
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /opt
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;and let's start playing:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# ABSOLUTE PATHS &lt;/span&gt;
-&lt;span class="c1"&gt;# Get absolute path of goofy.txt&amp;lt;/span&amp;gt;&lt;/span&gt;
-$&amp;gt; readlink -f goofy.txt          &lt;span class="c1"&gt;# Gives: /opt/goofy.txt&lt;/span&gt;
-&lt;span class="c1"&gt;# ...and of mickey.txt&lt;/span&gt;
-$&amp;gt; readlink -f test/mickey.txt    &lt;span class="c1"&gt;# Gives: /opt/test/mickey.txt&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# ABSOLUTE PATHS &lt;/span&gt;
+&lt;span class="c"&gt;# Get absolute path of goofy.txt&amp;lt;/span&amp;gt;&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; readlink -f goofy.txt          &lt;span class="c"&gt;# Gives: /opt/goofy.txt&lt;/span&gt;
+&lt;span class="c"&gt;# ...and of mickey.txt&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; readlink -f &lt;span class="nb"&gt;test&lt;/span&gt;/mickey.txt    &lt;span class="c"&gt;# Gives: /opt/test/mickey.txt&lt;/span&gt;
 
-&lt;span class="c1"&gt;# FILENAMES &lt;/span&gt;
-&lt;span class="c1"&gt;# Get filename for mickey.txt without extension&lt;/span&gt;
-$&amp;gt; basename test/mickey.txt .txt    &lt;span class="c1"&gt;# Gives: mickey&lt;/span&gt;
+&lt;span class="c"&gt;# FILENAMES &lt;/span&gt;
+&lt;span class="c"&gt;# Get filename for mickey.txt without extension&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; basename &lt;span class="nb"&gt;test&lt;/span&gt;/mickey.txt .txt    &lt;span class="c"&gt;# Gives: mickey&lt;/span&gt;
 
-&lt;span class="c1"&gt;# BASE DIRECTORIES &lt;/span&gt;
-&lt;span class="c1"&gt;# Get base directory relatively to the current directory&lt;/span&gt;
-$&amp;gt; dirname goofy.txt          &lt;span class="c1"&gt;# Gives: .&lt;/span&gt;
-$&amp;gt; dirname test/mickey.txt    &lt;span class="c1"&gt;# Gives: test&lt;/span&gt;
-&lt;span class="c1"&gt;#...and then absolutely&lt;/span&gt;
-$&amp;gt; dirname &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;readlink -f goofy.txt&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;        &lt;span class="c1"&gt;# Gives: /opt&lt;/span&gt;
-$&amp;gt; dirname &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;readlink -f test/mickey.txt&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;  &lt;span class="c1"&gt;# Gives: /opt/test&lt;/span&gt;
+&lt;span class="c"&gt;# BASE DIRECTORIES &lt;/span&gt;
+&lt;span class="c"&gt;# Get base directory relatively to the current directory&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname goofy.txt          &lt;span class="c"&gt;# Gives: .&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="nb"&gt;test&lt;/span&gt;/mickey.txt    &lt;span class="c"&gt;# Gives: test&lt;/span&gt;
+&lt;span class="c"&gt;#...and then absolutely&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="s2"&gt;&amp;quot;$(readlink -f goofy.txt)&amp;quot;&lt;/span&gt;        &lt;span class="c"&gt;# Gives: /opt&lt;/span&gt;
+&lt;span class="nv"&gt;$&amp;gt;&lt;/span&gt; dirname &lt;span class="s2"&gt;&amp;quot;$(readlink -f test/mickey.txt)&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# Gives: /opt/test&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

@@ -93,16 +93,16 @@
 <h3>1. Provide a synopsis describing the module's purposes</h3>
 <p><strong>AKA: "What am I supposed to do with you, weird little script?"</strong></p>
 <p>It might sound strange but one of the most recurring difficulties I've ever had when using CLM written by others (fellow workers, project partners) is to understand what they actually do. As all lazy users, I hate asking people what is the aim of a CLM and the last thing on Earth for discovering would be looking at the code itself! That's the reason why I always put a "synopsis" in my CLMs' help messages and comment headers, just like this:</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
-<span class="n">help_msg</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    WORDSCOUNTER.py</span>
-<span class="s2">    Synopsis:</span>
-<span class="s2">        counts the number of words contained into the provided</span>
-<span class="s2">        input file and prints it on standard output</span>
-<span class="s2">    Usage:</span>
-<span class="s2">        python wordscounter.py &lt;input_file&gt;</span>
-<span class="s2">    [...]</span>
-<span class="s2">    &quot;&quot;&quot;</span>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="n">help_msg</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    WORDSCOUNTER.py</span>
+<span class="s">    Synopsis:</span>
+<span class="s">        counts the number of words contained into the provided</span>
+<span class="s">        input file and prints it on standard output</span>
+<span class="s">    Usage:</span>
+<span class="s">        python wordscounter.py &lt;input_file&gt;</span>
+<span class="s">    [...]</span>
+<span class="s">    &quot;&quot;&quot;</span>
 </pre></div>
 
 
@@ -117,7 +117,7 @@
 <p><strong>AKA: "Dont' work out of my sight"</strong></p>
 <p>I recently worked on a Python wrapper for a complicated .exe file, let's call it example.exe. This executable takes a few parameters, runs an algorithm and finally outputs 3 different curves in a tabular format. This module was provided me as a Commercial-Off-The-Shelf, which means that I could not modify it nor I have its source code.  </p>
 <p>They told me: "It's so easy! You just need to invoke the executable using this command-line:"</p>
-<div class="highlight"><pre><span></span>C:\&gt; example.exe
+<div class="highlight"><pre>C:\&gt; example.exe
 </pre></div>
 
 
@@ -155,31 +155,31 @@
 </ul>
 <p>At this point, one should ask herself/himself: "Ok, when I execute it for the first time, how can I know how to print the help message?". This question should be answered by making as simple as possible the printing of help message by the users. So, I suggest to provide help messages whenever a user provides no parameters to your CLM (only – of course – if your CLM do have one or more parameters) or whenever switches such as <code>[ help | -help | h | -h | /? ]</code> are provided.  </p>
 <p>Example of help message in Python:</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">help_msg</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">   WORDSCOUNTER.py</span>
-<span class="s2">   Synopsis:</span>
-<span class="s2">     counts the number of words contained into the provided</span>
-<span class="s2">     input file and prints it on standard output</span>
-<span class="s2">   Usage:</span>
-<span class="s2">     python wordscounter.py &lt;input_file&gt;</span>
-<span class="s2">   Parameters:</span>
-<span class="s2">     &lt;input_file&gt; = the text file whose words are to be counted</span>
-<span class="s2">   Help:</span>
-<span class="s2">     you can print this message using one of the followings</span>
-<span class="s2">     python wordscounter.py</span>
-<span class="s2">     python wordscounter.py [ help | /? ]</span>
-<span class="s2">   Exit codes:</span>
-<span class="s2">    -1 - showed help</span>
-<span class="s2">     0 - successful execution</span>
-<span class="s2">     1 - input file does not exist</span>
-<span class="s2">     2 - input file is not a file</span>
-<span class="s2">     3 - input file is not a text file</span>
-<span class="s2">    90 - internal error&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">help_msg</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">   WORDSCOUNTER.py</span>
+<span class="s">   Synopsis:</span>
+<span class="s">     counts the number of words contained into the provided</span>
+<span class="s">     input file and prints it on standard output</span>
+<span class="s">   Usage:</span>
+<span class="s">     python wordscounter.py &lt;input_file&gt;</span>
+<span class="s">   Parameters:</span>
+<span class="s">     &lt;input_file&gt; = the text file whose words are to be counted</span>
+<span class="s">   Help:</span>
+<span class="s">     you can print this message using one of the followings</span>
+<span class="s">     python wordscounter.py</span>
+<span class="s">     python wordscounter.py [ help | /? ]</span>
+<span class="s">   Exit codes:</span>
+<span class="s">    -1 - showed help</span>
+<span class="s">     0 - successful execution</span>
+<span class="s">     1 - input file does not exist</span>
+<span class="s">     2 - input file is not a file</span>
+<span class="s">     3 - input file is not a text file</span>
+<span class="s">    90 - internal error&quot;&quot;&quot;</span>
 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
   <span class="k">print</span> <span class="n">help_msg</span>
   <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;help&#39;</span> <span class="ow">or</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;/?&#39;</span><span class="p">:</span>
+<span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;help&#39;</span> <span class="ow">or</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;/?&#39;</span><span class="p">:</span>
   <span class="k">print</span> <span class="n">help_msg</span>
   <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
@@ -188,13 +188,13 @@
 <h3>5. Tell the user what is happening</h3>
 <p><strong>AKA: "It's thinking, I will have a cofee in the meantime"</strong></p>
 <p>How many times I started a CLM with a terminal looking like this:</p>
-<div class="highlight"><pre><span></span>claudio@laptop:~$ bash install.bash package.tar.gz
+<div class="highlight"><pre>claudio@laptop:~<span class="nv">$ </span>bash install.bash package.tar.gz
 </pre></div>
 
 
 <p>and after minutes or tens of minutes the terminal looked like this:</p>
-<div class="highlight"><pre><span></span>claudio@laptop:~$ bash install.bash package.tar.gz
-claudio@laptop:~$
+<div class="highlight"><pre>claudio@laptop:~<span class="nv">$ </span>bash install.bash package.tar.gz
+claudio@laptop:~<span class="err">$</span>
 </pre></div>
 
 

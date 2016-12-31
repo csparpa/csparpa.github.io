@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds/design.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2013-10-29T01:00:00+01:00</updated><entry><title>Web APIs design: an improvable example</title><link href="http://csparpa.github.io/blog/2013/10/web-apis-design-an-improvable-example.html" rel="alternate"></link><published>2013-10-29T01:00:00+01:00</published><updated>2013-10-29T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-10-29:blog/2013/10/web-apis-design-an-improvable-example.html</id><summary type="html">&lt;p&gt;Today I want to speak about the &lt;a href="http://bugs.openweathermap.org/projects/api/wiki/API_2_5"&gt;OWM web API 2.5&lt;/a&gt; and its design. As this API follows a versioning scheme, this analysis holds for version 2.5 (which then I suppose is not changing in time!)&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Vorsprung durch Informatik</title><link href="http://csparpa.github.io/blog/" rel="alternate"></link><link href="http://csparpa.github.io/blog/feeds%5Cdesign.atom.xml" rel="self"></link><id>http://csparpa.github.io/blog/</id><updated>2013-10-29T01:00:00+01:00</updated><entry><title>Web APIs design: an improvable example</title><link href="http://csparpa.github.io/blog/2013/10/web-apis-design-an-improvable-example.html" rel="alternate"></link><updated>2013-10-29T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-10-29:blog/2013/10/web-apis-design-an-improvable-example.html</id><summary type="html">&lt;p&gt;Today I want to speak about the &lt;a href="http://bugs.openweathermap.org/projects/api/wiki/API_2_5"&gt;OWM web API 2.5&lt;/a&gt; and its design. As this API follows a versioning scheme, this analysis holds for version 2.5 (which then I suppose is not changing in time!)&lt;/p&gt;
 &lt;p&gt;First let me clearly state that I'm writing this post as a "gathering of thoughts” I've had during the first draft development of the PyOWM library, and it is not meant to be a negative criticism – but rather a positive review – to the  API architects/developers. I just want to write here my ideas so that the OWM API can be improved in future versions – and I will commit myself to help with this process, if needed.  &lt;/p&gt;
 &lt;p&gt;I found this activity also very educational because it made me think again to all that books and articles I've read on the Internet about API design and – good grief – they were damn right!  &lt;/p&gt;
 &lt;p&gt;As I said, developing the PyOWM library I had to write code interfacing with the OWM web API, which basically meant I had to setup an HTTP client and some kind of parsing module in order to read the API's responses, squeeze useful data out of them and inject data into my custom object model to the benefit of users. These funny tasks lead me, nevertheless, to crash onto a few improvable API design features that made my work unreasonably more complicated and error-prone. And a bug also came into sight.  &lt;/p&gt;
@@ -22,7 +22,7 @@
 &lt;p&gt;The API lets you basically retrieve different weather datasets (observations, forecasts, historic data) about places in the world.
 The most simple and natural feature for the API is to let you query for the currently observed weather in a location: this can be specified in a twofold manner, either by passing the API a toponym or a lat/lon couple.  &lt;/p&gt;
 &lt;p&gt;The related endpoints are:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#Feature: retrieve current weather - location is specified via toponym
+&lt;div class="highlight"&gt;&lt;pre&gt;#Feature: retrieve current weather - location is specified via toponym
 http://api.openweathermap.org/data/2.5/weather?q=London,uk
 
 #Feature: retrieve current weather - location is specified via lat/lon
@@ -33,7 +33,7 @@ http://api.openweathermap.org/data/2.5/weather?lat=57&amp;amp;lon=-2.15
 &lt;p&gt;Here the naming seems to quite proper with regards to the implemented feature: great!  &lt;/p&gt;
 &lt;p&gt;Things worsen when you consider these API features: find the current weather conditions in all the locations having certain characteristics, such as having toponyms that are similar/equal to a given string or being in the neighborhood of a given lat/lon couple.&lt;br /&gt;
 Here are the related endpoints:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#Feature: retrieve current weathers in all the locations whose names exactly equal to the string &amp;quot;London&amp;quot;
+&lt;div class="highlight"&gt;&lt;pre&gt;#Feature: retrieve current weathers in all the locations whose names exactly equal to the string &amp;quot;London&amp;quot;
 http://api.openweathermap.org/data/2.5/find?q=London&amp;amp;type=accurate
 
 #Feature: retrieve current weathers in all the locations whose names contains the string &amp;quot;London&amp;quot;
@@ -52,7 +52,7 @@ http://api.openweathermap.org/data/2.5/find?lat=57&amp;amp;lon=-2.15
 &lt;/ol&gt;
 &lt;p&gt;Another feature: retrieve weather forecasts for a location. You can get forecasts for every 3-hours of the next 5 days or for every of the next 14 days.  &lt;/p&gt;
 &lt;p&gt;Here are the endpoints:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#Feature: retrieve 3h weather forecast for a location
+&lt;div class="highlight"&gt;&lt;pre&gt;#Feature: retrieve 3h weather forecast for a location
 http://api.openweathermap.org/data/2.5/forecast?q=London
 
 #Feature: retrieve daily weather forecast for a location
@@ -69,7 +69,7 @@ http://api.openweathermap.org/data/2.5/forecast/daily?q=London
 &lt;/ol&gt;
 &lt;h3&gt;Same conceptual entities, different JSON representations&lt;/h3&gt;
 &lt;p&gt;Clients of data API expect returned data to be structured using some kind of language or convention and  they also expect that structured data is organized in chunks or logical groups  that clearly convey cohesion and hierarchy. In our specific case, the description language used by the API can either be JSON or XML (but we will only rely on JSON from now on): this is a consolidated practice among the web APIs  and this sounds good. At this point, we want to inspect the JSON returned by a query for current weather data on London,UK:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#Payload of response to request:
+&lt;div class="highlight"&gt;&lt;pre&gt;#Payload of response to request:
 #GET http://api.openweathermap.org/data/2.5/weather?q=London,uk
 {
   &amp;quot;coord&amp;quot;: {
@@ -105,7 +105,7 @@ http://api.openweathermap.org/data/2.5/forecast/daily?q=London
 
 
 &lt;p&gt;The "coord”, "country”, "id” and "name” JSON root elements refer to a single logical entity: the location for which the current weather is given (London, UK). Can you see it? Wouldn't have it been better to group all the location info into a single JSON element? For example, like this:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;{
+&lt;div class="highlight"&gt;&lt;pre&gt;{
 ...
 &amp;quot;location&amp;quot;:
 {
@@ -122,7 +122,7 @@ http://api.openweathermap.org/data/2.5/forecast/daily?q=London
 
 
 &lt;p&gt;Another legitimate question is: why location information spread out from the data regarding current weather? Here the API is clearly returning more data than it has been asked for. But what is really obscure is that location info are structured in different ways if returned by different endpoints. In example, if we ask for the daily weather forecast on London,UK we get:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#Payload of response to request:
+&lt;div class="highlight"&gt;&lt;pre&gt;#Payload of response to request:
 #GET http://api.openweathermap.org/data/2.5/forecast/daily?q=London
 {
 &amp;quot;city&amp;quot; : {
@@ -142,7 +142,7 @@ http://api.openweathermap.org/data/2.5/forecast/daily?q=London
 &lt;h3&gt;HTTP status codes are neglected&lt;/h3&gt;
 &lt;p&gt;This is one of the main shortcomings of this API: it does not convey error conditions through a proper use of HTTP status codes. The API users want to receive a 200 (OK) status code in the HTTP response's header – along with data – whenever a GET request is a hit: this means that the endpoint exists and is correctly invoked by the clients; the same way, users want to receive a 4xx or 5xx status code whenever something goes wrong with their request: this can happen for several reasons, either due to clients or the server itself. But, to be short: a user expects a non-200 status code to be returned whenever something goes wrong with its request.  s&lt;/p&gt;
 &lt;p&gt;The OWM API &lt;strong&gt;always returns a 200 HTTP status code&lt;/strong&gt;, no matter what happens. But, if something goes wrong with a client's request, it returns the right HTTP status code and an explanation message into the HTTP response's payload! An example: we want to query for current weather on a non-existent location (the folkloristic: "sev082hfrv2qvf2vunr”)  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#HTTP request
+&lt;div class="highlight"&gt;&lt;pre&gt;#HTTP request
 GET /data/2.5/weather?q=sev082hfrv2qvf2vunr HTTP/1.1
 #HTTP response headers
 HTTP/1.1 200 OK
@@ -157,7 +157,7 @@ Content-Type: application/json; charset=utf-8
 &lt;p&gt;The JSON payload is clear: the location has not been found and a 404 (Not Found) error code has been returned. However the code is returned &lt;strong&gt;into the payload&lt;/strong&gt;, so the clients have to first presume that the request was a success, then parse the payload and find out that it wasn't! The API is mis-using the HTTP protocol, which is a very nasty behaviour for clients and &lt;em&gt;blows the API away from RESTfulness&lt;/em&gt;, as well.  &lt;/p&gt;
 &lt;h3&gt;"Not found” is different from "Found but no data available”&lt;/h3&gt;
 &lt;p&gt;The improper usage of HTTP status codes is particularly problematic in the case of queries to historic weather data registred by meteostations. A meteostation is identified by a unique integer number and when historic data is queried, the API returns a JSON list of data measurements for the desired meteostation. So, an empty list means: no data for the desired meteostation. Now, if I want to get historic data for a station that is not present in the API's meteostations collection (like, say, station number -2147483648), I get:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#HTTP request
+&lt;div class="highlight"&gt;&lt;pre&gt;#HTTP request
 GET /data/2.5/history/station?id=-2147483648&amp;amp;type=tick HTTP/1.1
 #HTTP response headers
 HTTP/1.1 200 OK
@@ -177,12 +177,12 @@ Content-Type: application/json; charset=utf-8
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Again, a 200 status code (that means: "Ok, everything went smoothly”) and – surprisingly – an empty data list. What I would have expected is a 404 HTTP status code, telling me: "Hey, this station is not listed in my meteostations database”! So in this case, an error condition is wrongly mapped onto a non-error condition. And what if I query for an existing meteostation and it has no data available? How can I discern the "not found” case from the "found but no data available” case?&lt;/p&gt;</summary><category term="API"></category><category term="design"></category><category term="HTTP"></category><category term="JSON"></category><category term="OpenWeatherMap"></category><category term="PyOWM"></category></entry><entry><title>Command-line software design: 5 more advices</title><link href="http://csparpa.github.io/blog/2013/04/command-line-software-design-5-more-advices.html" rel="alternate"></link><published>2013-04-18T01:00:00+02:00</published><updated>2013-04-18T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-04-18:blog/2013/04/command-line-software-design-5-more-advices.html</id><summary type="html">&lt;p&gt;Ok, folks, ready to take off with 5 more CLMs (Command-Line Modules) design advices?  This is part II of a posts strip, part I contains the first 5 advices.&lt;/p&gt;
+&lt;p&gt;Again, a 200 status code (that means: "Ok, everything went smoothly”) and – surprisingly – an empty data list. What I would have expected is a 404 HTTP status code, telling me: "Hey, this station is not listed in my meteostations database”! So in this case, an error condition is wrongly mapped onto a non-error condition. And what if I query for an existing meteostation and it has no data available? How can I discern the "not found” case from the "found but no data available” case?&lt;/p&gt;</summary><category term="API"></category><category term="design"></category><category term="HTTP"></category><category term="JSON"></category><category term="OpenWeatherMap"></category><category term="PyOWM"></category></entry><entry><title>Command-line software design: 5 more advices</title><link href="http://csparpa.github.io/blog/2013/04/command-line-software-design-5-more-advices.html" rel="alternate"></link><updated>2013-04-18T01:00:00+02:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2013-04-18:blog/2013/04/command-line-software-design-5-more-advices.html</id><summary type="html">&lt;p&gt;Ok, folks, ready to take off with 5 more CLMs (Command-Line Modules) design advices?  This is part II of a posts strip, part I contains the first 5 advices.&lt;/p&gt;
 &lt;h3&gt;1. Provide meaningful messages&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;AKA: "What am I doing? I am existing..."&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Your CLM should provide insight into what it is currently doing. The difficult part is to decide how much detail you want to provide to the user...and you might argue: "Ok, but you can always use log level filtering and then let the user decide the verbosity" – this is perfectly right, but I'm talking about on-screen messages. My advice is to print out a specific message which conveys what the CLM is currently doing, with a detail level which should be just enough for the user not to say "It is talking rubbish"! So, what is really vital is that you avoid using simple and generalistic messages like "Computing" or "Executing" and – on the other hand – that you avoid using hyper-detailed expressions such as "Inverting matrix – computing determinant of the 3rd 2×2 submatrix" &lt;em&gt;if they are not meaningful to the user&lt;/em&gt;. Of course if the focus of your CLM is matricial inversion that shall be fine, but it shouldn't be if your CLM is – in example – focused on a higher-level problem which is solved using matricial inversion.  &lt;/p&gt;
 &lt;p&gt;...And, please, never print out the raw counters in nested for loops. It happened to me just a couple of days ago to run an image-processing CLM provided by a project partner: this was the output of a successful run  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;claudio@laptop:~$ python img_processing_clm.py input.tif output.tif
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;python img_processing_clm.py input.tif output.tif
 Conversion to 8bit took 23.567 seconds
 1
 2
@@ -190,7 +190,7 @@ Conversion to 8bit took 23.567 seconds
 4
 5
 6
-&lt;span class="c1"&gt;#2000 or so more lines&lt;/span&gt;
+&lt;span class="c"&gt;#2000 or so more lines&lt;/span&gt;
 The variance computation took 367.145 seconds
 ...
 &lt;/pre&gt;&lt;/div&gt;
@@ -200,22 +200,22 @@ The variance computation took 367.145 seconds
 &lt;h3&gt;2. Gracefully fail&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;AKA: "I don't want to see each blood drop spreading from your wound"&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;As a CLM user, would you prefer seeing this:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;claudio@laptop:~$ python myclm.py /var/clmdata/testoutdir  &lt;span class="c1"&gt;#we are missing the first parameter&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;python myclm.py /var/clmdata/testoutdir  &lt;span class="c"&gt;#we are missing the first parameter&lt;/span&gt;
   Traceback &lt;span class="o"&gt;(&lt;/span&gt;most recent call last&lt;span class="o"&gt;)&lt;/span&gt;:
   File &lt;span class="s2"&gt;&amp;quot;myclm.py&amp;quot;&lt;/span&gt;, line 3, in &amp;lt;module&amp;gt;
   &lt;span class="nv"&gt;inputfile&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; sys.argv&lt;span class="o"&gt;[&lt;/span&gt;1&lt;span class="o"&gt;]&lt;/span&gt;
   IndexError: list index out of range
-claudio@laptop:~$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;
 1
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;..or this?  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;claudio@laptop:~$ python myclm.py /var/clmdata/testoutdir  &lt;span class="c1"&gt;#we are missing the first parameter&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;python myclm.py /var/clmdata/testoutdir  &lt;span class="c"&gt;#we are missing the first parameter&lt;/span&gt;
   ERROR: you must specify an input file
   Usage:
     myclm.py &amp;lt;inputfile_path&amp;gt; &amp;lt;output_path&amp;gt;
-claudio@laptop:~$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;
 1
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -225,7 +225,7 @@ claudio@laptop:~$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&g
 &lt;h3&gt;3. Organize your CLM folder&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;AKA: "I am the Borg ... I bring order to chaos" (Borg Queen – Star Trek: First Contact)&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Order in organizing your code is good. This translates directly into the fact that a well-structured CMS is easy to understand and modify, and can be efficiently used in a small amount of time. My advice is to adhere to widely adopted or standard program folder structuration patterns: I usually have my CLM's folder in this fashion&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;CLM-folder/
+&lt;div class="highlight"&gt;&lt;pre&gt;CLM-folder/
   |--bin/     #Binaries: main CLM program and dependancies
   |--doc/     #Documentation about CLM usage/installation
   |--src/     #Source files
@@ -239,8 +239,8 @@ claudio@laptop:~$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&g
 &lt;p&gt;As a general advice, don't rely on the safety of filesystem operations. If your CLM needs to store intermediate data try to do that in-memory, and if it's not possible and therefore you are compelled to use the filesystem, your target should be to put the least complexity between your CLM and your data. Reading data from filesystems seldom is a problem, but writing often is, and the amount of adversities you might face depends on a variety of factors such as the architecture (never tried to write in a folder for which you don't have &lt;code&gt;w&lt;/code&gt; permissions?), the possible concurrency in data modification, the remoteness of the target filesystem and so on.  &lt;/p&gt;
 &lt;p&gt;Another misused – but smooth and clever – technique is to leverage temporary folder support provided by the operating systems. In my experience with bash programming, I've always seen people doing local computations as follows: input files are copied into the same folder of the executing binaries, then intermediate files are written in that folder (usually, a lot  of files), and in case of successful CLM end intermediate files are deleted. This always made me angry, because often their programs were  buggy and therefore never got to their natural end, which forced me to press &lt;code&gt;CTRL+C&lt;/code&gt;... leaving all of those intermediate files undeleted in the folder. And this meant: I myself would have to delete them!!! :-o To solve this issue, I simply suggested those people to leverage the "mktemp" Linux command, which creates a temporary folder with a pseudo-random name under /tmp and returns its name: one can then use this folder to do whatever she/he likes – i.e. writing the CLM execution's intermediate rubbish.  &lt;/p&gt;
 &lt;p&gt;It's as easy as follows:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;claudio@laptop:~$ &lt;span class="nv"&gt;tempdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;mktemp&lt;span class="k"&gt;)&lt;/span&gt;
-claudio@laptop:~$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$tempdir&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ tempdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;mktemp&lt;span class="k"&gt;)&lt;/span&gt;
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$tempdir&lt;/span&gt;
 /tmp/tmp.hyYKY21864
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -249,68 +249,68 @@ claudio@laptop:~$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&g
 &lt;p&gt;&lt;strong&gt;AKA: "Time – as well as folder location – is relative"&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;When you provide paths as arguments for CLMs it is a very good practice to give them in an absolute fashion. If you give absolute paths, there's a pretty good chance that your CLM  addresses files and folders in the right way. And my advice is: always handle absolute paths internally to your command-line softwares...in fact, this will prevent you from using terrible solutions like the &lt;code&gt;cd&lt;/code&gt; (change directory) command, which will mess the whole thing up if you are using relative paths because the root folder they are resolved against changes!  &lt;/p&gt;
 &lt;p&gt;A little coding exercise: let us write a small bash script (copier.bash) that takes reads a file and echoes its contents to a file named &lt;code&gt;results.out&lt;/code&gt; which will be created in a directory of our choice. We want it to have this interface:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;copier.bash &amp;lt;inputfile_path&amp;gt; &amp;lt;output_path&amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;copier.bash &amp;lt;inputfile_path&amp;gt; &amp;lt;output_path&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;and here is the code (as you can see I'm using the &lt;code&gt;cat&lt;/code&gt; executable which lies in the &lt;code&gt;/bin&lt;/code&gt; path on my Linux system):  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 
-&lt;span class="nv"&gt;inputfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;outputdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;inputfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$1&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;outputdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$2&amp;quot;&lt;/span&gt;
 
 &lt;span class="nv"&gt;bindir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/bin&amp;quot;&lt;/span&gt;
 
-&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$bindir&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-cat &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$inputfile&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$outputdir&lt;/span&gt;&lt;span class="s2"&gt;/result.out&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$bindir&amp;quot;&lt;/span&gt;
+cat &lt;span class="s2"&gt;&amp;quot;$inputfile&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class="s2"&gt;&amp;quot;$outputdir/result.out&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now if we setup the environment like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;claudio@laptop:~$ &lt;span class="nb"&gt;cd&lt;/span&gt; /opt/copier
-claudio@laptop:~$ mkdir output  &lt;span class="c1"&gt;#we create the output folder&lt;/span&gt;
-claudio@laptop:~$ tree .
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /opt/copier
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir output  &lt;span class="c"&gt;#we create the output folder&lt;/span&gt;
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;tree .
 .
-&lt;span class="p"&gt;|&lt;/span&gt;-- copier.bash
+|-- copier.bash
 &lt;span class="sb"&gt;`&lt;/span&gt;-- output
-&lt;span class="m"&gt;1&lt;/span&gt; directory, &lt;span class="m"&gt;1&lt;/span&gt; file
-claudio@laptop:~$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;italia has got talent&amp;quot;&lt;/span&gt; &amp;gt; input.txt &lt;span class="c1"&gt;#we create the input file&lt;/span&gt;
-claudio@laptop:~$ bash copier.bash input.txt output        &lt;span class="c1"&gt;#we run the script&lt;/span&gt;
+1 directory, 1 file
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;italia has got talent&amp;quot;&lt;/span&gt; &amp;gt; input.txt &lt;span class="c"&gt;#we create the input file&lt;/span&gt;
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash copier.bash input.txt output        &lt;span class="c"&gt;#we run the script&lt;/span&gt;
 copier.bash: line 9: output/result.out: No such file or directory
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;As we expected, the &lt;code&gt;cd&lt;/code&gt; inside our script is messing up everything and the bash shell is complaining about the fact that after it, it is impossible to find the &lt;code&gt;output&lt;/code&gt; subfolder (which, in absolute terms, is: &lt;code&gt;/bin/output&lt;/code&gt; !!!)  &lt;/p&gt;
 &lt;p&gt;Also the following command-line fail:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;claudio@laptop:~$ bash copier.bash input.txt /opt/copier/output
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash copier.bash input.txt /opt/copier/output
 cat: input.txt: No such file or directory
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;This time it's the &lt;code&gt;cat&lt;/code&gt; executable complaining for the missing &lt;code&gt;input.txt&lt;/code&gt; file, which it expects to be here: &lt;code&gt;/bin/input.txt&lt;/code&gt;  &lt;/p&gt;
 &lt;p&gt;The right way of running this script would be:  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;claudio@laptop:~$ bash copier.bash /opt/copier/input.txt /opt/copier/output
-claudio@laptop:~$ cat output/result.out
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash copier.bash /opt/copier/input.txt /opt/copier/output
+claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;cat output/result.out
 italia has got talent
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;You can see that: one must know in advance that absolute paths must be used. And consider that we were lucky to have a textual CLM, what if we had a compiled one? Lesson learn: never use &lt;code&gt;cd&lt;/code&gt; and leverage absolute paths!&lt;/p&gt;</summary><category term="software"></category><category term="design"></category><category term="shell"></category></entry><entry><title>Command-line software design: 5 advices</title><link href="http://csparpa.github.io/blog/2012/12/command-line-software-design-5-advices.html" rel="alternate"></link><published>2012-12-10T01:00:00+01:00</published><updated>2012-12-10T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-12-10:blog/2012/12/command-line-software-design-5-advices.html</id><summary type="html">&lt;p&gt;During the last years I developed several command-line utility tools, using several languages and for different environments. Attempts, learning and – of course – errors led me to clear my mind up and to adopt a series of design guidelines which I find very useful for any kind of command-line tool development – ranging from the simplest script to the most articulated modules – and which I'm willing to share. As you'll notice, the guidelines can be generalized, as they simply represent common sense approaches in SW design!  &lt;/p&gt;
+&lt;p&gt;You can see that: one must know in advance that absolute paths must be used. And consider that we were lucky to have a textual CLM, what if we had a compiled one? Lesson learn: never use &lt;code&gt;cd&lt;/code&gt; and leverage absolute paths!&lt;/p&gt;</summary><category term="software"></category><category term="design"></category><category term="shell"></category></entry><entry><title>Command-line software design: 5 advices</title><link href="http://csparpa.github.io/blog/2012/12/command-line-software-design-5-advices.html" rel="alternate"></link><updated>2012-12-10T01:00:00+01:00</updated><author><name>csparpa</name></author><id>tag:csparpa.github.io,2012-12-10:blog/2012/12/command-line-software-design-5-advices.html</id><summary type="html">&lt;p&gt;During the last years I developed several command-line utility tools, using several languages and for different environments. Attempts, learning and – of course – errors led me to clear my mind up and to adopt a series of design guidelines which I find very useful for any kind of command-line tool development – ranging from the simplest script to the most articulated modules – and which I'm willing to share. As you'll notice, the guidelines can be generalized, as they simply represent common sense approaches in SW design!  &lt;/p&gt;
 &lt;p&gt;Here I'm reporting just a few in "humurous" terms :-) (I'll share more with you in future posts as they come out from oblivion).  &lt;/p&gt;
 &lt;p&gt;From now on, CLM = Command Line Module&lt;/p&gt;
 &lt;h3&gt;1. Provide a synopsis describing the module's purposes&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;AKA: "What am I supposed to do with you, weird little script?"&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;It might sound strange but one of the most recurring difficulties I've ever had when using CLM written by others (fellow workers, project partners) is to understand what they actually do. As all lazy users, I hate asking people what is the aim of a CLM and the last thing on Earth for discovering would be looking at the code itself! That's the reason why I always put a "synopsis" in my CLMs' help messages and comment headers, just like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
-&lt;span class="n"&gt;help_msg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
-&lt;span class="s2"&gt;    WORDSCOUNTER.py&lt;/span&gt;
-&lt;span class="s2"&gt;    Synopsis:&lt;/span&gt;
-&lt;span class="s2"&gt;        counts the number of words contained into the provided&lt;/span&gt;
-&lt;span class="s2"&gt;        input file and prints it on standard output&lt;/span&gt;
-&lt;span class="s2"&gt;    Usage:&lt;/span&gt;
-&lt;span class="s2"&gt;        python wordscounter.py &amp;lt;input_file&amp;gt;&lt;/span&gt;
-&lt;span class="s2"&gt;    [...]&lt;/span&gt;
-&lt;span class="s2"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+&lt;span class="n"&gt;help_msg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;    WORDSCOUNTER.py&lt;/span&gt;
+&lt;span class="s"&gt;    Synopsis:&lt;/span&gt;
+&lt;span class="s"&gt;        counts the number of words contained into the provided&lt;/span&gt;
+&lt;span class="s"&gt;        input file and prints it on standard output&lt;/span&gt;
+&lt;span class="s"&gt;    Usage:&lt;/span&gt;
+&lt;span class="s"&gt;        python wordscounter.py &amp;lt;input_file&amp;gt;&lt;/span&gt;
+&lt;span class="s"&gt;    [...]&lt;/span&gt;
+&lt;span class="s"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -325,7 +325,7 @@ italia has got talent
 &lt;p&gt;&lt;strong&gt;AKA: "Dont' work out of my sight"&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;I recently worked on a Python wrapper for a complicated .exe file, let's call it example.exe. This executable takes a few parameters, runs an algorithm and finally outputs 3 different curves in a tabular format. This module was provided me as a Commercial-Off-The-Shelf, which means that I could not modify it nor I have its source code.  &lt;/p&gt;
 &lt;p&gt;They told me: "It's so easy! You just need to invoke the executable using this command-line:"&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;C:\&amp;gt; example.exe
+&lt;div class="highlight"&gt;&lt;pre&gt;C:\&amp;gt; example.exe
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -363,31 +363,31 @@ italia has got talent
 &lt;/ul&gt;
 &lt;p&gt;At this point, one should ask herself/himself: "Ok, when I execute it for the first time, how can I know how to print the help message?". This question should be answered by making as simple as possible the printing of help message by the users. So, I suggest to provide help messages whenever a user provides no parameters to your CLM (only – of course – if your CLM do have one or more parameters) or whenever switches such as &lt;code&gt;[ help | -help | h | -h | /? ]&lt;/code&gt; are provided.  &lt;/p&gt;
 &lt;p&gt;Example of help message in Python:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
-&lt;span class="n"&gt;help_msg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
-&lt;span class="s2"&gt;   WORDSCOUNTER.py&lt;/span&gt;
-&lt;span class="s2"&gt;   Synopsis:&lt;/span&gt;
-&lt;span class="s2"&gt;     counts the number of words contained into the provided&lt;/span&gt;
-&lt;span class="s2"&gt;     input file and prints it on standard output&lt;/span&gt;
-&lt;span class="s2"&gt;   Usage:&lt;/span&gt;
-&lt;span class="s2"&gt;     python wordscounter.py &amp;lt;input_file&amp;gt;&lt;/span&gt;
-&lt;span class="s2"&gt;   Parameters:&lt;/span&gt;
-&lt;span class="s2"&gt;     &amp;lt;input_file&amp;gt; = the text file whose words are to be counted&lt;/span&gt;
-&lt;span class="s2"&gt;   Help:&lt;/span&gt;
-&lt;span class="s2"&gt;     you can print this message using one of the followings&lt;/span&gt;
-&lt;span class="s2"&gt;     python wordscounter.py&lt;/span&gt;
-&lt;span class="s2"&gt;     python wordscounter.py [ help | /? ]&lt;/span&gt;
-&lt;span class="s2"&gt;   Exit codes:&lt;/span&gt;
-&lt;span class="s2"&gt;    -1 - showed help&lt;/span&gt;
-&lt;span class="s2"&gt;     0 - successful execution&lt;/span&gt;
-&lt;span class="s2"&gt;     1 - input file does not exist&lt;/span&gt;
-&lt;span class="s2"&gt;     2 - input file is not a file&lt;/span&gt;
-&lt;span class="s2"&gt;     3 - input file is not a text file&lt;/span&gt;
-&lt;span class="s2"&gt;    90 - internal error&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+&lt;span class="n"&gt;help_msg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;   WORDSCOUNTER.py&lt;/span&gt;
+&lt;span class="s"&gt;   Synopsis:&lt;/span&gt;
+&lt;span class="s"&gt;     counts the number of words contained into the provided&lt;/span&gt;
+&lt;span class="s"&gt;     input file and prints it on standard output&lt;/span&gt;
+&lt;span class="s"&gt;   Usage:&lt;/span&gt;
+&lt;span class="s"&gt;     python wordscounter.py &amp;lt;input_file&amp;gt;&lt;/span&gt;
+&lt;span class="s"&gt;   Parameters:&lt;/span&gt;
+&lt;span class="s"&gt;     &amp;lt;input_file&amp;gt; = the text file whose words are to be counted&lt;/span&gt;
+&lt;span class="s"&gt;   Help:&lt;/span&gt;
+&lt;span class="s"&gt;     you can print this message using one of the followings&lt;/span&gt;
+&lt;span class="s"&gt;     python wordscounter.py&lt;/span&gt;
+&lt;span class="s"&gt;     python wordscounter.py [ help | /? ]&lt;/span&gt;
+&lt;span class="s"&gt;   Exit codes:&lt;/span&gt;
+&lt;span class="s"&gt;    -1 - showed help&lt;/span&gt;
+&lt;span class="s"&gt;     0 - successful execution&lt;/span&gt;
+&lt;span class="s"&gt;     1 - input file does not exist&lt;/span&gt;
+&lt;span class="s"&gt;     2 - input file is not a file&lt;/span&gt;
+&lt;span class="s"&gt;     3 - input file is not a text file&lt;/span&gt;
+&lt;span class="s"&gt;    90 - internal error&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
   &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;help_msg&lt;/span&gt;
   &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;help&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/?&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;help&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/?&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
   &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;help_msg&lt;/span&gt;
   &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -396,13 +396,13 @@ italia has got talent
 &lt;h3&gt;5. Tell the user what is happening&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;AKA: "It's thinking, I will have a cofee in the meantime"&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;How many times I started a CLM with a terminal looking like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;claudio@laptop:~$ bash install.bash package.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash install.bash package.tar.gz
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;and after minutes or tens of minutes the terminal looked like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;claudio@laptop:~$ bash install.bash package.tar.gz
-claudio@laptop:~$
+&lt;div class="highlight"&gt;&lt;pre&gt;claudio@laptop:~&lt;span class="nv"&gt;$ &lt;/span&gt;bash install.bash package.tar.gz
+claudio@laptop:~&lt;span class="err"&gt;$&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

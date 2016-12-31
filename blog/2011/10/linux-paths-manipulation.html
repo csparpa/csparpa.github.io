@@ -88,7 +88,7 @@
 
         <p>Sometimes – when geeking around in Linux – you need to play with things like filenames, paths and so on. Here's a quick reference that uses <em>readlink</em>, <em>basename</em> and <em>dirname</em> commands.  </p>
 <p>You have a folder structure like, say:  </p>
-<div class="highlight"><pre><span></span>/opt/
+<div class="highlight"><pre>/opt/
    |_ goofy.txt
    |_ test/
        |_ mickey.txt
@@ -96,28 +96,28 @@
 
 
 <p>Now, let's get inside:  </p>
-<div class="highlight"><pre><span></span>$&gt; <span class="nb">cd</span> /opt
+<div class="highlight"><pre><span class="nv">$&gt;</span> <span class="nb">cd</span> /opt
 </pre></div>
 
 
 <p>and let's start playing:  </p>
-<div class="highlight"><pre><span></span><span class="c1"># ABSOLUTE PATHS </span>
-<span class="c1"># Get absolute path of goofy.txt&lt;/span&gt;</span>
-$&gt; readlink -f goofy.txt          <span class="c1"># Gives: /opt/goofy.txt</span>
-<span class="c1"># ...and of mickey.txt</span>
-$&gt; readlink -f test/mickey.txt    <span class="c1"># Gives: /opt/test/mickey.txt</span>
+<div class="highlight"><pre><span class="c"># ABSOLUTE PATHS </span>
+<span class="c"># Get absolute path of goofy.txt&lt;/span&gt;</span>
+<span class="nv">$&gt;</span> readlink -f goofy.txt          <span class="c"># Gives: /opt/goofy.txt</span>
+<span class="c"># ...and of mickey.txt</span>
+<span class="nv">$&gt;</span> readlink -f <span class="nb">test</span>/mickey.txt    <span class="c"># Gives: /opt/test/mickey.txt</span>
 
-<span class="c1"># FILENAMES </span>
-<span class="c1"># Get filename for mickey.txt without extension</span>
-$&gt; basename test/mickey.txt .txt    <span class="c1"># Gives: mickey</span>
+<span class="c"># FILENAMES </span>
+<span class="c"># Get filename for mickey.txt without extension</span>
+<span class="nv">$&gt;</span> basename <span class="nb">test</span>/mickey.txt .txt    <span class="c"># Gives: mickey</span>
 
-<span class="c1"># BASE DIRECTORIES </span>
-<span class="c1"># Get base directory relatively to the current directory</span>
-$&gt; dirname goofy.txt          <span class="c1"># Gives: .</span>
-$&gt; dirname test/mickey.txt    <span class="c1"># Gives: test</span>
-<span class="c1">#...and then absolutely</span>
-$&gt; dirname <span class="s2">&quot;</span><span class="k">$(</span>readlink -f goofy.txt<span class="k">)</span><span class="s2">&quot;</span>        <span class="c1"># Gives: /opt</span>
-$&gt; dirname <span class="s2">&quot;</span><span class="k">$(</span>readlink -f test/mickey.txt<span class="k">)</span><span class="s2">&quot;</span>  <span class="c1"># Gives: /opt/test</span>
+<span class="c"># BASE DIRECTORIES </span>
+<span class="c"># Get base directory relatively to the current directory</span>
+<span class="nv">$&gt;</span> dirname goofy.txt          <span class="c"># Gives: .</span>
+<span class="nv">$&gt;</span> dirname <span class="nb">test</span>/mickey.txt    <span class="c"># Gives: test</span>
+<span class="c">#...and then absolutely</span>
+<span class="nv">$&gt;</span> dirname <span class="s2">&quot;$(readlink -f goofy.txt)&quot;</span>        <span class="c"># Gives: /opt</span>
+<span class="nv">$&gt;</span> dirname <span class="s2">&quot;$(readlink -f test/mickey.txt)&quot;</span>  <span class="c"># Gives: /opt/test</span>
 </pre></div>
 
 

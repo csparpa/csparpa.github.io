@@ -95,59 +95,59 @@
 <p>We're about to issue every command as <code>root</code> user.  </p>
 <h3>Steps</h3>
 <p>First, I downloaded, extracted and placed the Mongo stuff (I didn't use the 10gen repo, but just a <code>tar.gz</code> from MongoDB website):  </p>
-<div class="highlight"><pre><span></span>$&gt; <span class="nb">cd</span> /opt
-$&gt; wget http://fastdl.mongodb.org/linux/mongodb-linux-i686-2.0.3.tgz
-$&gt; tar xvf mongodb-linux-i686-2.0.3.tgz
-$&gt; mv mongodb-linux-i686-2.0.3.tg mongodb-2.0.3
+<div class="highlight"><pre><span class="nv">$&gt;</span> <span class="nb">cd</span> /opt
+<span class="nv">$&gt;</span> wget http://fastdl.mongodb.org/linux/mongodb-linux-i686-2.0.3.tgz
+<span class="nv">$&gt;</span> tar xvf mongodb-linux-i686-2.0.3.tgz
+<span class="nv">$&gt;</span> mv mongodb-linux-i686-2.0.3.tg mongodb-2.0.3
 </pre></div>
 
 
 <p>I decided that my databases would go under <code>/usr/data/mongodb</code> and that MongoDB log file would be <code>/var/log/mongodb.log</code></p>
 <p>As I wanted my MongoDB server instance to be started/stopped as a demon, I prepared the following <code>init.d</code> script named <code>mongodb</code> and placed it under <code>/etc/init.d/</code>:</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="nb">source</span> /etc/rc.d/init.d/functions
 <span class="nv">prog</span><span class="o">=</span><span class="s2">&quot;mongod&quot;</span>
 <span class="nv">mongod</span><span class="o">=</span><span class="s2">&quot;/opt/mongodb-2.0.3/bin/mongod&quot;</span>
 <span class="nv">RETVAL</span><span class="o">=</span>0
 
 start<span class="o">()</span> <span class="o">{</span>
-  <span class="nb">echo</span> -n $<span class="s2">&quot;Starting </span><span class="nv">$prog</span><span class="s2">: &quot;</span>
-  <span class="c1">#This is the fundamental call to start the MongoDB server instance</span>
+  <span class="nb">echo</span> -n <span class="s2">$&quot;Starting $prog: &quot;</span>
+  <span class="c">#This is the fundamental call to start the MongoDB server instance</span>
   daemon <span class="nv">$mongod</span> <span class="s2">&quot;--fork --journal --dbpath /usr/data/mongodb \</span>
 <span class="s2">  --logpath /var/log/mongodb.log \</span>
 <span class="s2">  --logappend 2&amp;gt;&amp;amp;1 &amp;gt;&amp;gt;/var/log/mongodb.log&quot;</span>
   <span class="nv">RETVAL</span><span class="o">=</span><span class="nv">$?</span>
   <span class="nb">echo</span>
-  <span class="o">[</span> <span class="nv">$RETVAL</span> -eq <span class="m">0</span> <span class="o">]</span> <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> touch /var/lock/subsys/<span class="nv">$prog</span>
+  <span class="o">[</span> <span class="nv">$RETVAL</span> -eq 0 <span class="o">]</span> &amp;amp;&amp;amp; touch /var/lock/subsys/<span class="nv">$prog</span>
   <span class="k">return</span> <span class="nv">$RETVAL</span>
 <span class="o">}</span>
 
 stop<span class="o">()</span> <span class="o">{</span>
-  <span class="nb">echo</span> -n $<span class="s2">&quot;Stopping </span><span class="nv">$prog</span><span class="s2">: &quot;</span>
+  <span class="nb">echo</span> -n <span class="s2">$&quot;Stopping $prog: &quot;</span>
   killproc <span class="nv">$prog</span>
   <span class="nv">RETVAL</span><span class="o">=</span><span class="nv">$?</span>
   <span class="nb">echo</span>
-  <span class="o">[</span> <span class="nv">$RETVAL</span> -eq <span class="m">0</span> <span class="o">]</span> <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> rm -f /var/lock/subsys/<span class="nv">$prog</span>
+  <span class="o">[</span> <span class="nv">$RETVAL</span> -eq 0 <span class="o">]</span> &amp;amp;&amp;amp; rm -f /var/lock/subsys/<span class="nv">$prog</span>
   <span class="k">return</span> <span class="nv">$RETVAL</span>
 <span class="o">}</span>
 
-<span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> in
+<span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
  start<span class="o">)</span>
   start
-  <span class="p">;;</span>
+  ;;
  stop<span class="o">)</span>
   stop
-  <span class="p">;;</span>
+  ;;
  restart<span class="o">)</span>
   stop
   start
-  <span class="p">;;</span>
+  ;;
  status<span class="o">)</span>
   status <span class="nv">$mongod</span>
   <span class="nv">RETVAL</span><span class="o">=</span><span class="nv">$?</span>
-  <span class="p">;;</span>
+  ;;
  *<span class="o">)</span>
-  <span class="nb">echo</span> $<span class="s2">&quot;Usage: </span><span class="nv">$0</span><span class="s2"> {start|stop|restart|status}&quot;</span>
+  <span class="nb">echo</span> <span class="s2">$&quot;Usage: $0 {start|stop|restart|status}&quot;</span>
   <span class="nv">RETVAL</span><span class="o">=</span>1
 <span class="k">esac</span>
 
@@ -156,23 +156,23 @@ stop<span class="o">()</span> <span class="o">{</span>
 
 
 <p>Then, I opened my Iptables firewall's <code>INPUT</code> chain so that port 27017 (the port MongoDB server is listening to) is not blocked: I opened the file <code>/etc/sysconfig/iptables</code> and added the following rule before of the <code>COMMIT</code> statement:  </p>
-<div class="highlight"><pre><span></span>-A INPUT -p tcp -m tcp -m multiport --ports 27017 -j ACCEPT
+<div class="highlight"><pre>-A INPUT -p tcp -m tcp -m multiport --ports 27017 -j ACCEPT
 </pre></div>
 
 
 <p>and restarted iptables with:  </p>
-<div class="highlight"><pre><span></span>$&gt; service iptables restart
+<div class="highlight"><pre><span class="nv">$&gt;</span> service iptables restart
 </pre></div>
 
 
 <p>That's it. Finally, I started the server instance with:  </p>
-<div class="highlight"><pre><span></span>$&gt; service mongodb start
+<div class="highlight"><pre><span class="nv">$&gt;</span> service mongodb start
 </pre></div>
 
 
 <p>and tested the whole thing opening the Mongo Javascript shell like this:  </p>
-<div class="highlight"><pre><span></span>$&gt; <span class="nb">cd</span> /opt/mongodb-2.0.3/bin
-$&gt; ./mongo
+<div class="highlight"><pre><span class="nv">$&gt;</span> <span class="nb">cd</span> /opt/mongodb-2.0.3/bin
+<span class="nv">$&gt;</span> ./mongo
 </pre></div>
 
 

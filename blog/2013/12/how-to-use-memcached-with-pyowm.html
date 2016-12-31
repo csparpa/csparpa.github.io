@@ -99,23 +99,23 @@ For this purpose we'll use Memcached, which – simply put – is a key/value in
 I'll use Ubuntu, with Memcached 1.4.6 and PyOWM 0.4.0.<br />
 Let's dive into it.<br />
 First we install Memcached and the relative Python bindings:  </p>
-<div class="highlight"><pre><span></span>$&gt; sudo apt-get install memcached python-memcache
+<div class="highlight"><pre><span class="nv">$&gt;</span> sudo apt-get install memcached python-memcache
 </pre></div>
 
 
 <p>Then we install PyOWM library and check the installation:  </p>
-<div class="highlight"><pre><span></span>sudo pip install pyowm
+<div class="highlight"><pre>sudo pip install pyowm
 </pre></div>
 
 
 <p>And we check then that library has correctly been installed by running from the Python console:</p>
-<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">pyowm</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">pyowm</span>
 </pre></div>
 
 
 <p>(if you don't get any error, then PyOWM was installed correctly).  </p>
 <p>Finally, let's start Memcached:</p>
-<div class="highlight"><pre><span></span>$&gt; memcached <span class="p">&amp;</span>
+<div class="highlight"><pre><span class="nv">$&gt;</span> memcached &amp;
 </pre></div>
 
 
@@ -128,13 +128,13 @@ Let's name it <code>memcachedadapter.py</code>: you can put it anywhere, provide
 listed into the <code>PYTHONPATH</code> variable or you can place it directly into the PyOWM install folder.<br />
 In my distro, Python packages are installed by <code>pip</code> into folder <code>/usr/local/lib/python2.6/dist-packages</code>, I'll put the file over there.  </p>
 <p>Let's write the adapter:</p>
-<div class="highlight"><pre><span></span>$&gt; <span class="nb">cd</span> /usr/local/lib/python2.6/dist-packages/pyowm
-$&gt; sudo vim memcachedadapter.py
+<div class="highlight"><pre><span class="nv">$&gt;</span> <span class="nb">cd</span> /usr/local/lib/python2.6/dist-packages/pyowm
+<span class="nv">$&gt;</span> sudo vim memcachedadapter.py
 </pre></div>
 
 
 <p>The module will contain the <code>MemcachedAdapter</code> class:</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 
 <span class="k">class</span> <span class="nc">MemcachedAdapter</span><span class="p">():</span>
   <span class="sd">&quot;&quot;&quot;</span>
@@ -142,12 +142,12 @@ $&gt; sudo vim memcachedadapter.py
 <span class="sd">  adapting a memcache.Client object</span>
 <span class="sd">  &quot;&quot;&quot;</span>
 
-  <span class="n">__ITEM_LIFETIME_MILLISECONDS</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">10</span> <span class="c1"># Ten minutes</span>
+  <span class="n">__ITEM_LIFETIME_MILLISECONDS</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">10</span> <span class="c"># Ten minutes</span>
 
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
-      <span class="n">port</span><span class="o">=</span><span class="s2">&quot;11211&quot;</span><span class="p">,</span> <span class="n">item_lifetime</span><span class="o">=</span><span class="n">__ITEM_LIFETIME_MILLISECONDS</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="o">=</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+      <span class="n">port</span><span class="o">=</span><span class="s">&quot;11211&quot;</span><span class="p">,</span> <span class="n">item_lifetime</span><span class="o">=</span><span class="n">__ITEM_LIFETIME_MILLISECONDS</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">memcache</span> <span class="kn">import</span> <span class="n">Client</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_memcached</span> <span class="o">=</span> <span class="n">Client</span><span class="p">([</span><span class="n">hostname</span><span class="o">+</span><span class="s2">&quot;:&quot;</span><span class="o">+</span><span class="n">port</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_memcached</span> <span class="o">=</span> <span class="n">Client</span><span class="p">([</span><span class="n">hostname</span><span class="o">+</span><span class="s">&quot;:&quot;</span><span class="o">+</span><span class="n">port</span><span class="p">])</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_item_lifetime</span> <span class="o">=</span> <span class="n">item_lifetime</span>
 
   <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request_url</span><span class="p">):</span>
@@ -167,22 +167,22 @@ concrete instance which is created into a configuration file and injected into t
 <p>The first solution requires us to write a new configuration module. Say our module will be <code>pyowm.webapi25.mycustomconfig.py</code>: then you need
 to copy/paste all of the config data from the default <code>pyowm.webapi25.configuration25.py</code> configuration module, and then patch the
 line where the default cache object is provided:</p>
-<div class="highlight"><pre><span></span><span class="c1"># Cache provider to be used</span>
-<span class="c1"># cache = NullCache()  # default cache provided by PyOWM: comment out</span>
-<span class="kn">from</span> <span class="nn">memcachedadapter</span> <span class="kn">import</span> <span class="n">MemcachedAdapter</span>  <span class="c1"># instantiate our adapter</span>
-<span class="n">cache</span> <span class="o">=</span> <span class="n">MemcachedAdapter</span><span class="p">(</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="s2">&quot;11211&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span class="c"># Cache provider to be used</span>
+<span class="c"># cache = NullCache()  # default cache provided by PyOWM: comment out</span>
+<span class="kn">from</span> <span class="nn">memcachedadapter</span> <span class="kn">import</span> <span class="n">MemcachedAdapter</span>  <span class="c"># instantiate our adapter</span>
+<span class="n">cache</span> <span class="o">=</span> <span class="n">MemcachedAdapter</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="s">&quot;11211&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>Then you need to instantiate the PyOWM object by explicitly setting the path to our custom configuration module:</p>
-<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pyowm</span> <span class="kn">import</span> <span class="n">OWM</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">owm</span> <span class="o">=</span> <span class="n">OWM</span><span class="p">(</span><span class="n">config_module</span><span class="o">=</span><span class="s1">&#39;pyowm.webapi25.mycustomconfig&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pyowm</span> <span class="kn">import</span> <span class="n">OWM</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">owm</span> <span class="o">=</span> <span class="n">OWM</span><span class="p">(</span><span class="n">config_module</span><span class="o">=</span><span class="s">&#39;pyowm.webapi25.mycustomconfig&#39;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>The second solution is more of a hack and requires us to open module <code>pyowm.webapi25.configuration25.py</code> and do the same make up as above.
 Once done, you can finally create the main PyOWM object without specifying any custom configuration module:  </p>
-<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pyowm</span> <span class="kn">import</span> <span class="n">OWM</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pyowm</span> <span class="kn">import</span> <span class="n">OWM</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">owm</span> <span class="o">=</span> <span class="n">OWM</span><span class="p">()</span>
 </pre></div>
 
@@ -190,8 +190,8 @@ Once done, you can finally create the main PyOWM object without specifying any c
 <h3>See it in action</h3>
 <p>In the above examples, we are adapting a local Memcached instance listening on the default 11211 port, but you can change this configuration as needed.<br />
 Now let's try it out:</p>
-<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">not_cached</span> <span class="o">=</span> <span class="n">owm</span><span class="o">.</span><span class="n">daily_forecast</span><span class="p">(</span><span class="s2">&quot;London,uk&quot;</span><span class="p">)</span>  <span class="c1"># This first call to the API is not cached, obviously</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">cached</span> <span class="o">=</span> <span class="n">owm</span><span class="o">.</span><span class="n">daily_forecast</span><span class="p">(</span><span class="s2">&quot;London,uk&quot;</span><span class="p">)</span>      <span class="c1"># This second call is cached</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">not_cached</span> <span class="o">=</span> <span class="n">owm</span><span class="o">.</span><span class="n">daily_forecast</span><span class="p">(</span><span class="s">&quot;London,uk&quot;</span><span class="p">)</span>  <span class="c"># This first call to the API is not cached, obviously</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">cached</span> <span class="o">=</span> <span class="n">owm</span><span class="o">.</span><span class="n">daily_forecast</span><span class="p">(</span><span class="s">&quot;London,uk&quot;</span><span class="p">)</span>      <span class="c"># This second call is cached</span>
 </pre></div>
 
 

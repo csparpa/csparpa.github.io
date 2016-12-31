@@ -97,37 +97,37 @@
 <h3>Steps</h3>
 <h4>1. Flask app</h4>
 <p>We choose a folder in which we place the Python code. For instance,  </p>
-<div class="highlight"><pre><span></span>D:\webapps\test
+<div class="highlight"><pre><span class="nl">D:</span><span class="err">\</span><span class="n">webapps</span><span class="err">\</span><span class="n">test</span>
 </pre></div>
 
 
 <p>In this folder we create the real Flask webapplication that we want to deploy (file <code>test.py</code>):  </p>
-<div class="highlight"><pre><span></span><span class="c1"># test.py</span>
+<div class="highlight"><pre><span class="c"># test.py</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
 <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
-<span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/hello&#39;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/hello&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">hello_world</span><span class="p">():</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;Hello &#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span>
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">&#39;Hello &#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#39;!&#39;</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 
 
 <p>The Apache server won't be aware of <code>test.py</code> at all. What you need to do now is to write in the same folder a Python file named <code>test.wsgi</code> that we will link into the webserver's configuration: the code in this file will import the main Flask application object (built in our case as a singleton) and will be actually executed by the WSGI module of Apache. In the code, it is vital that you DON'T change the name of the "application" variable, as it is exactly what the server expects to find. Also please note that we are extending the Python classes path to include our own webapplication's folder.  </p>
 <p>This is <code>test.wsgi</code>:</p>
-<div class="highlight"><pre><span></span><span class="c1"># test.wsgi</span>
+<div class="highlight"><pre><span class="c"># test.wsgi</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="c1">#Expand Python classes path with your app&#39;s path</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;d:/webapps/test&quot;</span><span class="p">)</span>
+<span class="c">#Expand Python classes path with your app&#39;s path</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&quot;d:/webapps/test&quot;</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">test</span> <span class="kn">import</span> <span class="n">app</span>
 
-<span class="c1">#Put logging code (and imports) here ...</span>
+<span class="c">#Put logging code (and imports) here ...</span>
 
-<span class="c1">#Initialize WSGI app object</span>
+<span class="c">#Initialize WSGI app object</span>
 <span class="n">application</span> <span class="o">=</span> <span class="n">app</span>
 </pre></div>
 
@@ -137,19 +137,19 @@
 <h4>2. Apache setup</h4>
 <p>Ok, what's next? Now it's all about installing and properly configuring Apache.</p>
 <p>First: install Apache webserver. I <a href="http://apache.panu.it//httpd/binaries/win32/httpd-2.2.22-win32-x86-openssl-0.9.8t.msi">downloaded</a> and executed the .msi installer. Apache was installed at:</p>
-<div class="highlight"><pre><span></span>&quot;C:\Program Files (x86)\Apache Software Foundation\Apache2.2&quot;
+<div class="highlight"><pre>&quot;C:\Program Files (x86)\Apache Software Foundation\Apache2.2&quot;
 </pre></div>
 
 
 <p>Second: install the WSGI Apache module. Pay attention to download the module compiled for your specific combination of platform and Python and Apache versions: I downloaded <a href="https://code.google.com/p/modwsgi/downloads/detail?name=mod_wsgi-win32-ap22py27-3.3.so">this module</a>. Once downloaded, rename the <code>.so</code> file into <code>mod_wsgi.so</code> and put it under the <code>modules</code> subfolder of your Apache installation folder. Then you have to tell Apache to use it: open in a text editor the <code>httpd.config</code> file which is under the <code>conf</code> subfolder and add the following line at the bottom:  </p>
-<div class="highlight"><pre><span></span>LoadModule wsgi_module modules/mod_wsgi.so
+<div class="highlight"><pre>LoadModule wsgi_module modules/mod_wsgi.so
 </pre></div>
 
 
 <p>Third: restart Apache.</p>
 <p>Now Apache is ready to serve WSGI webapplications.  </p>
 <p>What is left to do is to tell about where our application is and match it to a URL alias. It's child's play: open in a text editor the <code>httpd.config</code> file we used before and add these lines to the bottom:  </p>
-<div class="highlight"><pre><span></span>&lt;Directory d:/webapps/test&gt;
+<div class="highlight"><pre>&lt;Directory d:/webapps/test&gt;
     Order allow,deny
     Allow from all
 &lt;/Directory&gt;
@@ -159,7 +159,7 @@ WSGIScriptAlias /flasktest d:/webapps/test/test.wsgi
 
 <p>(nevertheless, I prefer to place the per-virtual-host or per-alias configurations' stuff into separate files and then use an Include directive into the main <code>httpd.conf</code>).  </p>
 <p>Now restart Apache again and if you open a browser and point it to:</p>
-<div class="highlight"><pre><span></span>http://localhost/flasktest/hello?name=claudio
+<div class="highlight"><pre>http://localhost/flasktest/hello?name=claudio
 </pre></div>
 
 
