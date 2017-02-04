@@ -1,0 +1,445 @@
+{
+  "basics": {
+    "name": "Claudio Sparpaglione",
+    "label": "Software Architect",
+    "phone": "",
+    "website": "",
+    "summary": "I'm a goal-oriented Software Architect and Developer, a proud Pythonista, a Linux enthusiast and an open source advocate.\n\nI've gained a broad expertise on software development lifecycle and on a diverse set of technologies, thanks to my work in various industries (geomatics, online media & advertisement, telephony)\n\nI'm a versatile and resilient problem solver who puts enthusiasm, attention to detail and concreteness in everything. I'm a fast learner and always strive to perform at my best.\n\nI love to work with people I can learn from!",
+    "location": {
+      "address": "",
+      "postalCode": "",
+      "city": "Milan",
+      "countryCode": "IT",
+      "region": ""
+    },
+    "profiles": []
+  },
+  "work": [
+    {
+      "company": "Certilogo S.p.A.",
+      "position": "Software Architect",
+      "website": "",
+      "startDate": "2016-07-01",
+      "summary": "I hold the technical leadership of the strategic projects about innovation of company products and IT infrastructure",
+      "highlights": [],
+      "endDate": "2016-11-01"
+    },
+    {
+      "company": "WalletSaver",
+      "position": "Chief Technology Officer",
+      "website": "",
+      "startDate": "2015-07-01",
+      "summary": "I am in charge of executing the technical vision of the company.\n\nThese are my main responsibilities:\n  - turn the potentials of new technologies into strategic decisions, increasing the company’s competitiveness\n  - set a path for product architecture and lifecycle - with special emphasis on scalability, delivery quality and cost effectiveness\n  - establish and enforce best practices for development, testing and release processes\n  - facilitate communication processes and team workflow\n  - management of technical team (4 units at present)\n  - promote the company technology setting on the tech community\n  - hiring of technical team members\n\nI also act as a Scrum master and contribute to product development by coding on its backend",
+      "highlights": [],
+      "endDate": "2016-07-01"
+    },
+    {
+      "company": "TheOutplay",
+      "position": "Senior Software Developer",
+      "website": "",
+      "startDate": "2014-12-01",
+      "summary": "My contributions:\n\nOVO mobile app:\n- designed and coded the web APIs consumed by the app clients (Django)\n- designed and coded the CMS tools allowing OVO editors to feed APIs with contents (Django)\n- acted as technical point of contact for external contractor in charge for app development\n\nContent and Audience eXchange core platform\n- development of several full-stack product features (PostgreSQL, Django, jQuery, HTML/CSS)\n- development of data API (Django) for widget consumption\n- data import management from external data sources\n\nAdvertising Widgets\n- wrote end-to-end behavioural tests (Selenium, Nightwatch.js, Node.js)\n\nOVO.com website:\n- maintenance and bugfixing",
+      "highlights": [],
+      "endDate": "2015-07-01"
+    },
+    {
+      "company": "Affectv",
+      "position": "Web Engineer",
+      "website": "",
+      "startDate": "2014-04-01",
+      "summary": "I worked on the SignalAds core product, contributing to:\n- architectural roadmap for the backend and ads builder modules\n- development of new features in Python on Tornado and Coffeescript on Node.js\n- improvement of existing scarce documentation and fixing of bugs\n\nI've contributed to the company's data acquisition pipelines by coding Python import/aggregation jobs from external web APIs to Redsfhit and DynamoDB datastores\n\nI've provided support to sales and operations teams by crafting ads mockups for clients proposals",
+      "highlights": [],
+      "endDate": "2014-10-01"
+    },
+    {
+      "company": "Agip KCO",
+      "position": "GIS specialist consultant (on behalf of Esri Italia)",
+      "website": "",
+      "startDate": "2011-03-01",
+      "summary": "Played a key role in administering the client’s enterprise ArcGIS infrastructure\n\nAutomated data replication across IT departments and developed visual system reporting tools in Python\n\nImproved documentation of GIS usage patterns and best practices",
+      "highlights": [],
+      "endDate": "2011-07-01"
+    },
+    {
+      "company": "Galileian Plus s.r.l",
+      "position": "Software Engineer & Developer",
+      "website": "",
+      "startDate": "2008-02-01",
+      "summary": "I worked on several SW projects as an architect and developer, successfully contributing to the design, development and maintenance of SW systems among which:\n  - Python and PHP5 backend application servers\n  - RESTful data webservices\n  - a LAMP-based web GIS system for hydrogeological risk monitoring\n  - Java distributed network applications for scientific computing\n  - Python custom geoprocessing modules for ArcGIS\n  - Java desktop applications for GPS data download/archiving/search\n\nI've been pleased to be technical leader on many of the above-mentioned activities\n\nI've strived for consistently and continuously improving the productivity of corporate SW processes, identifying and documenting best practices, promoting information sharing and mentoring colleagues about SW engineering and IT tools\n\nA few tools I've developed:\nhttp://www.galileianplus.it/services/gps-gnss-date-converter/\nhttp://www.galileianplus.it/services/gps-gnss-coordinate-converter/",
+      "highlights": [],
+      "endDate": "2014-03-01"
+    }
+  ],
+  "education": [
+    {
+      "institution": "Università degli Studi di Pavia",
+      "area": "",
+      "studyType": "Bachelor of Engineering (B.Eng.)",
+      "startDate": "2002-01-01",
+      "gpa": "",
+      "courses": [],
+      "endDate": "2005-01-01"
+    },
+    {
+      "institution": "Università degli Studi di Pavia",
+      "area": "",
+      "studyType": "Master of Engineering (M.Eng.)",
+      "startDate": "2005-01-01",
+      "gpa": "",
+      "courses": [],
+      "endDate": "2007-01-01"
+    },
+    {
+      "institution": "Liceo Scientifico G.Galilei (Voghera)",
+      "area": "",
+      "studyType": "Seconday School Diploma",
+      "startDate": "1997-01-01",
+      "gpa": "",
+      "courses": [],
+      "endDate": "2002-01-01"
+    }
+  ],
+  "skills": [
+    {
+      "name": "LAMP",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Scrum",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Docker",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Cloud computing",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Big data",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Mobile development",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Microservices",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "PHP",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Web Services",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "REST",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "GIS",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "PostgreSQL",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Web Development",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Design Patterns",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Apache",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Bash",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Test Driven Development",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Linux",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Java",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Python",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Subversion",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Software Engineering",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Web Applications",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "JavaScript",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Open Source",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Software Development",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "MySQL",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "HTML",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "MVC",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "SQL",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "jQuery",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "AJAX",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Continuous Integration",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Application Architecture",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Django",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Amazon Web Services (AWS)",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "OOP",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "JSON",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "NoSQL",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "MongoDB",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "ArcGIS",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Fast Learner",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Git",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Flask",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Github",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Software Analysis",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "API Development",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "CoffeeScript",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Ansible",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Node.js",
+      "level": "",
+      "keywords": []
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "fluency": "Professional working"
+    },
+    {
+      "language": "French",
+      "fluency": "Elementary"
+    },
+    {
+      "language": "Italian",
+      "fluency": "Native or bilingual"
+    }
+  ],
+  "interests": [
+    {
+      "name": "computer science",
+      "keywords": []
+    },
+    {
+      "name": " music",
+      "keywords": []
+    },
+    {
+      "name": " cinema",
+      "keywords": []
+    },
+    {
+      "name": " nature",
+      "keywords": []
+    },
+    {
+      "name": " history",
+      "keywords": []
+    },
+    {
+      "name": " cooking",
+      "keywords": []
+    },
+    {
+      "name": " history of cartography",
+      "keywords": []
+    }
+  ],
+  "references": [],
+  "projects": [
+    {
+      "name": "Personal study subjects in 2016",
+      "startDate": "undefined-2016-01",
+      "summary": "Languages:\n- Scala\nTech topics:\n- Amazon Web Services\n- High scalability service architectures\n- Microservices\n- Monitoring and alerting\n- Continuous delivery and deployment",
+      "url": ""
+    },
+    {
+      "name": "Translation of open source projects documentation",
+      "startDate": "2015-05-01",
+      "summary": "I translated the documentation (usage docs, API docs, website pages) of various outstanding open source projects from English to Italian, in order to decrease language barriers for Italian users.\nProjects:\n- Requests library (https://github.com/requests/requests-docs-it)\n- the Reactive Systems Manifesto (http://www.reactivemanifesto.org)",
+      "url": ""
+    },
+    {
+      "name": "Technical reviewer of \"Geospatial Development By Example with Python\"",
+      "startDate": "2015-05-01",
+      "summary": "ISBN 13: 9781785282355\nAuthor: Pablo Carreira\nPublisher: Packt Publishing\nFirst edition: January, 2016",
+      "url": "https://www.packtpub.com/application-development/geospatial-development-example-python"
+    },
+    {
+      "name": "Tech talk: \"PyOWM - my first open source project\"",
+      "startDate": "2014-10-01",
+      "summary": "Tech talk about setting up an open source project given at Italian Developers in London meetup (Oct 1st, 2014) \nhttp://www.meetup.com/Italian-Developers-in-London/events/205107652/",
+      "url": "http://www.slideshare.net/csparpa/pyowm-my-first-open-source-project"
+    },
+    {
+      "name": "PyOWM open source project",
+      "startDate": "2013-09-01",
+      "summary": "PyOWM is a client Python wrapper library for the OpenWeatherMap (OWM) web API.\nIt allows quick and easy consumption of OWM weather data from Python applications via a simple object model and in a human-friendly fashion.",
+      "url": "http://github.com/csparpa/pyowm"
+    },
+    {
+      "name": "VULSAR",
+      "startDate": "2012-02-01",
+      "summary": "VULSAR - seismic VULnerability assessment via SAR - aimed to develop a GIS platform for quickly delivering vast-scale, semi-automatically generated seismic risk maps associated with buildings vulnerability curves.\n\nOne of the key aspects of the project was the large exploitation of remotely-sensed data (such as imagery recorded by COSMO-SkyMed satellites), thus allowing to decouple seismic vulnerability assessment from the availability of in-situ data and increasing the value of SAR data in the frame of natural risks mitigation applications.\n\nThe VULSAR computing platform consists in a custom developed tool chain for ArcGIS Desktop environments, whose computational results are then exposed via ArcGIS Server and handled via a developed browser Javascript GUI.\n\nProject team included university research groups (Università degli studi di Pavia, EUCENTRE) and private businesses (SISTEMATICA).",
+      "url": "http://vulsar.galileianplus.it/",
+      "endDate": "2013-08-01"
+    },
+    {
+      "name": "SISMA",
+      "startDate": "2008-02-01",
+      "summary": "SISMA - Seismic Information System for Monitoring and Alert - was a pilot project financed by the Italian Space Agency (ASI).\n\nThe project aimed to improve the knowledge of earthquake generation mechanisms and to monitor the deformation patterns in seismogenic areas in order to infer the dynamic behaviour of stress accumulation on faults. These goals were successfully achieved by integrating theoretical models coming from geodesy and geophysics into a unique computational framework: a distributed application operated via a comprehensive graphical user interface.\n\nThe resulting system has been tested out by the Civil Protection department of Friuli-Venezia Giulia region, which is one of SISMA's major stakeholders.\n\nThe project set out a cooperation among research groups from preminent Italian universities (Politecnico di Milano, Università degli studi di Milano, Università di Trieste) and private businesses (TeS).",
+      "url": "http://sisma.galileianplus.it/",
+      "endDate": "2012-02-01"
+    }
+  ]
+}
