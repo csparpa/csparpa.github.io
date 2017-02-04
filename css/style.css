@@ -1027,6 +1027,7 @@ a.talks  { border-bottom: 1px dotted #9621ce; color:#9621ce;}
 a.linkedin  { border-bottom: 1px dotted #6c7808; color:#6c7808;}
 a.panoramio  { border-bottom: 1px dotted #e38024; color:#e38024;}
 a.delicious  { border-bottom: 1px dotted #626799; color:#626799;}
+a.jsonresume { border-bottom: 1px dotted #773388; color:#773388;}
 .qr_img {
     max-width: 100%;
     height: auto;
